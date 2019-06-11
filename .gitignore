@@ -1,4 +1,14 @@
 .env
-node_modules/
 .DS_Store
+.vscode
+
+# Node files
+node_modules/
 package-lock.json
+
+# Ruby files
+Gemfile.lock
+
+# Python files
+__pycache__
+venv
