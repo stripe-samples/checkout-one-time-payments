@@ -12,3 +12,14 @@ Gemfile.lock
 # Python files
 __pycache__
 venv
+
+# PHP files
+composer.lock
+vendor
+
+# Java files
+.settings
+target/
+.classpath
+.factorypath
+.project
