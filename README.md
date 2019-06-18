@@ -14,14 +14,12 @@ Some things to note:
 
 3. Instructions on hosting TBD.
 
-# Sample recipe README
-
 Below is everything you should include in your original recipe README. Everything above should be deleted.
 
 # Name of recipe
 A brief description of what this recipe shows. Keep it 3 - 5 setences. 
 
-<img src="#" alt="Preview of recipe" align="center">
+<img src="https://cf.ltkcdn.net/dogs/images/std/236742-699x450-cutest-puppy-videos.jpg" alt="Preview of recipe" align="center">
 
 Features: 
 * One cool thing about this recipe
