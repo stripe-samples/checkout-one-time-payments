@@ -17,11 +17,12 @@ Some things to note:
 Below is everything you should include in your original recipe README. Everything above should be deleted.
 
 # Name of recipe
-A brief description of what this recipe shows. Keep it 3 - 5 setences. 
+A brief description of what this recipe shows. Keep it 3 - 5 sentences.
 
+A quick screenshot of the demo view:
 <img src="https://cf.ltkcdn.net/dogs/images/std/236742-699x450-cutest-puppy-videos.jpg" alt="Preview of recipe" align="center">
 
-Features: 
+Features:
 * One cool thing about this recipe
 * Another cool thing about the recipe
 * The final cool thing about the recipe
@@ -31,9 +32,11 @@ This recipe includes [6 server implementations](server/README.md) in our most po
 
 ## FAQ
 Q: Why did you pick these frameworks?
+
 A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
 
 Q: Can you show me how to build X?
+
 A: We are always looking for new recipe ideas, please email tbd@stripe.com with your suggestion!
 
 ## Author(s)
