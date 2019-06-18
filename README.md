@@ -6,13 +6,12 @@ This is a repo to help you get started with creating a recipe.
 git clone https://git.corp.stripe.com/adreyfus/stripe-recipe-template
 ```
 
-Some things to note: 
-* Update the Java artifactId to use a recipe specific name. Update the README with the right package name.
+2. Language specific instructions: 
+    - Update the Java artifactId to use a specific recipe related name. Update the README with the right package name.
 
+3. Update the sample recipe README below and delete this boilerplate text.
 
-2. Update the sample recipe README below and delete this boilerplate text.
-
-3. Instructions on hosting TBD.
+4. Instructions on hosting TBD.
 
 Below is everything you should include in your original recipe README. Everything above should be deleted.
 
