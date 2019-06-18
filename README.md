@@ -5,10 +5,18 @@ This is a repo to help you get started with creating a recipe.
 ```
 git clone https://git.corp.stripe.com/adreyfus/stripe-recipe-template
 ```
-2. Update the sample recipe README below and delete this boilerplate text.
-3. Instructions on hosting TBD
 
-## Sample recipe README
+Some things to note: 
+* Update the Java artifactId to use a recipe specific name. Update the README with the right package name.
+
+
+2. Update the sample recipe README below and delete this boilerplate text.
+
+3. Instructions on hosting TBD.
+
+# Sample recipe README
+
+Below is everything you should include in your original recipe README. Everything above should be deleted.
 
 # Name of recipe
 A brief description of what this recipe shows. Keep it 3 - 5 setences. 
@@ -22,6 +30,13 @@ Features:
 
 ## How to run locally
 This recipe includes [6 server implementations](server/README.md) in our most popular languages. 
+
+## FAQ
+Q: Why did you pick these frameworks?
+A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
+
+Q: Can you show me how to build X?
+A: We are always looking for new recipe ideas, please email tbd@stripe.com with your suggestion!
 
 ## Author(s)
 [@adreyfus-stripe](https://twitter.com/adrind)
