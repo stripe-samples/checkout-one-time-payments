@@ -22,9 +22,9 @@ A quick screenshot of the demo view:
 <img src="https://cf.ltkcdn.net/dogs/images/std/236742-699x450-cutest-puppy-videos.jpg" alt="Preview of recipe" align="center">
 
 Features:
-* One cool thing about this recipe
-* Another cool thing about the recipe
-* The final cool thing about the recipe
+* One cool thing about this recipe 😃
+* Another cool thing about the recipe 🏋️
+* The final cool thing about the recipe 💡
 
 ## How to run locally
 This recipe includes [6 server implementations](server/README.md) in our most popular languages. 
