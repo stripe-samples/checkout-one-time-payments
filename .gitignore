@@ -14,6 +14,7 @@ venv
 
 # PHP files
 vendor
+logs
 
 # Java files
 .settings
