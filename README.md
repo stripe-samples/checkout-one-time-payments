@@ -29,6 +29,14 @@ Features:
 ## How to run locally
 This recipe includes [6 server implementations](server/README.md) in our most popular languages. 
 
+If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory: 
+
+```
+cp .env.example .env
+```
+
+You will need a Stripe account with its own set of [API keys](https://stripe.com/docs/development#api-keys).
+
 ## FAQ
 Q: Why did you pick these frameworks?
 

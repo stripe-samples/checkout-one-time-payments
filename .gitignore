@@ -4,7 +4,6 @@
 
 # Node files
 node_modules/
-package-lock.json
 
 # Ruby files
 Gemfile.lock
@@ -14,7 +13,6 @@ __pycache__
 venv
 
 # PHP files
-composer.lock
 vendor
 
 # Java files
