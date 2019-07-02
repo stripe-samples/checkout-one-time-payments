@@ -16,7 +16,7 @@ source /path/to/new/virtual/environment/venv/bin/activate
 2. Install dependencies
 
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 3. Export and run the server locally
