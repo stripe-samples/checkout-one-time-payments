@@ -16,7 +16,7 @@ end
 
 post '/' do
   content_type 'application/json'
-  data = JSON.parse request.body.data
+  data = JSON.parse request.body.read
 
   {
     data: data
