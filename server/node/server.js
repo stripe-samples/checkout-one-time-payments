@@ -1,25 +1,25 @@
 const express = require("express");
 const app = express();
 const { resolve } = require("path");
-const envPath = resolve("../../.env");
+const envPath = resolve(__dirname, "../../.env");
 const env = require("dotenv").config({ path: envPath });
-const stripe = require("stripe")(env.parsed.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-app.use(express.static("../../client"));
+app.use(express.static(resolve(__dirname, "../../client")));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
     // Let's compute it only when hitting the Stripe webhook endpoint.
     verify: function(req, res, buf) {
-      if (req.originalUrl.startsWith('/webhook')) {
+      if (req.originalUrl.startsWith("/webhook")) {
         req.rawBody = buf.toString();
       }
-    },
+    }
   })
 );
 
 app.get("/", (req, res) => {
-  const path = resolve("../../client/index.html");
+  const path = resolve(__dirname, "../../client/index.html");
   res.sendFile(path);
 });
 
