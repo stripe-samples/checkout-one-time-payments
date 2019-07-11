@@ -1,4 +1,4 @@
-# Name of recipe
+# Name of sample
 
 A [Sinatra](http://sinatrarb.com/) implementation.
 
@@ -8,12 +8,14 @@ A [Sinatra](http://sinatrarb.com/) implementation.
 
 ## How to run
 
-1. Install required dependencies
+1. Install dependencies
 ```
 bundle install
 ```
 
-2. Run the server locally
+2. Run the application
 ```
 ruby server.rb
 ```
+
+3. Go to `localhost:4242` in your browser to see the demo

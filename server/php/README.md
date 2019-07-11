@@ -1,19 +1,22 @@
-# PHP example
+# Name of sample
 
 ## Requirements
 * PHP >= 7.1.3
+* Composer
 * [Slim](http://www.slimframework.com/)
 
 ## How to run
 
-1. Run composer to set up dependencies
+1. Install dependencies
 
 ```
-php composer.json install
+composer install
 ```
 
-2. Run the server locally
+2. Run the application
 
 ```
-php -S localhost:8080
+composer start
 ```
+
+3. Go to `localhost:4242` in your browser to see the demo

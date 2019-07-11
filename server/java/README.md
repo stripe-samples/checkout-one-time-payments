@@ -1,4 +1,4 @@
-# Name of recipe
+# Name of sample
 
 ## Requirements
 * Maven
@@ -6,14 +6,14 @@
 * [Configured .env file](../README.md)
 
 
-1. Build the jar
+1. Build the package
 ```
 mvn package
 ```
 
-2. Run the packaged jar
+2. Run the application
 ```
-java -cp target/some-recipe-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.recipe.Server
+java -cp target/sales-tax-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.sample.Server
 ```
 
-Go to http://localhost:4567/
+3. Go to `localhost:4567` in your browser to see the demo
