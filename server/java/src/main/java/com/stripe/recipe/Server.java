@@ -5,6 +5,7 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.port;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -27,6 +28,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        port(4242);
         Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
 
         get("/", (request, response) -> {
