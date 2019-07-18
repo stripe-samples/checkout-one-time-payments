@@ -27,7 +27,7 @@ Features:
 * The final cool thing about the recipe 💡
 
 ## How to run locally
-This recipe includes [6 server implementations](server/README.md) in our most popular languages. 
+This recipe includes [5 server implementations](server/README.md) in our most popular languages. 
 
 If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory: 
 

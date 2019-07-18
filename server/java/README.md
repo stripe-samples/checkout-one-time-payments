@@ -3,17 +3,24 @@
 ## Requirements
 * Maven
 * Java
-* [Configured .env file](../README.md)
 
-
-1. Build the package
+1. Build the jar
 ```
 mvn package
 ```
 
-2. Run the application
+2. Export environment variables
+(the Java sample pulls environment variables from your system)
+
 ```
-java -cp target/sales-tax-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.sample.Server
+export STRIPE_PUBLIC_KEY=pk_replace_with_your_key
+export STRIPE_SECRET_KEY=sk_replace_with_your_key
+export STRIPE_WEBHOOK_SECRET=whsec_replace_with_your_key
 ```
 
-3. Go to `localhost:4242` in your browser to see the demo
+3. Run the packaged jar
+```
+java -cp target/placing-a-hold-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.sample.Server
+```
+
+4. Go to `localhost:4242` in your browser to see the demo
