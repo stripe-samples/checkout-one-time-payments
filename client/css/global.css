@@ -10,7 +10,7 @@
     --accent-color: #0066F0;
     --body-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     --radius: 6px;
-    --logo-image: url("https://cdn.glitch.com/804a52b5-e10e-4c27-a231-c2fff9bfec0f%2FKAVHOLM.svg?v=1561585740202");
+    --logo-image: url("https://storage.googleapis.com/stripe-sample-images/KAVHOLM.svg");
     --form-width: 343px;
   }
   
@@ -156,7 +156,7 @@
   
   .sr-checkbox-label input:checked ~ .sr-checkbox-check {
     background-color: var(--accent-color);
-    background-image: url("https://cdn.glitch.com/804a52b5-e10e-4c27-a231-c2fff9bfec0f%2Ficon-checkmark.svg?v=1561586156671");
+    background-image: url("https://storage.googleapis.com/stripe-sample-images/icon-checkmark.svg");
     background-repeat: no-repeat;
     background-size: 16px;
     background-position: -1px -1px;
@@ -167,7 +167,7 @@
       display: block;
     height: 44px;
       margin: 0;
-      background-image: url('https://cdn.glitch.com/804a52b5-e10e-4c27-a231-c2fff9bfec0f%2Ficon-chevron-down.svg?v=1561504532379');
+      background-image: url('https://storage.googleapis.com/stripe-sample-images/icon-chevron-down.svg');
       background-repeat: no-repeat, repeat;
       background-position: right 12px top 50%, 0 0;
       background-size: .65em auto, 100%;
@@ -328,7 +328,7 @@
   :root {
     --accent-color: #ED5F74;
     --headline-color: var(--accent-color);
-    --logo-image: url("https://cdn.glitch.com/804a52b5-e10e-4c27-a231-c2fff9bfec0f%2Flogo-pasha.svg?v=1561504532656");
+    --logo-image: url("https://storage.googleapis.com/stripe-sample-images/logo-pasha.svg");
   }
   
   .pasha-image-stack {
