@@ -44,7 +44,7 @@ A: We chose the most minimal framework to convey the key Stripe calls and concep
 
 Q: Can you show me how to build X?
 
-A: We are always looking for new recipe ideas, please email tbd@stripe.com with your suggestion!
+A: We are always looking for new recipe ideas, please email dev-samples@stripe.com with your suggestion!
 
 ## Author(s)
 [@adreyfus-stripe](https://twitter.com/adrind)
