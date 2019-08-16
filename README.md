@@ -7,6 +7,8 @@ Once your customer is ready to pay, use Stripe.js to redirect them to the URL of
 
 <img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
 
+See the sample [live](https://0hczv.sse.codesandbox.io/) or [fork](https://codesandbox.io/s/stripe-sample-checkout-one-time-payments-0hczv) on CodeSandbox.
+
 **Features:**
 * Localization in 14 different languages 🌍
 * Built-in Apple Pay support 🍎
