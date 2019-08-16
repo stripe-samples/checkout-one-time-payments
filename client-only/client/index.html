@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stripe Payment Page Recipe</title>
+    <meta name="description" content="A demo of Stripe Payment Intents" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <!-- Load Stripe.js on your website. -->
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+
+  <body>
+    <div class="sr-root">
+      <div class="sr-main">
+        <header class="sr-header">
+          <div class="sr-header__logo"></div>
+        </header>
+        <section class="container">
+          <div>
+            <h1>Single photo</h1>
+            <h4>Purchase a Pasha original photo</h4>
+            <div class="pasha-image">
+              <img
+                src="https://picsum.photos/280/320?random=4"
+                width="140"
+                height="160"
+              />
+            </div>
+          </div>
+          <div class="quantity-setter">
+            <button class="increment-btn" id="subtract" disabled>
+              -
+            </button>
+            <input type="number" id="quantity-input" min="1" value="1" />
+            <button class="increment-btn" id="add">+</button>
+          </div>
+          <p class="sr-legal-text">Number of copies (max 10)</p>
+
+          <button id="basic-photo-button">
+            Buy for $<span id="total">5</span>.00
+          </button>
+        </section>
+        <div id="error-message"></div>
+      </div>
+    </div>
+
+    <script>
+      // Replace with your own public key: https://dashboard.stripe.com/test/apikeys
+      var PUBLIC_KEY = "pk_1234";
+      // Replace with the domain you want your users to be redirected back to after payment
+      var DOMAIN = window.location.hostname;
+      // Replace with a SKU for your own product (created either in the Stripe Dashboard or with the API)
+      var SKU_ID = "sku_1234";
+
+      if (PUBLIC_KEY === "pk_1234") {
+        console.log(
+          "Replace the hardcoded public key with your own public key: https://dashboard.stripe.com/test/apikeys"
+        );
+      }
+
+      if (SKU_ID === "sku_1234") {
+        console.log(
+          "Replace the hardcoded SKU ID with your own SKU: https://stripe.com/docs/api/skus"
+        );
+      }
+
+      var stripe = Stripe(PUBLIC_KEY);
+
+      var basicPhotoButton = document.getElementById("basic-photo-button");
+      document
+        .getElementById("quantity-input")
+        .addEventListener("change", function(evt) {
+          if (evt.target.value < 1) {
+            evt.target.value = 1;
+          }
+          if (evt.target.value > 10) {
+            evt.target.value = 10;
+          }
+        });
+
+      var updateQuantity = function(evt) {
+        if (evt && evt.type === "keypress" && evt.keyCode !== 13) {
+          return;
+        }
+
+        var isAdding = evt.target.id === "add";
+        var inputEl = document.getElementById("quantity-input");
+        var currentQuantity = parseInt(inputEl.value);
+
+        document.getElementById("add").disabled = false;
+        document.getElementById("subtract").disabled = false;
+
+        var quantity = isAdding ? currentQuantity + 1 : currentQuantity - 1;
+
+        inputEl.value = quantity;
+        document.getElementById("total").textContent = quantity * 5;
+
+        if (quantity === 1) {
+          document.getElementById("subtract").disabled = true;
+        }
+        if (quantity === 10) {
+          document.getElementById("add").disabled = true;
+        }
+      };
+
+      Array.from(document.getElementsByClassName("increment-btn")).forEach(
+        element => {
+          element.addEventListener("click", updateQuantity);
+        }
+      );
+
+      var handleResult = function(result) {
+        if (result.error) {
+          var displayError = document.getElementById("error-message");
+          displayError.textContent = result.error.message;
+        }
+      };
+
+      basicPhotoButton.addEventListener("click", function() {
+        var quantity = parseInt(
+          document.getElementById("quantity-input").value
+        );
+        stripe
+          .redirectToCheckout({
+            items: [{ sku: SKU_ID, quantity: quantity }],
+            successUrl: DOMAIN + "/success.html?session_id={CHECKOUT_SESSION_ID}",
+            cancelUrl: DOMAIN + "/canceled.html"
+          })
+          .then(handleResult);
+      });
+    </script>
+  </body>
+</html>
