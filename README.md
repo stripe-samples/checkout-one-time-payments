@@ -7,7 +7,7 @@ Once your customer is ready to pay, use Stripe.js to redirect them to the URL of
 
 <img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
 
-Features:
+**Features:**
 * Localization in 14 different languages 🌍
 * Built-in Apple Pay support 🍎
 * Built-in dynamic 3D Secure (ready for SCA) 🔔
