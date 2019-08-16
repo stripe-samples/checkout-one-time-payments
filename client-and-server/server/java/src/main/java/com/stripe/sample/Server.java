@@ -14,12 +14,10 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import com.stripe.Stripe;
-import com.stripe.model.Customer;
 import com.stripe.model.Event;
 import com.stripe.model.checkout.Session;
 import com.stripe.exception.*;
 import com.stripe.net.Webhook;
-import com.stripe.net.ApiResource;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionCreateParams.LineItem;
 import com.stripe.param.checkout.SessionCreateParams.PaymentMethodType;
@@ -50,6 +48,7 @@ public class Server {
             return gson.toJson(responseData);
         });
 
+        // Fetch the Checkout Session to display the JSON result on the success page
         get("/checkout-session", (request, response) -> {
             response.type("application/json");
 
@@ -66,6 +65,16 @@ public class Server {
             String domainUrl = System.getenv("DOMAIN");
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder();
 
+            // Create new Checkout Session for the order
+            // Other optional params include:
+            // [billing_address_collection] - to display billing address details on the page
+            // [customer] - if you have an existing Stripe Customer ID
+            // [payment_intent_data] - lets capture the payment later
+            // [customer_email] - lets you prefill the email input in the form
+            // For full details see https://stripe.com/docs/api/checkout/sessions/create
+
+            // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID
+            // set as a query param
             builder.setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD);
 

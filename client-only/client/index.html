@@ -67,17 +67,21 @@
         );
       }
 
+      var MIN_PHOTOS = 1;
+      var MAX_PHOTOS = 10;
+
       var stripe = Stripe(PUBLIC_KEY);
 
       var basicPhotoButton = document.getElementById("basic-photo-button");
       document
         .getElementById("quantity-input")
         .addEventListener("change", function(evt) {
-          if (evt.target.value < 1) {
-            evt.target.value = 1;
+          // Ensure customers only buy between 1 and 10 photos
+          if (evt.target.value < MIN_PHOTOS) {
+            evt.target.value = MIN_PHOTOS;
           }
-          if (evt.target.value > 10) {
-            evt.target.value = 10;
+          if (evt.target.value > MAX_PHOTOS) {
+            evt.target.value = MAX_PHOTOS;
           }
         });
 
@@ -98,10 +102,11 @@
         inputEl.value = quantity;
         document.getElementById("total").textContent = quantity * 5;
 
-        if (quantity === 1) {
+        // Disable the button if the customers hits the max or min
+        if (quantity === MIN_PHOTOS) {
           document.getElementById("subtract").disabled = true;
         }
-        if (quantity === 10) {
+        if (quantity === MAX_PHOTOS) {
           document.getElementById("add").disabled = true;
         }
       };
@@ -112,6 +117,7 @@
         }
       );
 
+      // Handle any errors from Checkout
       var handleResult = function(result) {
         if (result.error) {
           var displayError = document.getElementById("error-message");
@@ -123,10 +129,14 @@
         var quantity = parseInt(
           document.getElementById("quantity-input").value
         );
+
+        // Make the call to Stripe.js to redirect to the checkout page
+        // with the current quantity
         stripe
           .redirectToCheckout({
             items: [{ sku: SKU_ID, quantity: quantity }],
-            successUrl: DOMAIN + "/success.html?session_id={CHECKOUT_SESSION_ID}",
+            successUrl:
+              DOMAIN + "/success.html?session_id={CHECKOUT_SESSION_ID}",
             cancelUrl: DOMAIN + "/canceled.html"
           })
           .then(handleResult);

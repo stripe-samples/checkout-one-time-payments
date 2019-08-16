@@ -5,7 +5,7 @@ use Stripe\Stripe;
 
 require 'vendor/autoload.php';
 
-$ENV_PATH = '../..';
+$ENV_PATH = '../../..';
 $dotenv = Dotenv\Dotenv::create(realpath($ENV_PATH));
 $dotenv->load();
 
@@ -28,10 +28,8 @@ $app->add(function ($request, $response, $next) {
     return $next($request, $response);
 });
   
-
 $app->get('/', function (Request $request, Response $response, array $args) {   
     return $response->write(file_get_contents('../../client/index.html'));
-
 });
 
 $app->get('/public-key', function (Request $request, Response $response, array $args) {
@@ -39,6 +37,7 @@ $app->get('/public-key', function (Request $request, Response $response, array $
   return $response->withJson([ 'publicKey' => $pub_key ]);
 });
 
+// Fetch the Checkout Session to display the JSON result on the success page
 $app->get('/checkout-session', function (Request $request, Response $response, array $args) {
   $id = $request->getQueryParams()['sessionId'];
   $checkout_session = \Stripe\Checkout\Session::retrieve($id);
@@ -52,6 +51,15 @@ $app->post('/create-checkout-session', function(Request $request, Response $resp
   $body = json_decode($request->getBody());
   $quantity = $body->quantity;
 
+  // Create new Checkout Session for the order
+  // Other optional params include:
+  // [billing_address_collection] - to display billing address details on the page
+  // [customer] - if you have an existing Stripe Customer ID
+  // [payment_intent_data] - lets capture the payment later
+  // [customer_email] - lets you prefill the email input in the form
+  // For full details see https://stripe.com/docs/api/checkout/sessions/create
+
+  // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
   $checkout_session = \Stripe\Checkout\Session::create([
     'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
     'cancel_url' => $domain_url . '/canceled.html',

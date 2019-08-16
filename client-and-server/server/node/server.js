@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const { resolve } = require("path");
 // Replace if using a different env file or config
-const ENV_PATH = "../../.env";
+const ENV_PATH = "../../../.env";
 const envPath = resolve(ENV_PATH);
 const env = require("dotenv").config({ path: envPath });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
   res.sendFile(path);
 });
 
+// Fetch the Checkout Session to display the JSON result on the success page
 app.get("/checkout-session", async (req, res) => {
   const { sessionId } = req.query;
   const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -35,7 +36,13 @@ app.post("/create-checkout-session", async (req, res) => {
   const domainURL = process.env.DOMAIN;
 
   const { quantity } = req.body;
-  // Customer is signing up for a subscription and purchasing the extra e-book
+  // Create new Checkout Session for the order
+  // Other optional params include:
+  // [billing_address_collection] - to display billing address details on the page
+  // [customer] - if you have an existing Stripe Customer ID
+  // [payment_intent_data] - lets capture the payment later
+  // [customer_email] - lets you prefill the email input in the form
+  // For full details see https://stripe.com/docs/api/checkout/sessions/create
   session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -46,6 +53,7 @@ app.post("/create-checkout-session", async (req, res) => {
         amount: 500 // Keep the amount on the server to prevent customers from manipulating on client
       }
     ],
+    // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
     success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${domainURL}/canceled.html`
   });

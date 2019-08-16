@@ -1,30 +1,27 @@
-# Stripe Recipe Blueprint
-This is a repo to help you get started with creating a recipe. 
+# Using Checkout for one-time purchases
+Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
-1. Clone this repository and add the recipe specific logic. 
-```
-git clone https://git.corp.stripe.com/adreyfus/stripe-recipe-template
-```
+We built Checkout to do that work for you so now you can focus on building the best storefront experience for your customers.
 
-2. Language specific instructions: 
-    - Update the Java artifactId to use a specific recipe related name. Update the README with the right package name.
+Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. It's so simple you don't even need a server!
 
-3. Update the sample recipe README below and delete this boilerplate text.
-
-4. Instructions on hosting TBD.
-
-Below is everything you should include in your original recipe README. Everything above should be deleted.
-
-# Name of recipe
-A brief description of what this recipe shows. Keep it 3 - 5 sentences.
-
-A quick screenshot of the demo view:
-<img src="https://cf.ltkcdn.net/dogs/images/std/236742-699x450-cutest-puppy-videos.jpg" alt="Preview of recipe" align="center">
+<img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
 
 Features:
-* One cool thing about this recipe 😃
-* Another cool thing about the recipe 🏋️
-* The final cool thing about the recipe 💡
+* Localization in 14 different languages 🌍
+* Built-in Apple Pay support 🍎
+* Built-in dynamic 3D Secure (ready for SCA) 🔔
+* Plans to support more payment methods 🔮
+
+For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout). 
+
+There are two integrations: [client-only](./client-only) and [client-and-server](./client-and-server).
+<!-- prettier-ignore -->
+|     | client-only | client-and-server
+:--- | :---: | :---:
+🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. | ✅  | ✅ |
+🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined SKUs.  | ❌  | ✅ |
+⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
 
 ## How to run locally
 This recipe includes [5 server implementations](server/README.md) in our most popular languages. 
