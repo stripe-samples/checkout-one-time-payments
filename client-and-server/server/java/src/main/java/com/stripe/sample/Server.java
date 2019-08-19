@@ -22,6 +22,8 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionCreateParams.LineItem;
 import com.stripe.param.checkout.SessionCreateParams.PaymentMethodType;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Server {
     private static Gson gson = new Gson();
 
@@ -36,15 +38,19 @@ public class Server {
 
     public static void main(String[] args) {
         port(4242);
-        Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
-        staticFiles.externalLocation(Paths.get(Paths.get("").toAbsolutePath().toString(), System.getenv("STATIC_DIR"))
-                .normalize().toString());
+        String ENV_FILE_PATH = "../../../";
+        Dotenv dotenv = Dotenv.configure().directory(ENV_FILE_PATH).load();
+
+        Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
+
+        staticFiles.externalLocation(
+                Paths.get(Paths.get("").toAbsolutePath().toString(), dotenv.get("STATIC_DIR")).normalize().toString());
 
         get("/public-key", (request, response) -> {
             response.type("application/json");
 
             Map<String, Object> responseData = new HashMap<>();
-            responseData.put("publicKey", System.getenv("STRIPE_PUBLIC_KEY"));
+            responseData.put("publicKey", dotenv.get("STRIPE_PUBLIC_KEY"));
             return gson.toJson(responseData);
         });
 
@@ -62,7 +68,7 @@ public class Server {
             response.type("application/json");
             PostBody postBody = gson.fromJson(request.body(), PostBody.class);
 
-            String domainUrl = System.getenv("DOMAIN");
+            String domainUrl = dotenv.get("DOMAIN");
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder();
 
             // Create new Checkout Session for the order
@@ -95,7 +101,7 @@ public class Server {
             System.out.println("Webhook");
             String payload = request.body();
             String sigHeader = request.headers("Stripe-Signature");
-            String endpointSecret = System.getenv("STRIPE_WEBHOOK_SECRET");
+            String endpointSecret = dotenv.get("STRIPE_WEBHOOK_SECRET");
 
             Event event = null;
 

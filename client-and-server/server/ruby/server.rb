@@ -3,7 +3,7 @@ require 'sinatra'
 require 'dotenv'
 
 # Replace if using a different env file or config
-ENV_FILE_PATH = '../../../.env'.freeze
+ENV_FILE_PATH = '/../../../.env'.freeze
 Dotenv.load(File.dirname(__FILE__) + ENV_FILE_PATH)
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 

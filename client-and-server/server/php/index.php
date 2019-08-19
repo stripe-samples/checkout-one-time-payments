@@ -29,7 +29,7 @@ $app->add(function ($request, $response, $next) {
 });
   
 $app->get('/', function (Request $request, Response $response, array $args) {   
-    return $response->write(file_get_contents('../../client/index.html'));
+    return $response->write(file_get_contents(getenv('STATIC_DIR') . '/index.html'));
 });
 
 $app->get('/public-key', function (Request $request, Response $response, array $args) {
