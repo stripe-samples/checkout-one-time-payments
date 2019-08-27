@@ -1,4 +1,4 @@
-# Name of sample
+# Checkout single product
 
 ## Requirements
 * Maven

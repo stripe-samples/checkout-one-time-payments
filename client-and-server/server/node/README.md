@@ -1,4 +1,4 @@
-# Name of sample
+# Checkout single product
 An [Express server](http://expressjs.com) implementation
 
 ## Requirements
