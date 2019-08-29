@@ -5,9 +5,18 @@ We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work f
 
 Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. It's so simple you don't even need a server! 🥳
 
-<img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
+**Demo**
 
 See the sample [live](https://0hczv.sse.codesandbox.io/) or [fork](https://codesandbox.io/s/stripe-sample-checkout-one-time-payments-0hczv) on CodeSandbox.
+
+The demo is running in test mode -- use `4242424242424242` as a test card number with any CVC + future expiration date.
+
+Use the `4000000000003220` test card number to trigger a 3D Secure challenge flow.
+
+Read more about testing on Stripe at https://stripe.com/docs/testing.
+
+<img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
+
 
 **Features:**
 * Localization in 14 different languages 🌍
