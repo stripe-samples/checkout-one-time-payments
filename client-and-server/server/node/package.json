@@ -1,5 +1,5 @@
 {
-  "name": "stripe-recipe-demo",
+  "name": "stripe-sample-demo",
   "version": "1.0.0",
   "description": "A Stripe demo",
   "main": "index.js",

@@ -2,7 +2,7 @@
 
 """
 server.py
-Stripe Recipe.
+Stripe Sample.
 Python 3.6 or newer required.
 """
 

@@ -35,9 +35,9 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
 
 ## How to run locally
-This recipe includes [5 server implementations](server/README.md) in our most popular languages. 
+This sample includes [5 server implementations](server/README.md) in our most popular languages. 
 
-If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory: 
+If you want to run the sample locally, copy the .env.example file to your own .env file in this directory: 
 
 ```
 cp .env.example .env
@@ -52,7 +52,7 @@ A: We chose the most minimal framework to convey the key Stripe calls and concep
 
 Q: Can you show me how to build X?
 
-A: We are always looking for new recipe ideas, please email dev-samples@stripe.com with your suggestion!
+A: We are always looking for new sample ideas, please email dev-samples@stripe.com with your suggestion!
 
 ## Author(s)
 [@adreyfus-stripe](https://twitter.com/adrind)
