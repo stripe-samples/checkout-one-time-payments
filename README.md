@@ -34,6 +34,13 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined SKUs.  | ❌  | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
 
+### Client-only flowchart 
+<img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-only.png" alt="A flowchart of the Checkout flow" align="center">
+
+### Client-and-server flowchart
+<img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
+
+
 ## How to run locally
 This sample includes [5 server implementations](server/README.md) in our most popular languages. 
 
