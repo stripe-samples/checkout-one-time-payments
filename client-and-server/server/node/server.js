@@ -55,8 +55,7 @@ app.post("/create-checkout-session", async (req, res) => {
     ],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
     success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${domainURL}/canceled.html`,
-    locale: process.env.LOCALE
+    cancel_url: `${domainURL}/canceled.html`
   });
 
   res.send({
@@ -67,7 +66,6 @@ app.post("/create-checkout-session", async (req, res) => {
 app.get("/config", (req, res) => {
   res.send({
     publicKey: process.env.STRIPE_PUBLIC_KEY,
-    locale: process.env.LOCALE,
     currency: process.env.CURRENCY
   });
 });

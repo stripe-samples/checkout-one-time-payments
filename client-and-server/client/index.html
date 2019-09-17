@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Stripe Checkout Sample</title>
+    <title data-i18n="title"></title>
     <meta name="description" content="A demo of Stripe Payment Intents" />
 
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -11,6 +11,11 @@
     <!-- Load Stripe.js on your website. -->
     <script src="https://js.stripe.com/v3/"></script>
     <script src="./script.js" defer></script>
+    <!-- Load translation files and libraries. -->
+    <script src="https://unpkg.com/i18next/i18next.js"></script>
+    <script src="https://unpkg.com/i18next-xhr-backend/i18nextXHRBackend.js"></script>
+    <script src="https://unpkg.com/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.js"></script>
+    <script src="./translation.js" defer></script>
   </head>
 
   <body>
@@ -21,8 +26,8 @@
         </header>
         <section class="container">
           <div>
-            <h1>Single photo</h1>
-            <h4>Purchase a Pasha original photo</h4>
+            <h1 data-i18n="headline"></h1>
+            <h4 data-i18n="subline"></h4>
             <div class="pasha-image">
               <img
                 src="https://picsum.photos/280/320?random=4"
@@ -38,9 +43,13 @@
             <input type="number" id="quantity-input" min="1" value="1" />
             <button class="increment-btn" id="add">+</button>
           </div>
-          <p class="sr-legal-text">Number of copies (max 10)</p>
+          <p class="sr-legal-text" data-i18n="sr-legal-text"></p>
 
-          <button id="submit">Buy for <span id="total"></span></button>
+          <button
+            id="submit"
+            data-i18n="button.submit"
+            i18n-options="{ "total": "0" }"
+          ></button>
         </section>
         <div id="error-message"></div>
       </div>

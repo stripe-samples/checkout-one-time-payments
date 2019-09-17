@@ -36,14 +36,18 @@ var updateQuantity = function(evt) {
     : currentQuantity;
 
   inputEl.value = quantity;
-  var numberFormat = new Intl.NumberFormat(config.locale, {
+  var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
     currency: config.currency,
     currencyDisplay: "symbol"
   });
-  document.getElementById("total").textContent = numberFormat.format(
-    quantity * 5
-  );
+  document
+    .getElementById("submit")
+    .setAttribute(
+      "i18n-options",
+      `{ "total": "${numberFormat.format(quantity * 5)}" }`
+    );
+  updateContent("button.submit");
 
   // Disable the button if the customers hits the max or min
   if (quantity === MIN_PHOTOS) {
