@@ -21,7 +21,7 @@ var updateQuantity = function(evt) {
     return;
   }
 
-  var isAdding = evt.target.id === "add";
+  var isAdding = evt && evt.target.id === "add";
   var inputEl = document.getElementById("quantity-input");
   var currentQuantity = parseInt(inputEl.value);
 
@@ -29,10 +29,21 @@ var updateQuantity = function(evt) {
   document.getElementById("subtract").disabled = false;
 
   // Calculate new quantity
-  var quantity = isAdding ? currentQuantity + 1 : currentQuantity - 1;
+  var quantity = evt
+    ? isAdding
+      ? currentQuantity + 1
+      : currentQuantity - 1
+    : currentQuantity;
 
   inputEl.value = quantity;
-  document.getElementById("total").textContent = quantity * 5;
+  var numberFormat = new Intl.NumberFormat(config.locale, {
+    style: "currency",
+    currency: config.currency,
+    currencyDisplay: "symbol"
+  });
+  document.getElementById("total").textContent = numberFormat.format(
+    quantity * 5
+  );
 
   // Disable the button if the customers hits the max or min
   if (quantity === MIN_PHOTOS) {
@@ -58,7 +69,7 @@ var handleResult = function(result) {
   }
 };
 
-// Create a Checkout Session with the selected quantity 
+// Create a Checkout Session with the selected quantity
 var createCheckoutSession = function(stripe) {
   var inputEl = document.getElementById("quantity-input");
   var quantity = parseInt(inputEl.value);
@@ -85,13 +96,14 @@ var handleResult = function(result) {
 };
 
 /* Get your Stripe public key to initialize Stripe.js */
-fetch("/public-key")
+fetch("/config")
   .then(function(result) {
     return result.json();
   })
   .then(function(json) {
-    var publicKey = json.publicKey;
-    var stripe = Stripe(publicKey);
+    window.config = json;
+    var stripe = Stripe(config.publicKey);
+    updateQuantity();
     // Setup event handler to create a Checkout Session on submit
     document.querySelector("#submit").addEventListener("click", function(evt) {
       createCheckoutSession().then(function(data) {

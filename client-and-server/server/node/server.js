@@ -49,13 +49,14 @@ app.post("/create-checkout-session", async (req, res) => {
       {
         name: "Pasha photo",
         quantity: quantity,
-        currency: "usd",
+        currency: process.env.CURRENCY,
         amount: 500 // Keep the amount on the server to prevent customers from manipulating on client
       }
     ],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
     success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${domainURL}/canceled.html`
+    cancel_url: `${domainURL}/canceled.html`,
+    locale: process.env.LOCALE
   });
 
   res.send({
@@ -63,8 +64,12 @@ app.post("/create-checkout-session", async (req, res) => {
   });
 });
 
-app.get("/public-key", (req, res) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+app.get("/config", (req, res) => {
+  res.send({
+    publicKey: process.env.STRIPE_PUBLIC_KEY,
+    locale: process.env.LOCALE,
+    currency: process.env.CURRENCY
+  });
 });
 
 // Webhook handler for asynchronous events.
