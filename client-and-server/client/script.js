@@ -34,19 +34,20 @@ var updateQuantity = function(evt) {
       ? currentQuantity + 1
       : currentQuantity - 1
     : currentQuantity;
-
+  // Update number input with new value.
   inputEl.value = quantity;
+  // Caluclate the total amount and format it with currency symbol.
+  var total = ((quantity * config.basePrice) / 100).toFixed(2);
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
     currency: config.currency,
     currencyDisplay: "symbol"
   });
+  var formattedTotal = numberFormat.format(total);
+
   document
     .getElementById("submit")
-    .setAttribute(
-      "i18n-options",
-      `{ "total": "${numberFormat.format(quantity * 5)}" }`
-    );
+    .setAttribute("i18n-options", `{ "total": "${formattedTotal}" }`);
   updateContent("button.submit");
 
   // Disable the button if the customers hits the max or min

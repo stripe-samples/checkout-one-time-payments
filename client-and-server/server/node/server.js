@@ -50,7 +50,7 @@ app.post("/create-checkout-session", async (req, res) => {
         name: "Pasha photo",
         quantity: quantity,
         currency: process.env.CURRENCY,
-        amount: 500 // Keep the amount on the server to prevent customers from manipulating on client
+        amount: process.env.BASE_PRICE // Keep the amount on the server to prevent customers from manipulating on client
       }
     ],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
@@ -66,6 +66,7 @@ app.post("/create-checkout-session", async (req, res) => {
 app.get("/config", (req, res) => {
   res.send({
     publicKey: process.env.STRIPE_PUBLIC_KEY,
+    basePrice: process.env.BASE_PRICE,
     currency: process.env.CURRENCY
   });
 });
