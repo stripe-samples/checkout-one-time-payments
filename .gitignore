@@ -10,6 +10,7 @@ Gemfile.lock
 
 # Python files
 __pycache__
+env
 venv
 
 # PHP files

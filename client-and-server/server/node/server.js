@@ -25,6 +25,14 @@ app.get("/", (req, res) => {
   res.sendFile(path);
 });
 
+app.get("/config", (req, res) => {
+  res.send({
+    publicKey: process.env.STRIPE_PUBLIC_KEY,
+    basePrice: process.env.BASE_PRICE,
+    currency: process.env.CURRENCY
+  });
+});
+
 // Fetch the Checkout Session to display the JSON result on the success page
 app.get("/checkout-session", async (req, res) => {
   const { sessionId } = req.query;
@@ -48,6 +56,7 @@ app.post("/create-checkout-session", async (req, res) => {
     line_items: [
       {
         name: "Pasha photo",
+        images: ["https://picsum.photos/300/300?random=4"],
         quantity: quantity,
         currency: process.env.CURRENCY,
         amount: process.env.BASE_PRICE // Keep the amount on the server to prevent customers from manipulating on client
@@ -60,14 +69,6 @@ app.post("/create-checkout-session", async (req, res) => {
 
   res.send({
     sessionId: session.id
-  });
-});
-
-app.get("/config", (req, res) => {
-  res.send({
-    publicKey: process.env.STRIPE_PUBLIC_KEY,
-    basePrice: process.env.BASE_PRICE,
-    currency: process.env.CURRENCY
   });
 });
 

@@ -29,9 +29,13 @@ def get_example():
     return render_template('index.html')
 
 
-@app.route('/public-key', methods=['GET'])
+@app.route('/config', methods=['GET'])
 def get_public_key():
-    return jsonify({'publicKey': os.getenv('STRIPE_PUBLIC_KEY')})
+    return jsonify({
+      'publicKey': os.getenv('STRIPE_PUBLIC_KEY'),
+      'basePrice': os.getenv('BASE_PRICE'),
+      'currency': os.getenv('CURRENCY')
+    })
 
 # Fetch the Checkout Session to display the JSON result on the success page
 @app.route('/checkout-session', methods=['GET'])
@@ -64,9 +68,10 @@ def create_checkout_session():
             line_items=[
                 {
                     "name": "Pasha photo",
+                    "images": ["https://picsum.photos/300/300?random=4"],
                     "quantity": data['quantity'],
-                    "currency": "usd",
-                    "amount": 500
+                    "currency": os.getenv('CURRENCY'),
+                    "amount": os.getenv('BASE_PRICE')
                 }
             ]
         )

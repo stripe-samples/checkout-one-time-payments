@@ -16,6 +16,15 @@ get '/' do
   send_file File.join(settings.public_folder, 'index.html')
 end
 
+get '/config' do
+  content_type 'application/json'
+  {
+    publicKey: ENV['STRIPE_PUBLIC_KEY'],
+    basePrice: ENV['BASE_PRICE'],
+    currency: ENV['CURRENCY']
+  }.to_json
+end
+
 # Fetch the Checkout Session to display the JSON result on the success page
 get '/checkout-session' do
   content_type 'application/json'
@@ -23,13 +32,6 @@ get '/checkout-session' do
 
   session = Stripe::Checkout::Session.retrieve(session_id)
   session.to_json
-end
-
-get '/public-key' do
-  content_type 'application/json'
-  {
-    publicKey: ENV['STRIPE_PUBLIC_KEY']
-  }.to_json
 end
 
 post '/create-checkout-session' do
@@ -50,9 +52,10 @@ post '/create-checkout-session' do
     payment_method_types: ['card'],
     line_items: [{
       name: 'Pasha photo',
+      images: ["https://picsum.photos/300/300?random=4"],
       quantity: data['quantity'],
-      currency: 'usd',
-      amount: 500
+      currency: ENV['CURRENCY'],
+      amount: ENV['BASE_PRICE']
     }]
   )
 
