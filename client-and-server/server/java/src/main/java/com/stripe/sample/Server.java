@@ -46,11 +46,13 @@ public class Server {
         staticFiles.externalLocation(
                 Paths.get(Paths.get("").toAbsolutePath().toString(), dotenv.get("STATIC_DIR")).normalize().toString());
 
-        get("/public-key", (request, response) -> {
+        get("/config", (request, response) -> {
             response.type("application/json");
 
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("publicKey", dotenv.get("STRIPE_PUBLIC_KEY"));
+            responseData.put("basePrice", dotenv.get("BASE_PRICE"));
+            responseData.put("currency", dotenv.get("CURRENCY"));
             return gson.toJson(responseData);
         });
 
@@ -69,7 +71,9 @@ public class Server {
             PostBody postBody = gson.fromJson(request.body(), PostBody.class);
 
             String domainUrl = dotenv.get("DOMAIN");
-            SessionCreateParams.Builder builder = new SessionCreateParams.Builder();
+            Long basePrice = new Long(dotenv.get("BASE_PRICE"));
+            Long quantity = postBody.getQuantity();
+            String currency = dotenv.get("CURRENCY");
 
             // Create new Checkout Session for the order
             // Other optional params include:
@@ -81,12 +85,17 @@ public class Server {
 
             // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID
             // set as a query param
-            builder.setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
-                    .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD);
+            SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
+                .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
+                .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD);
 
             // Add a line item for the sticker the Customer is purchasing
-            LineItem item = new LineItem.Builder().setName("Pasha photo").setAmount(new Long(500))
-                    .setQuantity(postBody.getQuantity()).setCurrency("usd").build();
+            LineItem item = new LineItem.Builder()
+                .setName("Pasha photo")
+                .setAmount(basePrice)
+                .setQuantity(quantity)
+                .setCurrency(currency)
+                .build();
             builder.addLineItem(item);
 
             SessionCreateParams createParams = builder.build();

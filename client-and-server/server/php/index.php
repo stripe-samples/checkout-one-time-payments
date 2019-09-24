@@ -32,9 +32,15 @@ $app->get('/', function (Request $request, Response $response, array $args) {
     return $response->write(file_get_contents(getenv('STATIC_DIR') . '/index.html'));
 });
 
-$app->get('/public-key', function (Request $request, Response $response, array $args) {
+$app->get('/config', function (Request $request, Response $response, array $args) {
   $pub_key = getenv('STRIPE_PUBLIC_KEY');
-  return $response->withJson([ 'publicKey' => $pub_key ]);
+  $base_price = getenv('BASE_PRICE');
+  $currency = getenv('CURRENCY');
+  return $response->withJson([ 
+    'publicKey' => $pub_key, 
+    'basePrice' => $base_price, 
+    'currency' => $currency 
+  ]);
 });
 
 // Fetch the Checkout Session to display the JSON result on the success page
@@ -48,6 +54,8 @@ $app->get('/checkout-session', function (Request $request, Response $response, a
 
 $app->post('/create-checkout-session', function(Request $request, Response $response, array $args) {
   $domain_url = getenv('DOMAIN');
+  $base_price = getenv('BASE_PRICE');
+  $currency = getenv('CURRENCY');
   $body = json_decode($request->getBody());
   $quantity = $body->quantity;
 
@@ -66,9 +74,10 @@ $app->post('/create-checkout-session', function(Request $request, Response $resp
     'payment_method_types' => ['card'],
     'line_items' => [[
       'name' => 'Pasha photo',
-      'amount' => 500,
-      'currency' => 'usd',
-      'quantity' => $quantity
+      'images' => ["https://picsum.photos/300/300?random=4"],
+      'quantity' => $quantity,
+      'amount' => $base_price,
+      'currency' => $currency
     ]]
   ]);
 

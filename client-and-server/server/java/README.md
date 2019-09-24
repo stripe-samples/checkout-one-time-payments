@@ -1,15 +1,18 @@
 # Checkout single product
 
 ## Requirements
-* Maven
-* Java
+
+- Maven
+- Java
 
 1. Build the jar
+
 ```
 mvn package
 ```
 
 2. Run the packaged jar
+
 ```
 java -cp target/single-product-checkout-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.sample.Server
 ```
