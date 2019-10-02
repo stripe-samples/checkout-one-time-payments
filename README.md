@@ -67,9 +67,13 @@ STRIPE_PUBLIC_KEY=<replace-with-your-publishable-key>
 STRIPE_SECRET_KEY=<replace-with-your-secret-key>
 ```
 
-`CLIENT_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
+`STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
+
 `BASE_PRICE` is the amount for the order.
+
 `CURRENCY` is the currency for the order.
+
+`DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page. 
 
 **3. Follow the server instructions on how to run:**
 
@@ -82,6 +86,23 @@ cd client-and-server/server/node # there's a README in this folder with instruct
 npm install
 npm start
 ```
+
+**4. [Optional] Run a webhook locally:**
+
+You can use the Stripe CLI to easily spin up a local webhook.
+
+First [install the CLI](https://stripe.com/docs/stripe-cli) and [link your Stripe account](https://stripe.com/docs/stripe-cli#link-account).
+
+```
+stripe listen --forward-to localhost:4242/webhook
+```
+
+The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECRET` to this value in your .env file.
+
+You should see events logged in the console where the CLI is running.
+
+When you are ready to create a live webhook endpoint, follow our guide in the docs on [configuring a webhook endpoint in the dashboard](https://stripe.com/docs/webhooks/setup#configure-webhook-settings). 
+
 
 ## FAQ
 Q: Why did you pick these frameworks?
