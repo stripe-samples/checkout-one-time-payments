@@ -40,17 +40,48 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 ### Client-and-server flowchart
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
-
 ## How to run locally
-This sample includes [5 server implementations](server/README.md) in our most popular languages. 
 
-If you want to run the sample locally, copy the .env.example file to your own .env file in this directory: 
+There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration: 
+
+This sample includes 5 server implementations in Node, Ruby, Python, Java, and PHP.
+
+Follow the steps below to run locally.
+
+**1. Clone the repository:**
+
+```
+git clone https://github.com/stripe-samples/checkout-one-time-payments
+```
+
+**2. Copy the .env.example to a .env file:**
 
 ```
 cp .env.example .env
 ```
 
-You will need a Stripe account with its own set of [API keys](https://stripe.com/docs/development#api-keys).
+You will need a Stripe account in order to run the demo. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys.
+
+```
+STRIPE_PUBLIC_KEY=<replace-with-your-publishable-key>
+STRIPE_SECRET_KEY=<replace-with-your-secret-key>
+```
+
+`CLIENT_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
+`BASE_PRICE` is the amount for the order.
+`CURRENCY` is the currency for the order.
+
+**3. Follow the server instructions on how to run:**
+
+Pick the server language you want and follow the instructions in the server folder README on how to run.
+
+For example, if you want to run the Node server:
+
+```
+cd client-and-server/server/node # there's a README in this folder with instructions
+npm install
+npm start
+```
 
 ## FAQ
 Q: Why did you pick these frameworks?
