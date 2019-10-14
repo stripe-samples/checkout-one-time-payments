@@ -1,22 +1,27 @@
-# Checkout single product
+# Checkout subscription with add-ons with PHP 
 
 ## Requirements
-* PHP >= 7.1.3
-* Composer
-* [Slim](http://www.slimframework.com/)
+* PHP 
 
 ## How to run
 
-1. Install dependencies
+1. Run composer to set up dependencies
 
 ```
 composer install
 ```
 
-2. Run the application
+2. Copy .config.ini.sample to .config.ini and replace with your Stripe API keys 
 
 ```
-php -S localhost:4242 index.php
+cp .config.ini.sample .config.ini
 ```
 
-3. Go to `localhost:4242` in your browser to see the demo
+3. Run the server locally
+
+```
+cd public
+php -S localhost:4242
+```
+
+4. Go to localhost:4242

@@ -1,0 +1,11 @@
+{
+    "require": {
+        "slim/slim": "^3.12",
+        "vlucas/phpdotenv": "^3.4",
+        "stripe/stripe-php": "^6.31",
+        "monolog/monolog": "^1.17"
+    },
+    "scripts": {
+        "start": "php -S localhost:4242 index.php"
+    }
+}
