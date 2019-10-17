@@ -66,14 +66,6 @@ Array.from(document.getElementsByClassName("increment-btn")).forEach(
   }
 );
 
-/* Handle any errors returns from Checkout  */
-var handleResult = function(result) {
-  if (result.error) {
-    var displayError = document.getElementById("error-message");
-    displayError.textContent = result.error.message;
-  }
-};
-
 // Create a Checkout Session with the selected quantity
 var createCheckoutSession = function(stripe) {
   var inputEl = document.getElementById("quantity-input");
