@@ -30,9 +30,9 @@ def get_example():
 
 
 @app.route('/config', methods=['GET'])
-def get_public_key():
+def get_publishable_key():
     return jsonify({
-      'publicKey': os.getenv('STRIPE_PUBLIC_KEY'),
+      'publicKey': os.getenv('STRIPE_PUBLISHABLE_KEY'),
       'basePrice': os.getenv('BASE_PRICE'),
       'currency': os.getenv('CURRENCY')
     })
