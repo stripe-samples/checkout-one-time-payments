@@ -38,8 +38,8 @@ public class Server {
 
     public static void main(String[] args) {
         port(4242);
-        String ENV_PATH = "../../../";
-        Dotenv dotenv = Dotenv.configure().directory(ENV_PATH).load();
+        
+        Dotenv dotenv = Dotenv.load();
 
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
 
@@ -50,7 +50,7 @@ public class Server {
             response.type("application/json");
 
             Map<String, Object> responseData = new HashMap<>();
-            responseData.put("publicKey", dotenv.get("STRIPE_PUBLIC_KEY"));
+            responseData.put("publicKey", dotenv.get("STRIPE_PUBLISHABLE_KEY"));
             responseData.put("basePrice", dotenv.get("BASE_PRICE"));
             responseData.put("currency", dotenv.get("CURRENCY"));
             return gson.toJson(responseData);
@@ -107,7 +107,6 @@ public class Server {
         });
 
         post("/webhook", (request, response) -> {
-            System.out.println("Webhook");
             String payload = request.body();
             String sigHeader = request.headers("Stripe-Signature");
             String endpointSecret = dotenv.get("STRIPE_WEBHOOK_SECRET");

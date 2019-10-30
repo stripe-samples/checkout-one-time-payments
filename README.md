@@ -55,17 +55,20 @@ git clone https://github.com/stripe-samples/checkout-one-time-payments
 ```
 
 **2. Copy the .env.example to a .env file:**
+Copy the .env.example file into a file named .env in the folder of the server you want to use. For example:
 
 ```
-cp .env.example .env
+cp .env.example client-and-server/server/node/.env
 ```
 
-You will need a Stripe account in order to run the demo. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys.
+You will need a Stripe account in order to run the demo. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys and update your .env file with the keys.
 
 ```
-STRIPE_PUBLIC_KEY=<replace-with-your-publishable-key>
+STRIPE_PUBLISHABLE_KEY=<replace-with-your-publishable-key>
 STRIPE_SECRET_KEY=<replace-with-your-secret-key>
 ```
+
+The other environment variables are configurable:
 
 `STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
 

@@ -48,16 +48,16 @@
     </div>
 
     <script>
-      // Replace with your own public key: https://dashboard.stripe.com/test/apikeys
-      var PUBLIC_KEY = "pk_1234";
+      // Replace with your own publishable key: https://dashboard.stripe.com/test/apikeys
+      var PUBLISHABLE_KEY = "pk_1234";
       // Replace with the domain you want your users to be redirected back to after payment
       var DOMAIN = window.location.hostname;
       // Replace with a SKU for your own product (created either in the Stripe Dashboard or with the API)
       var SKU_ID = "sku_1234";
 
-      if (PUBLIC_KEY === "pk_1234") {
+      if (PUBLISHABLE_KEY === "pk_1234") {
         console.log(
-          "Replace the hardcoded public key with your own public key: https://dashboard.stripe.com/test/apikeys"
+          "Replace the hardcoded publishable key with your own publishable key: https://dashboard.stripe.com/test/apikeys"
         );
       }
 
@@ -70,7 +70,7 @@
       var MIN_PHOTOS = 1;
       var MAX_PHOTOS = 10;
 
-      var stripe = Stripe(PUBLIC_KEY);
+      var stripe = Stripe(PUBLISHABLE_KEY);
 
       var basicPhotoButton = document.getElementById("basic-photo-button");
       document

@@ -2,9 +2,8 @@ require 'stripe'
 require 'sinatra'
 require 'dotenv'
 
-# Replace if using a different env file or config
-ENV_PATH = '/../../../.env'.freeze
-Dotenv.load(File.dirname(__FILE__) + ENV_PATH)
+# Copy the .env.example in the root into a .env file in this folder
+Dotenv.load
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
 set :static, true
@@ -19,7 +18,7 @@ end
 get '/config' do
   content_type 'application/json'
   {
-    publicKey: ENV['STRIPE_PUBLIC_KEY'],
+    publicKey: ENV['STRIPE_PUBLISHABLE_KEY'],
     basePrice: ENV['BASE_PRICE'],
     currency: ENV['CURRENCY']
   }.to_json
