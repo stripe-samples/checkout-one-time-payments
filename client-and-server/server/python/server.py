@@ -30,7 +30,7 @@ def get_example():
 
 
 @app.route('/config', methods=['GET'])
-def get_PUBLISHABLE_KEY():
+def get_publishable_key():
     return jsonify({
       'publicKey': os.getenv('STRIPE_PUBLISHABLE_KEY'),
       'basePrice': os.getenv('BASE_PRICE'),
