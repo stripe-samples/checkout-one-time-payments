@@ -1,0 +1,17 @@
+{
+    "name": "checkout-one-time-payments",
+    "configureDotEnv": true,
+    "integrations": [
+      {
+        "name": "client-and-server",
+        "clients": ["web"],
+        "servers": ["java", "node", "php-slim", "php", "python", "ruby"]
+      },
+      {
+        "name": "client-only",
+        "clients": ["web"],
+        "servers": []
+      }
+    ]
+  }
+  
