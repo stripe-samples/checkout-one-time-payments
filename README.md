@@ -1,4 +1,5 @@
 # Using Checkout for one-time purchases
+
 Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
 We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work for you so now you can focus on building the best storefront experience for your customers.
@@ -15,18 +16,26 @@ Use the `4000000000003220` test card number to trigger a 3D Secure challenge flo
 
 Read more about testing on Stripe at https://stripe.com/docs/testing.
 
+<details open><summary>USD Cards Demo</summary>
 <img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
+</details>
 
+<details><summary>EUR Cards & iDEAL Demo</summary>
+<img src="./checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
+</details>
 
 **Features:**
-* Localization in 14 different languages 🌍
-* Built-in Apple Pay support 🍎
-* Built-in dynamic 3D Secure (ready for SCA) 🔔
-* Plans to support more payment methods 🔮
 
-For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout). 
+- Localization in 14 different languages 🌍
+- Built-in Apple Pay support 🍎
+- Built-in dynamic 3D Secure (ready for SCA) 🔔
+- Support for iDEAL for customers in the Netherlands 🇳🇱🌷 (EUR only; Server only)
+- Plans to support more payment methods 🔮
+
+For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout).
 
 There are two integrations: [client-only](./client-only) and [client-and-server](./client-and-server).
+
 <!-- prettier-ignore -->
 |     | client-only | client-and-server
 :--- | :---: | :---:
@@ -34,15 +43,17 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined SKUs.  | ❌  | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
 
-### Client-only flowchart 
+### Client-only flowchart
+
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-only.png" alt="A flowchart of the Checkout flow" align="center">
 
 ### Client-and-server flowchart
+
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
 ## How to run locally
 
-There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration: 
+There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration:
 
 This sample includes 5 server implementations in Node, Ruby, Python, Java, and PHP.
 
@@ -50,7 +61,7 @@ Follow the steps below to run locally.
 
 **1. Clone and configure the sample**
 
-The Stripe CLI is the fastest way to clone and configure a sample to run locally. 
+The Stripe CLI is the fastest way to clone and configure a sample to run locally.
 
 **Using the Stripe CLI**
 
@@ -62,7 +73,7 @@ In your terminal shell, run the Stripe CLI command to clone the sample:
 stripe samples create checkout-one-time-payments
 ```
 
-The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys. 
+The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys.
 
 **Installing and cloning manually**
 
@@ -93,7 +104,7 @@ The other environment variables are configurable:
 
 `CURRENCY` is the currency for the order.
 
-`DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page. 
+`DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page.
 
 **2. Follow the server instructions on how to run:**
 
@@ -121,10 +132,10 @@ The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECR
 
 You should see events logged in the console where the CLI is running.
 
-When you are ready to create a live webhook endpoint, follow our guide in the docs on [configuring a webhook endpoint in the dashboard](https://stripe.com/docs/webhooks/setup#configure-webhook-settings). 
-
+When you are ready to create a live webhook endpoint, follow our guide in the docs on [configuring a webhook endpoint in the dashboard](https://stripe.com/docs/webhooks/setup#configure-webhook-settings).
 
 ## FAQ
+
 Q: Why did you pick these frameworks?
 
 A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
@@ -134,4 +145,5 @@ Q: Can you show me how to build X?
 A: We are always looking for new sample ideas, please email dev-samples@stripe.com with your suggestion!
 
 ## Author(s)
+
 [@adreyfus-stripe](https://twitter.com/adrind)
