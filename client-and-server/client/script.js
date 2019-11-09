@@ -92,14 +92,6 @@ var createCheckoutSession = function(stripe) {
   });
 };
 
-// Handle any errors returned from Checkout
-var handleResult = function(result) {
-  if (result.error) {
-    var displayError = document.getElementById("error-message");
-    displayError.textContent = result.error.message;
-  }
-};
-
 /* Get your Stripe publishable key to initialize Stripe.js */
 fetch("/config")
   .then(function(result) {
