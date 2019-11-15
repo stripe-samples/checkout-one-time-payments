@@ -59,6 +59,10 @@ This sample includes 5 server implementations in Node, Ruby, Python, Java, and P
 
 Follow the steps below to run locally.
 
+**[Client-only] 0. Enable Checkout in the Dashboard**
+
+If you plan on using the client-only integration, go to your [account settings](https://dashboard.stripe.com/account/checkout/settings) in the Dashboard and enable Checkout.
+
 **1. Clone and configure the sample**
 
 The Stripe CLI is the fastest way to clone and configure a sample to run locally.
