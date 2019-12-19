@@ -41,7 +41,7 @@ app.get("/checkout-session", async (req, res) => {
 app.post("/create-checkout-session", async (req, res) => {
   const domainURL = process.env.DOMAIN;
 
-  const { quantity } = req.body;
+  const { quantity, locale } = req.body;
   // Create new Checkout Session for the order
   // Other optional params include:
   // [billing_address_collection] - to display billing address details on the page
@@ -51,6 +51,7 @@ app.post("/create-checkout-session", async (req, res) => {
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   session = await stripe.checkout.sessions.create({
     payment_method_types: process.env.PAYMENT_METHODS.split(", "),
+    locale: locale,
     line_items: [
       {
         name: "Pasha photo",

@@ -85,7 +85,8 @@ var createCheckoutSession = function(stripe) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      quantity: quantity
+      quantity: quantity,
+      locale: i18next.language.toLowerCase()
     })
   }).then(function(result) {
     return result.json();
