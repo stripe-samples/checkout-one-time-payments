@@ -24,11 +24,16 @@ Read more about testing on Stripe at https://stripe.com/docs/testing.
 <img src="./checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
+<details><summary>MYR Cards & FPX Demo</summary>
+<img src="./checkout-demo-fpx.gif" alt="A gif of the Checkout payment page rendering" align="center">
+</details>
+
 **Features:**
 
-- Localization in 14 different languages 🌍
+- Localization in 15 different languages 🌍
 - Built-in Apple Pay support 🍎
 - Built-in dynamic 3D Secure (ready for SCA) 🔔
+- Support for FPX for customers in Malaysia 🇲🇾🌺 (MYR only; Server only)
 - Support for iDEAL for customers in the Netherlands 🇳🇱🌷 (EUR only; Server only)
 - Plans to support more payment methods 🔮
 
