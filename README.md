@@ -58,15 +58,11 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 
 ## How to run locally
 
-There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration:
+There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration. For `client-only` setup instructions see [client-only/client/README.md](./client-only/client/README.md)
 
 This sample includes 5 server implementations in Node, Ruby, Python, Java, and PHP.
 
 Follow the steps below to run locally.
-
-**[Client-only] 0. Enable Checkout in the Dashboard**
-
-If you plan on using the client-only integration, go to your [account settings](https://dashboard.stripe.com/account/checkout/settings) in the Dashboard and enable Checkout.
 
 **1. Clone and configure the sample**
 
@@ -156,3 +152,4 @@ A: We are always looking for new sample ideas, please email dev-samples@stripe.c
 ## Author(s)
 
 [@adreyfus-stripe](https://twitter.com/adrind)
+[@thorsten-stripe](https://twitter.com/thorwebdev)
