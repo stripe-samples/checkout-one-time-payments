@@ -75,7 +75,7 @@ var handleResult = function(result) {
 };
 
 // Create a Checkout Session with the selected quantity
-var createCheckoutSession = function(stripe) {
+var createCheckoutSession = function() {
   var inputEl = document.getElementById("quantity-input");
   var quantity = parseInt(inputEl.value);
 
