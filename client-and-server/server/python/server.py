@@ -77,7 +77,7 @@ def create_checkout_session():
         )
         return jsonify({'sessionId': checkout_session['id']})
     except Exception as e:
-        return jsonify(e), 40
+        return jsonify(error=str(e)), 403
 
 
 @app.route('/webhook', methods=['POST'])
