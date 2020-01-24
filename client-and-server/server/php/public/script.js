@@ -37,12 +37,21 @@ var updateQuantity = function(evt) {
   // Update number input with new value.
   inputEl.value = quantity;
   // Caluclate the total amount and format it with currency symbol.
-  var total = ((quantity * config.basePrice) / 100).toFixed(2);
+  var amount = config.basePrice;
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
     currency: config.currency,
     currencyDisplay: "symbol"
   });
+  var parts = numberFormat.formatToParts(amount);
+  var zeroDecimalCurrency = true;
+  for (var part of parts) {
+    if (part.type === "decimal") {
+      zeroDecimalCurrency = false;
+    }
+  }
+  amount = zeroDecimalCurrency ? amount : amount / 100;
+  var total = (quantity * amount).toFixed(2);
   var formattedTotal = numberFormat.format(total);
 
   document
