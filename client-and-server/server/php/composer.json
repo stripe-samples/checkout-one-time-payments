@@ -1,5 +1,0 @@
-{
-    "require": {
-        "stripe/stripe-php": "^6.31"
-    }
-}
