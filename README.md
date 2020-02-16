@@ -8,7 +8,7 @@ Once your customer is ready to pay, use Stripe.js to redirect them to the URL of
 
 **Demo**
 
-See the sample [live](https://0hczv.sse.codesandbox.io/) or [fork](https://codesandbox.io/s/stripe-sample-checkout-one-time-payments-0hczv) on CodeSandbox.
+See the sample [live](https://70p1h.sse.codesandbox.io/) or [fork](https://codesandbox.io/s/github/stripe-samples/checkout-one-time-payments/tree/codesandbox/) on CodeSandbox.
 
 The demo is running in test mode -- use `4242424242424242` as a test card number with any CVC + future expiration date.
 

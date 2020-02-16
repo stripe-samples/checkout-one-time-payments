@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const { resolve } = require("path");
 // Copy the .env.example in the root into a .env file in this folder
-const env = require("dotenv").config({ path: "./.env" });
+require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 app.use(express.static("./client"));
@@ -39,7 +39,7 @@ app.get("/checkout-session", async (req, res) => {
 });
 
 app.post("/create-checkout-session", async (req, res) => {
-  const domainURL = process.env.DOMAIN;
+  const domainURL = req.headers.origin;
 
   const { quantity, locale } = req.body;
   // Create new Checkout Session for the order
@@ -49,9 +49,9 @@ app.post("/create-checkout-session", async (req, res) => {
   // [payment_intent_data] - lets capture the payment later
   // [customer_email] - lets you prefill the email input in the form
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
-  session = await stripe.checkout.sessions.create({
+  const session = await stripe.checkout.sessions.create({
     payment_method_types: process.env.PAYMENT_METHODS.split(", "),
-    locale: locale,
+    locale: locale.split("-")[0],
     line_items: [
       {
         name: "Pasha photo",
