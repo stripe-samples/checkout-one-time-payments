@@ -95,7 +95,7 @@ var createCheckoutSession = function() {
     },
     body: JSON.stringify({
       quantity: quantity,
-      locale: i18next.language.toLowerCase()
+      locale: i18next.language.toLowerCase().split("-")[0]
     })
   }).then(function(result) {
     return result.json();

@@ -51,7 +51,7 @@ app.post("/create-checkout-session", async (req, res) => {
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   const session = await stripe.checkout.sessions.create({
     payment_method_types: process.env.PAYMENT_METHODS.split(", "),
-    locale: locale.split("-")[0],
+    locale: locale,
     line_items: [
       {
         name: "Pasha photo",
