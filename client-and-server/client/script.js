@@ -36,7 +36,7 @@ var updateQuantity = function(evt) {
     : currentQuantity;
   // Update number input with new value.
   inputEl.value = quantity;
-  // Caluclate the total amount and format it with currency symbol.
+  // Calculate the total amount and format it with currency symbol.
   var amount = config.basePrice;
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
@@ -59,7 +59,7 @@ var updateQuantity = function(evt) {
     .setAttribute("i18n-options", `{ "total": "${formattedTotal}" }`);
   updateContent("button.submit");
 
-  // Disable the button if the customers hits the max or min
+  // Disable the button if the customers hit the max or min
   if (quantity === MIN_PHOTOS) {
     document.getElementById("subtract").disabled = true;
   }
