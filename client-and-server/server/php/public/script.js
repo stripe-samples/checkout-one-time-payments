@@ -5,7 +5,7 @@ var MAX_PHOTOS = 10;
 var basicPhotoButton = document.getElementById("basic-photo-button");
 document
   .getElementById("quantity-input")
-  .addEventListener("change", function(evt) {
+  .addEventListener("change", function (evt) {
     // Ensure customers only buy between 1 and 10 photos
     if (evt.target.value < MIN_PHOTOS) {
       evt.target.value = MIN_PHOTOS;
@@ -16,7 +16,7 @@ document
   });
 
 /* Method for changing the product quantity when a customer clicks the increment / decrement buttons */
-var updateQuantity = function(evt) {
+var updateQuantity = function (evt) {
   if (evt && evt.type === "keypress" && evt.keyCode !== 13) {
     return;
   }
@@ -36,12 +36,12 @@ var updateQuantity = function(evt) {
     : currentQuantity;
   // Update number input with new value.
   inputEl.value = quantity;
-  // Caluclate the total amount and format it with currency symbol.
+  // Calculate the total amount and format it with currency symbol.
   var amount = config.basePrice;
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
     currency: config.currency,
-    currencyDisplay: "symbol"
+    currencyDisplay: "symbol",
   });
   var parts = numberFormat.formatToParts(amount);
   var zeroDecimalCurrency = true;
@@ -70,31 +70,31 @@ var updateQuantity = function(evt) {
 
 /* Attach method */
 Array.from(document.getElementsByClassName("increment-btn")).forEach(
-  element => {
+  (element) => {
     element.addEventListener("click", updateQuantity);
   }
 );
 
 // Create a Checkout Session with the selected quantity
-var createCheckoutSession = function(stripe) {
+var createCheckoutSession = function (stripe) {
   var inputEl = document.getElementById("quantity-input");
   var quantity = parseInt(inputEl.value);
 
   return fetch("/create-checkout-session.php", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      quantity: quantity
-    })
-  }).then(function(result) {
+      quantity: quantity,
+    }),
+  }).then(function (result) {
     return result.json();
   });
 };
 
 // Handle any errors returned from Checkout
-var handleResult = function(result) {
+var handleResult = function (result) {
   if (result.error) {
     var displayError = document.getElementById("error-message");
     displayError.textContent = result.error.message;
@@ -103,19 +103,19 @@ var handleResult = function(result) {
 
 /* Get your Stripe publishable key to initialize Stripe.js */
 fetch("/config.php")
-  .then(function(result) {
+  .then(function (result) {
     return result.json();
   })
-  .then(function(json) {
+  .then(function (json) {
     window.config = json;
     var stripe = Stripe(config.publicKey);
     updateQuantity();
     // Setup event handler to create a Checkout Session on submit
-    document.querySelector("#submit").addEventListener("click", function(evt) {
-      createCheckoutSession().then(function(data) {
+    document.querySelector("#submit").addEventListener("click", function (evt) {
+      createCheckoutSession().then(function (data) {
         stripe
           .redirectToCheckout({
-            sessionId: data.sessionId
+            sessionId: data.sessionId,
           })
           .then(handleResult);
       });
