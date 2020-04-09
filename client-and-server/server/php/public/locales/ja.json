@@ -1,0 +1,9 @@
+{
+  "title": "Stripe Checkout サンプル",
+  "headline": "写真",
+  "subline": "Pashaオリジナル写真を購入する",
+  "sr-legal-text": "枚数 (最大 10)",
+  "button": {
+    "submit": "購入する {{total}}"
+  }
+}

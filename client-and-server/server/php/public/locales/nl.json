@@ -1,0 +1,9 @@
+{
+  "title": "Stripe Checkout Voorbeeld",
+  "headline": "Enkele foto",
+  "subline": "Koop een originele Pasha-foto",
+  "sr-legal-text": "Aantal exemplaren (max 10)",
+  "button": {
+    "submit": "Koop voor {{total}}"
+  }
+}
