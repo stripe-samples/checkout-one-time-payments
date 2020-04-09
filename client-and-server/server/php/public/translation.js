@@ -7,13 +7,14 @@ i18next
     {
       fallbackLng: "en",
       debug: false,
+      load: "languageOnly",
       backend: {
         // load from locales folder.
         loadPath: "/locales/{{lng}}.json",
-        crossDomain: false
-      }
+        crossDomain: false,
+      },
     },
-    function(err, t) {
+    function (err, t) {
       // init set content
       updateContent();
     }
@@ -27,7 +28,7 @@ function updateContent(key) {
 
     elm.innerHTML = i18next.t(key, options);
   } else {
-    document.querySelectorAll("[data-i18n]").forEach(function(elm) {
+    document.querySelectorAll("[data-i18n]").forEach(function (elm) {
       var key = elm.getAttribute("data-i18n");
       var options = elm.getAttribute("i18n-options");
       options = JSON.parse(options);
