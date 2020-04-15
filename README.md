@@ -17,15 +17,15 @@ Use the `4000000000003220` test card number to trigger a 3D Secure challenge flo
 Read more about testing on Stripe at https://stripe.com/docs/testing.
 
 <details open><summary>USD Cards Demo</summary>
-<img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
 <details><summary>EUR Cards & iDEAL Demo</summary>
-<img src="./checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
 <details><summary>MYR Cards & FPX Demo</summary>
-<img src="./checkout-demo-fpx.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo-fpx.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
 **Features:**
