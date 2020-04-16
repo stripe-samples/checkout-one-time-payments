@@ -1,0 +1,9 @@
+{
+  "title": "Stripe Checkout Beispiel",
+  "headline": "Einzelnes Foto",
+  "subline": "Kaufe ein original Pasha Foto",
+  "sr-legal-text": "Maximal 10 Kopien pro Einkauf",
+  "button": {
+    "submit": "Für {{total}} kaufen"
+  }
+}
