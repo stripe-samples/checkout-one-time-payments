@@ -10,7 +10,7 @@
   --accent-color: #0066f0;
   --body-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   --radius: 6px;
-  --logo-image: url("https://storage.googleapis.com/stripe-sample-images/KAVHOLM.svg");
+  --logo-image: url('https://storage.googleapis.com/stripe-sample-images/KAVHOLM.svg');
   --form-width: 600px;
 }
 
@@ -113,8 +113,8 @@ label {
 /* Inputs */
 .sr-input,
 .sr-select,
-input[type="text"],
-input[type="number"] {
+input[type='text'],
+input[type='number'] {
   border: 1px solid var(--gray-border);
   border-radius: var(--radius);
   padding: 5px 12px;
@@ -128,7 +128,7 @@ input[type="number"] {
   color: #32325d;
 }
 .sr-input:focus,
-input[type="text"]:focus,
+input[type='text']:focus,
 button:focus,
 .focused {
   box-shadow: 0 0 0 1px rgba(50, 151, 211, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.07),
@@ -137,8 +137,8 @@ button:focus,
   z-index: 9;
 }
 .sr-input::placeholder,
-input[type="text"]::placeholder,
-input[type="number"]::placeholder {
+input[type='text']::placeholder,
+input[type='number']::placeholder {
   color: var(--gray-light);
 }
 
@@ -172,7 +172,7 @@ input[type="number"]::placeholder {
 
 .sr-checkbox-label input:checked ~ .sr-checkbox-check {
   background-color: var(--accent-color);
-  background-image: url("https://storage.googleapis.com/stripe-sample-images/icon-checkmark.svg");
+  background-image: url('https://storage.googleapis.com/stripe-sample-images/icon-checkmark.svg');
   background-repeat: no-repeat;
   background-size: 16px;
   background-position: -1px -1px;
@@ -183,12 +183,10 @@ input[type="number"]::placeholder {
   display: block;
   height: 44px;
   margin: 0;
-  background-image: url("https://storage.googleapis.com/stripe-sample-images/icon-chevron-down.svg");
+  background-image: url('https://storage.googleapis.com/stripe-sample-images/icon-chevron-down.svg');
   background-repeat: no-repeat, repeat;
   background-position: right 12px top 50%, 0 0;
   background-size: 0.65em auto, 100%;
-}
-.sr-select:after {
 }
 .sr-select::-ms-expand {
   display: none;
@@ -206,7 +204,6 @@ input[type="number"]::placeholder {
 }
 .sr-select:invalid {
   color: var(--gray-light);
-  background-opacity: 0.4;
 }
 
 /* Combo inputs */
@@ -317,7 +314,7 @@ a:active {
 }
 code,
 pre {
-  font-family: "SF Mono", "IBM Plex Mono", "Menlo", monospace;
+  font-family: 'SF Mono', 'IBM Plex Mono', 'Menlo', monospace;
   font-size: 12px;
 }
 
@@ -356,7 +353,7 @@ pre {
 :root {
   --accent-color: #ed5f74;
   --headline-color: var(--accent-color);
-  --logo-image: url("https://storage.googleapis.com/stripe-sample-images/logo-pasha.svg");
+  --logo-image: url('https://storage.googleapis.com/stripe-sample-images/logo-pasha.svg');
 }
 
 .pasha-image-stack {
@@ -420,7 +417,7 @@ pre {
 .spinner:before,
 .spinner:after {
   position: absolute;
-  content: "";
+  content: '';
 }
 .spinner:before {
   width: 10.4px;
@@ -505,8 +502,8 @@ pre {
   border: 1px solid var(--accent-color);
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -569,4 +566,36 @@ input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* CODESANDBOX ONLY BANNER */
+.banner {
+  max-width: 825px;
+  margin: 0 auto;
+  padding: 0 22px;
+  font-size: 14px;
+  background: white;
+  color: #6a7c94;
+  border-radius: 22px;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 15px;
+  line-height: 1.15;
+  position: fixed;
+  bottom: 2vh;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.banner span {
+  display: inline-block;
+  width: 100%;
+}
+
+.banner a {
+  color: var(--accent-color);
 }

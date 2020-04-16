@@ -566,3 +566,35 @@ input[type='number']::-webkit-outer-spin-button {
     transform: scale(1);
   }
 }
+
+/* CODESANDBOX ONLY BANNER */
+.banner {
+  max-width: 825px;
+  margin: 0 auto;
+  padding: 0 22px;
+  font-size: 14px;
+  background: white;
+  color: #6a7c94;
+  border-radius: 22px;
+  box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+    0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 15px;
+  line-height: 1.15;
+  position: fixed;
+  bottom: 2vh;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.banner span {
+  display: inline-block;
+  width: 100%;
+}
+
+.banner a {
+  color: var(--accent-color);
+}
