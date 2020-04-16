@@ -9,7 +9,7 @@
     },
     {
       "name": "client-only",
-      "clients": ["web"],
+      "clients": ["html", "react-cra"],
       "servers": []
     }
   ]
