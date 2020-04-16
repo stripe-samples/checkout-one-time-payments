@@ -17,21 +17,19 @@
           <div class="sr-header__logo"></div>
         </header>
         <div class="sr-payment-summary completed-view">
-            <h1>Your payment succeeded</h1>
-            <h4>
-              View CheckoutSession response:</a>
-            </h4>
+          <h1>Your payment succeeded</h1>
+          <h4>
+            View CheckoutSession response:
+          </h4>
+        </div>
+        <div class="sr-section completed-view">
+          <div class="sr-callout">
+            <pre></pre>
           </div>
-          <div class="sr-section completed-view">
-            <div class="sr-callout">
-              <pre>
-    
-              </pre>
-            </div>
-            <button onclick="window.location.href = '/';">Restart demo</button>
-          </div> 
-        </div> 
-        <div class="sr-content">
+          <button onclick="window.location.href = '/';">Restart demo</button>
+        </div>
+      </div>
+      <div class="sr-content">
         <div class="pasha-image-stack">
           <img
             src="https://picsum.photos/280/320?random=1"
@@ -58,16 +56,19 @@
     </div>
     <script>
       var urlParams = new URLSearchParams(window.location.search);
-      var sessionId = urlParams.get("session_id")
+      var sessionId = urlParams.get('session_id');
       if (sessionId) {
-        fetch("/checkout-session?sessionId=" + sessionId).then(function(result){
-          return result.json()
-        }).then(function(session){
-          var sessionJSON = JSON.stringify(session, null, 2);
-          document.querySelector("pre").textContent = sessionJSON;
-        }).catch(function(err){
-          console.log('Error when fetching Checkout session', err);
-        });
+        fetch('/checkout-session?sessionId=' + sessionId)
+          .then(function (result) {
+            return result.json();
+          })
+          .then(function (session) {
+            var sessionJSON = JSON.stringify(session, null, 2);
+            document.querySelector('pre').textContent = sessionJSON;
+          })
+          .catch(function (err) {
+            console.log('Error when fetching Checkout session', err);
+          });
       }
     </script>
   </body>

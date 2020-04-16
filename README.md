@@ -1,4 +1,4 @@
-# Using Checkout for one-time purchases
+# Accept payments with Stripe Checkout
 
 Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
@@ -6,9 +6,11 @@ We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work f
 
 Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. It's so simple you don't even need a server! 🥳
 
-**Demo**
+## Demo
 
-See the sample [live](https://70p1h.sse.codesandbox.io/) or [fork](https://codesandbox.io/s/github/stripe-samples/checkout-one-time-payments/tree/codesandbox/) on CodeSandbox.
+- [HTML + Vanilla JavaScript demo](https://70p1h.sse.codesandbox.io/)
+- [React demo](https://70p1h-3000.sse.codesandbox.io/)
+- [Fork on CodeSandbox](https://codesandbox.io/s/github/stripe-samples/checkout-one-time-payments/tree/codesandbox/) (includes both HTML and React client)
 
 The demo is running in test mode -- use `4242424242424242` as a test card number with any CVC + future expiration date.
 
@@ -17,29 +19,28 @@ Use the `4000000000003220` test card number to trigger a 3D Secure challenge flo
 Read more about testing on Stripe at https://stripe.com/docs/testing.
 
 <details open><summary>USD Cards Demo</summary>
-<img src="./checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
 <details><summary>EUR Cards & iDEAL Demo</summary>
-<img src="./checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo-ideal.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
 <details><summary>MYR Cards & FPX Demo</summary>
-<img src="./checkout-demo-fpx.gif" alt="A gif of the Checkout payment page rendering" align="center">
+<img src="./demo-gifs/checkout-demo-fpx.gif" alt="A gif of the Checkout payment page rendering" align="center">
 </details>
 
-**Features:**
+## Features
 
-- Localization in 15 different languages 🌍
-- Built-in Apple Pay support 🍎
-- Built-in dynamic 3D Secure (ready for SCA) 🔔
-- Support for FPX for customers in Malaysia 🇲🇾🌺 (MYR only; Server only)
-- Support for iDEAL for customers in the Netherlands 🇳🇱🌷 (EUR only; Server only)
-- Plans to support more payment methods 🔮
+- 🌍Localization in different languages
+- 🍎⌚️Built-in support for Apple Pay and Google Pay
+- 🔒Built-in dynamic 3D Secure (ready for SCA)
+- 🧾💵Support for various payment methods. See the [docs](https://stripe.com/docs/payments/checkout/payment-methods) for details.
+- 🍨HTML + Vanilla JavaScript as well as ⚛️ React clients
 
 For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout).
 
-There are two integrations: [client-only](./client-only) and [client-and-server](./client-and-server).
+There are two integrations: [client-and-server](./client-and-server) and [client-only](./client-only).
 
 <!-- prettier-ignore -->
 |     | client-only | client-and-server
@@ -60,7 +61,7 @@ There are two integrations: [client-only](./client-only) and [client-and-server]
 
 There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration. For `client-only` setup instructions see [client-only/client/README.md](./client-only/client/README.md)
 
-This sample includes 5 server implementations in Node, Ruby, Python, Java, and PHP.
+This sample includes 5 server implementations in Java, JavaScript (Node), PHP, Python, and Ruby. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
 
 Follow the steps below to run locally.
 
@@ -151,5 +152,5 @@ A: We are always looking for new sample ideas, please email dev-samples@stripe.c
 
 ## Author(s)
 
-[@adreyfus-stripe](https://twitter.com/adrind)
-[@thorsten-stripe](https://twitter.com/thorwebdev)
+- [@adreyfus-stripe](https://twitter.com/adrind)
+- [@thorsten-stripe](https://twitter.com/thorwebdev)
