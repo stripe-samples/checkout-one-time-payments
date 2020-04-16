@@ -5,7 +5,7 @@ const { resolve } = require('path');
 require('dotenv').config({ path: './.env' });
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-app.use(express.static(process.env.STATIC_DIR));
+app.use(express.static('./client/html'));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -19,7 +19,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  const path = resolve(process.env.STATIC_DIR + '/index.html');
+  const path = resolve('./client/html/index.html');
   res.sendFile(path);
 });
 
@@ -39,7 +39,7 @@ app.get('/checkout-session', async (req, res) => {
 });
 
 app.post('/create-checkout-session', async (req, res) => {
-  const domainURL = process.env.DOMAIN;
+  const domainURL = req.headers.referer;
 
   const { quantity, locale } = req.body;
   // Create new Checkout Session for the order
@@ -62,8 +62,8 @@ app.post('/create-checkout-session', async (req, res) => {
       },
     ],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-    success_url: `${domainURL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${domainURL}/canceled.html`,
+    success_url: `${domainURL}success.html?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${domainURL}canceled.html`,
   });
 
   res.send({

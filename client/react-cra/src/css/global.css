@@ -7,7 +7,7 @@
   --gray-dark: rgba(0, 0, 0, 0.9);
   --body-color: var(--gray-mid);
   --headline-color: var(--gray-dark);
-  --accent-color: #0066f0;
+  --accent-color: #61dafb;
   --body-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   --radius: 6px;
   --logo-image: url('https://storage.googleapis.com/stripe-sample-images/KAVHOLM.svg');
@@ -264,7 +264,7 @@ input[type='number']::placeholder {
 button {
   background: var(--accent-color);
   border-radius: var(--radius);
-  color: white;
+  color: #282c34;
   border: 0;
   padding: 12px 16px;
   margin-top: 16px;
@@ -351,7 +351,6 @@ pre {
 
 /* Pasha styles – Brand-overrides, can split these out */
 :root {
-  --accent-color: #ed5f74;
   --headline-color: var(--accent-color);
   --logo-image: url('https://storage.googleapis.com/stripe-sample-images/logo-pasha.svg');
 }
