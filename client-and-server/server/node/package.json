@@ -1,7 +1,7 @@
 {
-  "name": "stripe-sample-demo",
+  "name": "checkout-one-time-payments",
   "version": "1.0.0",
-  "description": "A Stripe demo",
+  "description": "Accept payments with Stripe Checkout",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
