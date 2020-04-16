@@ -2,8 +2,12 @@
 .DS_Store
 .vscode
 
-# Node files
-node_modules/
+# Dependencies
+node_modules
+package-lock.json
+yarn.lock
+!/yarn.lock
+composer.lock
 
 # Ruby files
 Gemfile.lock

@@ -1,0 +1,9 @@
+{
+  "title": "Contoh Checkout Stripe",
+  "headline": "Foto tunggal",
+  "subline": "Beli satu foto asal Pasha",
+  "sr-legal-text": "Bilangan salinan (maks 10)",
+  "button": {
+    "submit": "Beli untuk {{total}}"
+  }
+}

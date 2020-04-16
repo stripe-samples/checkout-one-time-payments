@@ -1,0 +1,9 @@
+{
+  "title": "Paiement Stripe - Exemple",
+  "headline": "Photos à l'unité",
+  "subline": "Acheter une photo originale Pasha",
+  "sr-legal-text": "Nombre de copies (max. 10)",
+  "button": {
+    "submit": "Payer {{total}}"
+  }
+}
