@@ -1,6 +1,6 @@
 # Accept payments with Stripe Checkout (client-only integration)
 
-You can create Checkout pages without a server by creating Products and SKUs in the Stripe Dashboard before launching your integration. Then pass the SKU ID of your Product to `stripe.redirectToCheckout` on the client when your customer checks out.
+You can create Checkout pages without a server by creating Products and Prices in the Stripe Dashboard before launching your integration. Then pass the Price ID of your Product to `stripe.redirectToCheckout` on the client when your customer checks out.
 
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-only.png" alt="A flowchart of the Checkout flow" align="center">
 
@@ -8,8 +8,8 @@ You can create Checkout pages without a server by creating Products and SKUs in 
 
 - Enable client-only checkout: https://dashboard.stripe.com/account/checkout/settings
 - Create a one-time or recurring product in the Stripe Dashboard: https://dashboard.stripe.com/products
-  - After creation click the "Use with checkout" button and copy the sku (sku_xxx) ID.
-  - Paste the sku ID into the `SKU_ID` var in the index.html file.
+  - After creation click the "Use with checkout" button and copy the price (price_xxx) ID.
+  - Paste the price ID into the `PRICE_ID` var in the index.html file.
 - Copy your publishable key from: https://dashboard.stripe.com/apikeys and set it as the value for `PUBLISHABLE_KEY` in the index.html file
 
 ## Run locally

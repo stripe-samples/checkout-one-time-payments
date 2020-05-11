@@ -38,7 +38,7 @@ function reducer(state, action) {
         ...state,
         ...action.payload,
         price: formatPrice({
-          amount: action.payload.basePrice,
+          amount: action.payload.unitAmount,
           currency: action.payload.currency,
           quantity: state.quantity,
         }),
@@ -48,7 +48,7 @@ function reducer(state, action) {
         ...state,
         quantity: state.quantity + 1,
         price: formatPrice({
-          amount: state.basePrice,
+          amount: state.unitAmount,
           currency: state.currency,
           quantity: state.quantity + 1,
         }),
@@ -58,7 +58,7 @@ function reducer(state, action) {
         ...state,
         quantity: state.quantity - 1,
         price: formatPrice({
-          amount: state.basePrice,
+          amount: state.unitAmount,
           currency: state.currency,
           quantity: state.quantity - 1,
         }),
@@ -84,14 +84,14 @@ const Checkout = () => {
   useEffect(() => {
     async function fetchConfig() {
       // Fetch config from our backend.
-      const { publicKey, basePrice, currency } = await fetch(
+      const { publicKey, unitAmount, currency } = await fetch(
         '/config'
       ).then((res) => res.json());
       // Make sure to call `loadStripe` outside of a component’s render to avoid
       // recreating the `Stripe` object on every render.
       dispatch({
         type: 'useEffectUpdate',
-        payload: { basePrice, currency, stripe: await loadStripe(publicKey) },
+        payload: { unitAmount, currency, stripe: await loadStripe(publicKey) },
       });
     }
     fetchConfig();

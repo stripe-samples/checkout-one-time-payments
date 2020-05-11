@@ -37,7 +37,7 @@ var updateQuantity = function (evt) {
   // Update number input with new value.
   inputEl.value = quantity;
   // Calculate the total amount and format it with currency symbol.
-  var amount = config.basePrice;
+  var amount = config.unitAmount;
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: 'currency',
     currency: config.currency,

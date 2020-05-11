@@ -1,6 +1,5 @@
 source 'https://rubygems.org/'
 
 gem 'dotenv'
-gem 'json'
 gem 'sinatra'
-gem 'stripe'
+gem 'stripe', '~> 5.21.0'

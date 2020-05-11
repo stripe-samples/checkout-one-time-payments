@@ -33,12 +33,11 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 
 $app->get('/config', function (Request $request, Response $response, array $args) {
   $pub_key = getenv('STRIPE_PUBLISHABLE_KEY');
-  $base_price = getenv('BASE_PRICE');
-  $currency = getenv('CURRENCY');
+  $price = \Stripe\Price::retrieve(getenv('PRICE'));
   return $response->withJson([ 
     'publicKey' => $pub_key, 
-    'basePrice' => $base_price, 
-    'currency' => $currency 
+    'unitAmount' => $price['unit_amount'], 
+    'currency' => $price['currency'] 
   ]);
 });
 
@@ -53,8 +52,7 @@ $app->get('/checkout-session', function (Request $request, Response $response, a
 
 $app->post('/create-checkout-session', function(Request $request, Response $response, array $args) {
   $domain_url = getenv('DOMAIN');
-  $base_price = getenv('BASE_PRICE');
-  $currency = getenv('CURRENCY');
+  $price = getenv('PRICE');
   $body = json_decode($request->getBody());
   $quantity = $body->quantity;
 
@@ -71,15 +69,13 @@ $app->post('/create-checkout-session', function(Request $request, Response $resp
     'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
     'cancel_url' => $domain_url . '/canceled.html',
     'payment_method_types' => ['card'],
+    'mode' => 'payment',
     'line_items' => [[
-      'name' => 'Pasha photo',
-      'images' => ["https://picsum.photos/300/300?random=4"],
+      'price' => $price,
       'quantity' => $quantity,
-      'amount' => $base_price,
-      'currency' => $currency
     ]]
   ]);
-
+  
   return $response->withJson(array('sessionId' => $checkout_session['id']));
 });
 
