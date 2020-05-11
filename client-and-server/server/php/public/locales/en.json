@@ -1,9 +1,9 @@
 {
-  "title": "Stripe Checkout Sample",
-  "headline": "Single photo",
-  "subline": "Purchase a Pasha original photo",
-  "sr-legal-text": "Number of copies (max 10)",
-  "button": {
-    "submit": "Buy for {{total}}"
-  }
+    "title": "Stripe Checkout Sample",
+    "headline": "Invoice Payment",
+    "subline": "Thank you for your business",
+    "sr-legal-text": "Is this the correct amount?",
+    "button": {
+        "submit": "Pay {{total}}"
+    }
 }

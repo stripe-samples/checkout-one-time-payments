@@ -4,6 +4,8 @@ This is a fork of the official Stripe [checkout-one-time-payments](https://githu
 
 The main change is that instead of charging multiples of a base price set in the config.ini, it accepts an arbitrary dollar value. It also allows for a query string variable to be appended to the URL to allow for easy invoicing. Ex: yourdomain.com/?amt=100 would charge $100.
 
+Read [our tutorial](https://www.greatbigdigitalagency.com/blog/get-stripe-payments-up-and-running-fast-with-php-2020-update) for more info.
+
 Below I've kept the original documentation for reference.
 
 ## Accept payments with Stripe Checkout
