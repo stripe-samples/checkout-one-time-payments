@@ -1,4 +1,12 @@
-# Accept payments with Stripe Checkout
+# Accept payments of an arbitrary amount
+
+This is a fork of the official Stripe [checkout-one-time-payments](https://github.com/stripe-samples/checkout-one-time-payments) example, which focuses only on the PHP implementation.
+
+The main change is that instead of charging multiples of a base price set in the config.ini, it accepts an arbitrary dollar value. It also allows for a query string variable to be appended to the URL to allow for easy invoicing. Ex: yourdomain.com/?amt=100 would charge $100.
+
+Below I've kept the original documentation for reference.
+
+## Accept payments with Stripe Checkout
 
 Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 

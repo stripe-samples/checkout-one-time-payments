@@ -2,5 +2,7 @@ stripe_secret_key = sk_test_1234
 stripe_publishable_key = pk_test_1234
 stripe_webhook_secret = whsec_1234
 domain = http://localhost:4242
-base_price = 500
+; Normally, base_price would be used as the base price of a product.
+; We want to allow the user to pay an arbitrary amount so we'll leave this out.
+;base_price = 500
 currency = usd

@@ -486,20 +486,20 @@ pre {
   margin-right: 20px;
 }
 
-.quantity-setter {
+.amount-setter {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.quantity-setter input {
+.amount-setter input {
   border-radius: 0;
-  width: 50px;
+  width: 140px;
   padding: 0;
   text-align: center;
 }
 
-.quantity-setter .increment-btn {
+.amount-setter .increment-btn {
   margin-top: 0;
   border-radius: 0;
   border: 1px solid var(--accent-color);

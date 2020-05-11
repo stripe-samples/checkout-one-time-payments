@@ -3,9 +3,11 @@
 require_once 'shared.php';
 
 $domain_url = $config['domain'];
-$base_price = $config['base_price'];
+//we will use $amount instead of $quantity and $base_price
+$amount = $body->amount;
+//$base_price = $config['base_price'];
 $currency = $config['currency'];
-$quantity = $body->quantity;
+//$quantity = $body->quantity;
 
 // Create new Checkout Session for the order
 // Other optional params include:
@@ -21,10 +23,10 @@ $checkout_session = \Stripe\Checkout\Session::create([
 	'cancel_url' => $domain_url . '/canceled.html',
 	'payment_method_types' => ['card'],
 	'line_items' => [[
-	  'name' => 'Pasha photo',
+	  'name' => 'Invoice Payment',
 	  'images' => ["https://picsum.photos/300/300?random=4"],
-	  'quantity' => $quantity,
-	  'amount' => $base_price,
+	  'quantity' => 1,
+	  'amount' => $amount,
 	  'currency' => $currency
 	]]
   ]);

@@ -1,43 +1,13 @@
-// The max and min number of photos a customer can purchase
-var MIN_PHOTOS = 1;
-var MAX_PHOTOS = 10;
-
-var basicPhotoButton = document.getElementById("basic-photo-button");
-document
-  .getElementById("quantity-input")
-  .addEventListener("change", function (evt) {
-    // Ensure customers only buy between 1 and 10 photos
-    if (evt.target.value < MIN_PHOTOS) {
-      evt.target.value = MIN_PHOTOS;
-    }
-    if (evt.target.value > MAX_PHOTOS) {
-      evt.target.value = MAX_PHOTOS;
-    }
-  });
-
-/* Method for changing the product quantity when a customer clicks the increment / decrement buttons */
-var updateQuantity = function (evt) {
+/* Method for changing the submit text when the amount is changed */
+var updateAmount = function (evt) {
   if (evt && evt.type === "keypress" && evt.keyCode !== 13) {
     return;
   }
 
-  var isAdding = evt && evt.target.id === "add";
-  var inputEl = document.getElementById("quantity-input");
-  var currentQuantity = parseInt(inputEl.value);
+  var inputEl = document.getElementById("amount-input");
+  var amount = parseInt(inputEl.value);
 
-  document.getElementById("add").disabled = false;
-  document.getElementById("subtract").disabled = false;
-
-  // Calculate new quantity
-  var quantity = evt
-    ? isAdding
-      ? currentQuantity + 1
-      : currentQuantity - 1
-    : currentQuantity;
-  // Update number input with new value.
-  inputEl.value = quantity;
   // Calculate the total amount and format it with currency symbol.
-  var amount = config.basePrice;
   var numberFormat = new Intl.NumberFormat(i18next.language, {
     style: "currency",
     currency: config.currency,
@@ -51,7 +21,7 @@ var updateQuantity = function (evt) {
     }
   }
   amount = zeroDecimalCurrency ? amount : amount / 100;
-  var total = (quantity * amount).toFixed(2);
+  var total = amount.toFixed(2) * 100;
   var formattedTotal = numberFormat.format(total);
 
   document
@@ -59,34 +29,23 @@ var updateQuantity = function (evt) {
     .setAttribute("i18n-options", `{ "total": "${formattedTotal}" }`);
   updateContent("button.submit");
 
-  // Disable the button if the customers hits the max or min
-  if (quantity === MIN_PHOTOS) {
-    document.getElementById("subtract").disabled = true;
-  }
-  if (quantity === MAX_PHOTOS) {
-    document.getElementById("add").disabled = true;
-  }
 };
 
 /* Attach method */
-Array.from(document.getElementsByClassName("increment-btn")).forEach(
-  (element) => {
-    element.addEventListener("click", updateQuantity);
-  }
-);
+document.getElementById("amount-input").addEventListener("change", updateAmount);
 
-// Create a Checkout Session with the selected quantity
+// Create a Checkout Session with the selected amount
 var createCheckoutSession = function (stripe) {
-  var inputEl = document.getElementById("quantity-input");
-  var quantity = parseInt(inputEl.value);
+  var inputEl = document.getElementById("amount-input");
+  var amount = parseInt(inputEl.value) * 100;
 
-  return fetch("/create-checkout-session.php", {
+  return fetch("create-checkout-session.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      quantity: quantity,
+        amount: amount,
     }),
   }).then(function (result) {
     return result.json();
@@ -101,15 +60,31 @@ var handleResult = function (result) {
   }
 };
 
+/* Method for getting query string parameter by name */
+var getParameterByName = function (name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+/* Method for getting the "amt" variable from the query string in case it is provided */
+var getAmountFromQueryString = function() {
+    var amt = getParameterByName("amt");
+    if (amt) {
+        var inputEl = document.getElementById("amount-input");
+        inputEl.value = amt;
+    }
+}
+
 /* Get your Stripe publishable key to initialize Stripe.js */
-fetch("/config.php")
+fetch("config.php")
   .then(function (result) {
     return result.json();
   })
   .then(function (json) {
     window.config = json;
     var stripe = Stripe(config.publicKey);
-    updateQuantity();
+    getAmountFromQueryString();
+    updateAmount();
     // Setup event handler to create a Checkout Session on submit
     document.querySelector("#submit").addEventListener("click", function (evt) {
       createCheckoutSession().then(function (data) {
