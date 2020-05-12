@@ -46,7 +46,7 @@ There are two integrations: [client-and-server](./client-and-server) and [client
 |     | client-only | client-and-server
 :--- | :---: | :---:
 🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. | ✅  | ✅ |
-🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined SKUs.  | ❌  | ✅ |
+🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.  | ❌  | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
 
 ### Client-only flowchart
@@ -106,9 +106,7 @@ The other environment variables are configurable:
 
 `STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
 
-`BASE_PRICE` is the amount for the order.
-
-`CURRENCY` is the currency for the order.
+`PRICE` is the [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
 
 `DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page.
 
@@ -149,6 +147,10 @@ A: We chose the most minimal framework to convey the key Stripe calls and concep
 Q: Can you show me how to build X?
 
 A: We are always looking for new sample ideas, please email dev-samples@stripe.com with your suggestion!
+
+Q: What happened to Plans and SKUs?
+
+A: Plans and SKUs were old ways to model recurring and one-off prices. We created the Prices API to unify the two concepts and make it easier to reason about your pricing catalog. You can still pass old Plan and SKU IDs to Checkout -- to learn more read [our docs](https://stripe.com/docs/payments/checkout/migrating-prices) but know that you do not need to migrate any of your existing SKUs and Plans.
 
 ## Author(s)
 

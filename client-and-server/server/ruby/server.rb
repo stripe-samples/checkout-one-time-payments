@@ -17,10 +17,12 @@ end
 
 get '/config' do
   content_type 'application/json'
+  price = Stripe::Price.retrieve(ENV['PRICE'])
+
   {
     publicKey: ENV['STRIPE_PUBLISHABLE_KEY'],
-    basePrice: ENV['BASE_PRICE'],
-    currency: ENV['CURRENCY']
+    unitAmount: price['unit_amount'],
+    currency: price['currency']
   }.to_json
 end
 
@@ -40,7 +42,6 @@ post '/create-checkout-session' do
   # Other optional params include:
   # [billing_address_collection] - to display billing address details on the page
   # [customer] - if you have an existing Stripe Customer ID
-  # [payment_intent_data] - lets capture the payment later
   # [customer_email] - lets you prefill the email input in the form
   # For full details see https:#stripe.com/docs/api/checkout/sessions/create
 
@@ -49,12 +50,10 @@ post '/create-checkout-session' do
     success_url: ENV['DOMAIN'] + '/success.html?session_id={CHECKOUT_SESSION_ID}',
     cancel_url: ENV['DOMAIN'] + '/canceled.html',
     payment_method_types: ['card'],
+    mode: 'payment',
     line_items: [{
-      name: 'Pasha photo',
-      images: ["https://picsum.photos/300/300?random=4"],
       quantity: data['quantity'],
-      currency: ENV['CURRENCY'],
-      amount: ENV['BASE_PRICE']
+      price: ENV['PRICE'],
     }]
   )
 

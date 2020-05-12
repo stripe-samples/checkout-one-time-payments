@@ -52,8 +52,9 @@
       var PUBLISHABLE_KEY = "pk_1234";
       // Replace with the domain you want your users to be redirected back to after payment
       var DOMAIN = window.location.origin;
-      // Replace with a SKU for your own product (created either in the Stripe Dashboard or with the API)
-      var SKU_ID = "sku_1234";
+      // Replace with a Price for your own product (created either in the Stripe Dashboard or with the API)
+      // You can also supply a SKU or Plan ID for 
+      var PRICE_ID = "price_1234";
 
       if (PUBLISHABLE_KEY === "pk_1234") {
         console.log(
@@ -61,7 +62,7 @@
         );
       }
 
-      if (SKU_ID === "sku_1234") {
+      if (PRICE_ID === "price_1234") {
         console.log(
           "Replace the hardcoded SKU ID with your own SKU: https://stripe.com/docs/api/skus"
         );
@@ -134,7 +135,8 @@
         // with the current quantity
         stripe
           .redirectToCheckout({
-            items: [{ sku: SKU_ID, quantity: quantity }],
+            mode: 'payment',
+            lineItems: [{ price: PRICE_ID, quantity: quantity }],
             successUrl:
               DOMAIN + "/success.html?session_id={CHECKOUT_SESSION_ID}",
             cancelUrl: DOMAIN + "/canceled.html"

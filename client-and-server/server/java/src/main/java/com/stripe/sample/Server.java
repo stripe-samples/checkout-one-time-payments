@@ -16,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.stripe.Stripe;
 import com.stripe.model.Event;
 import com.stripe.model.checkout.Session;
+import com.stripe.model.Price;
 import com.stripe.exception.*;
 import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -38,7 +39,7 @@ public class Server {
 
     public static void main(String[] args) {
         port(4242);
-        
+
         Dotenv dotenv = Dotenv.load();
 
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
@@ -48,11 +49,12 @@ public class Server {
 
         get("/config", (request, response) -> {
             response.type("application/json");
+            Price price = Price.retrieve(dotenv.get("PRICE"));
 
             Map<String, Object> responseData = new HashMap<>();
             responseData.put("publicKey", dotenv.get("STRIPE_PUBLISHABLE_KEY"));
-            responseData.put("basePrice", dotenv.get("BASE_PRICE"));
-            responseData.put("currency", dotenv.get("CURRENCY"));
+            responseData.put("unitAmount", price.getUnitAmount());
+            responseData.put("currency", price.getCurrency());
             return gson.toJson(responseData);
         });
 
@@ -71,31 +73,25 @@ public class Server {
             PostBody postBody = gson.fromJson(request.body(), PostBody.class);
 
             String domainUrl = dotenv.get("DOMAIN");
-            Long basePrice = new Long(dotenv.get("BASE_PRICE"));
             Long quantity = postBody.getQuantity();
-            String currency = dotenv.get("CURRENCY");
+            String price = dotenv.get("PRICE");
 
             // Create new Checkout Session for the order
             // Other optional params include:
             // [billing_address_collection] - to display billing address details on the page
             // [customer] - if you have an existing Stripe Customer ID
-            // [payment_intent_data] - lets capture the payment later
             // [customer_email] - lets you prefill the email input in the form
             // For full details see https://stripe.com/docs/api/checkout/sessions/create
 
             // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID
             // set as a query param
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
-                .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
-                .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD);
+                    .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
+                    .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD)
+                    .setMode(SessionCreateParams.Mode.PAYMENT);
 
             // Add a line item for the sticker the Customer is purchasing
-            LineItem item = new LineItem.Builder()
-                .setName("Pasha photo")
-                .setAmount(basePrice)
-                .setQuantity(quantity)
-                .setCurrency(currency)
-                .build();
+            LineItem item = new LineItem.Builder().setQuantity(quantity).setPrice(price).build();
             builder.addLineItem(item);
 
             SessionCreateParams createParams = builder.build();
@@ -122,13 +118,13 @@ public class Server {
             }
 
             switch (event.getType()) {
-            case "checkout.session.completed":
-                System.out.println("Payment succeeded!");
-                response.status(200);
-                return "";
-            default:
-                response.status(200);
-                return "";
+                case "checkout.session.completed":
+                    System.out.println("Payment succeeded!");
+                    response.status(200);
+                    return "";
+                default:
+                    response.status(200);
+                    return "";
             }
         });
     }

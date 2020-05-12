@@ -31,10 +31,11 @@ def get_example():
 
 @app.route('/config', methods=['GET'])
 def get_publishable_key():
+    price = stripe.Price.retrieve(os.getenv('PRICE'))
     return jsonify({
       'publicKey': os.getenv('STRIPE_PUBLISHABLE_KEY'),
-      'basePrice': os.getenv('BASE_PRICE'),
-      'currency': os.getenv('CURRENCY')
+      'unitAmount': price['unit_amount'],
+      'currency': price['currency']
     })
 
 # Fetch the Checkout Session to display the JSON result on the success page
@@ -65,13 +66,11 @@ def create_checkout_session():
             "/success.html?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=domain_url + "/canceled.html",
             payment_method_types=["card"],
+            mode="payment",
             line_items=[
                 {
-                    "name": "Pasha photo",
-                    "images": ["https://picsum.photos/300/300?random=4"],
-                    "quantity": data['quantity'],
-                    "currency": os.getenv('CURRENCY'),
-                    "amount": os.getenv('BASE_PRICE')
+                    "price": os.getenv('PRICE'),
+                    "quantity": data['quantity']
                 }
             ]
         )

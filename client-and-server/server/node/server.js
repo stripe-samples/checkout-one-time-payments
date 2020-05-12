@@ -23,11 +23,13 @@ app.get('/', (req, res) => {
   res.sendFile(path);
 });
 
-app.get('/config', (req, res) => {
+app.get('/config', async (req, res) => {
+  const price = await stripe.prices.retrieve(process.env.PRICE);
+
   res.send({
     publicKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    basePrice: process.env.BASE_PRICE,
-    currency: process.env.CURRENCY,
+    unitAmount: price.unit_amount,
+    currency: price.currency,
   });
 });
 
@@ -46,19 +48,16 @@ app.post('/create-checkout-session', async (req, res) => {
   // Other optional params include:
   // [billing_address_collection] - to display billing address details on the page
   // [customer] - if you have an existing Stripe Customer ID
-  // [payment_intent_data] - lets capture the payment later
-  // [customer_email] - lets you prefill the email input in the form
+  // [customer_email] - lets you prefill the email input in the Checkout page
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   const session = await stripe.checkout.sessions.create({
     payment_method_types: process.env.PAYMENT_METHODS.split(', '),
+    mode: 'payment',
     locale: locale,
     line_items: [
       {
-        name: 'Pasha photo',
-        images: ['https://picsum.photos/300/300?random=4'],
-        quantity: quantity,
-        currency: process.env.CURRENCY,
-        amount: process.env.BASE_PRICE, // Keep the amount on the server to prevent customers from manipulating on client
+        price: process.env.PRICE,
+        quantity: quantity
       },
     ],
     // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
