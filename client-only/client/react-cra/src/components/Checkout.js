@@ -54,13 +54,13 @@ function reducer(state, action) {
 
 const Checkout = () => {
   const [state, dispatch] = useReducer(reducer, {
-    price: process.env.REACT_APP_PRICE_ID,
-    basePrice: 999, // Replace with your Price's unit_amount
-    currency: 'usd', // Replace with your Price's currency
+    priceId: process.env.REACT_APP_PRICE_ID,
+    basePrice: process.env.REACT_APP_BASE_PRICE,
+    currency: process.env.REACT_APP_CURRENCY,
     quantity: 1,
     price: formatPrice({
-      amount: 999,
-      currency: 'usd',
+      amount: process.env.REACT_APP_BASE_PRICE,
+      currency: process.env.REACT_APP_CURRENCY,
       quantity: 1,
     }),
     loading: false,
@@ -73,7 +73,8 @@ const Checkout = () => {
     // When the customer clicks on the button, redirect them to Checkout.
     const stripe = await stripePromise;
     const { error } = await stripe.redirectToCheckout({
-      items: [{ price: state.price, quantity: state.quantity }],
+      mode: 'payment',
+      lineItems: [{ price: state.priceId, quantity: state.quantity }],
       successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${window.location.origin}/canceled`,
     });
