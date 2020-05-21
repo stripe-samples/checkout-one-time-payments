@@ -59,7 +59,7 @@ There are two integrations: [client-and-server](./client-and-server) and [client
 
 ## How to run locally
 
-There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration. For `client-only` setup instructions see [client-only/client/README.md](./client-only/client/README.md)
+There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration. For `client-only` setup instructions see the READMEs in [client-only/client/html/README.md](./client-only/client/html/README.md) or [client-only/client/react-cra/README.md](./client-only/client/react-cra/README.md).
 
 This sample includes 5 server implementations in Java, JavaScript (Node), PHP, Python, and Ruby. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
 
