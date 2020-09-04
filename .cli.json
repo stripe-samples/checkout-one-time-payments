@@ -5,7 +5,7 @@
     {
       "name": "client-and-server",
       "clients": ["html", "react-cra"],
-      "servers": ["java", "node", "php-slim", "php", "python", "ruby"]
+      "servers": ["java", "node", "php-slim", "php", "python", "ruby", "go"]
     },
     {
       "name": "client-only",
