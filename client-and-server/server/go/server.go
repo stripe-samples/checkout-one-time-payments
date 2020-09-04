@@ -1,0 +1,179 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
+	"github.com/stripe/stripe-go/v71"
+	"github.com/stripe/stripe-go/v71/checkout/session"
+	"github.com/stripe/stripe-go/v71/price"
+	"github.com/stripe/stripe-go/v71/webhook"
+)
+
+func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
+
+	http.Handle("/", http.FileServer(http.Dir(os.Getenv("STATIC_DIR"))))
+	http.HandleFunc("/config", handleConfig)
+	http.HandleFunc("/checkout-session", handleCheckoutSession)
+	http.HandleFunc("/create-checkout-session", handleCreateCheckoutSession)
+	http.HandleFunc("/webhook", handleWebhook)
+
+	http.ListenAndServe("localhost:4242", nil)
+}
+
+// ErrorResponseMessage represents the structure of the error
+// object sent in failed responses.
+type ErrorResponseMessage struct {
+	Message string `json:"message"`
+}
+
+// ErrorResponse represents the structure of the error object sent
+// in failed responses.
+type ErrorResponse struct {
+	Error *ErrorResponseMessage `json:"error"`
+}
+
+func handleConfig(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+	// Fetch a price, use it's unit amount and currency
+	p, _ := price.Get(
+		os.Getenv("PRICE"),
+		nil,
+	)
+	writeJSON(w, struct {
+		PublicKey  string `json:"publicKey"`
+		UnitAmount int64  `json:"unitAmount"`
+		Currency   string `json:"currency"`
+	}{
+		PublicKey:  os.Getenv("STRIPE_PUBLISHABLE_KEY"),
+		UnitAmount: p.UnitAmount,
+		Currency:   string(p.Currency),
+	})
+}
+
+func handleCheckoutSession(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+	sessionID := r.URL.Query().Get("sessionId")
+	fmt.Println(sessionID)
+	s, _ := session.Get(sessionID, nil)
+	writeJSON(w, s)
+}
+
+type checkoutSessionCreateReq struct {
+	Quantity int64 `json:"quantity"`
+}
+
+func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
+	req := checkoutSessionCreateReq{}
+	json.NewDecoder(r.Body).Decode(&req)
+	domainURL := os.Getenv("DOMAIN")
+
+	// Create new Checkout Session for the order
+	// Other optional params include:
+	// [billing_address_collection] - to display billing address details on the page
+	// [customer] - if you have an existing Stripe Customer ID
+	// [payment_intent_data] - lets capture the payment later
+	// [customer_email] - lets you prefill the email input in the form
+	// For full details see https://stripe.com/docs/api/checkout/sessions/create
+
+	// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID
+	// set as a query param
+	params := &stripe.CheckoutSessionParams{
+		SuccessURL: stripe.String(domainURL + "/success.html?session_id={CHECKOUT_SESSION_ID}"),
+		CancelURL:  stripe.String(domainURL + "/canceled.html"),
+		PaymentMethodTypes: stripe.StringSlice([]string{
+			"card",
+		}),
+		Mode: stripe.String(string(stripe.CheckoutSessionModePayment)),
+		LineItems: []*stripe.CheckoutSessionLineItemParams{
+			{
+				Quantity: stripe.Int64(req.Quantity),
+				Price:    stripe.String(os.Getenv("PRICE")),
+			},
+		},
+	}
+	s, err := session.New(params)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error while creating session %v", err.Error()), http.StatusInternalServerError)
+		return
+	}
+
+	writeJSON(w, struct {
+		SessionID string `json:"sessionId"`
+	}{
+		SessionID: s.ID,
+	})
+}
+
+func handleWebhook(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Printf("ioutil.ReadAll: %v", err)
+		return
+	}
+
+	event, err := webhook.ConstructEvent(b, r.Header.Get("Stripe-Signature"), os.Getenv("STRIPE_WEBHOOK_SECRET"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Printf("webhook.ConstructEvent: %v", err)
+		return
+	}
+
+	if event.Type == "checkout.session.completed" {
+		fmt.Println("Checkout Session completed!")
+	}
+
+	writeJSON(w, nil)
+}
+
+func writeJSON(w http.ResponseWriter, v interface{}) {
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(v); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Printf("json.NewEncoder.Encode: %v", err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if _, err := io.Copy(w, &buf); err != nil {
+		log.Printf("io.Copy: %v", err)
+		return
+	}
+}
+
+func writeJSONError(w http.ResponseWriter, v interface{}, code int) {
+	w.WriteHeader(code)
+	writeJSON(w, v)
+	return
+}
+
+func writeJSONErrorMessage(w http.ResponseWriter, message string, code int) {
+	resp := &ErrorResponse{
+		Error: &ErrorResponseMessage{
+			Message: message,
+		},
+	}
+	writeJSONError(w, resp, code)
+}
