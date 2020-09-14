@@ -144,13 +144,18 @@ Q: Why did you pick these frameworks?
 
 A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
 
-Q: Can you show me how to build X?
-
-A: We are always looking for new sample ideas, please email dev-samples@stripe.com with your suggestion!
-
 Q: What happened to Plans and SKUs?
 
 A: Plans and SKUs were old ways to model recurring and one-off prices. We created the Prices API to unify the two concepts and make it easier to reason about your pricing catalog. You can still pass old Plan and SKU IDs to Checkout -- to learn more read [our docs](https://stripe.com/docs/payments/checkout/migrating-prices) but know that you do not need to migrate any of your existing SKUs and Plans.
+
+## Get support
+If you found a bug or want to suggest a new [feature/use case/sample], please [file an issue](../../issues).
+
+If you have questions, comments, or need help with code, we're here to help:
+- on [IRC via freenode](https://webchat.freenode.net/?channel=#stripe)
+- on Twitter at [@StripeDev](https://twitter.com/StripeDev)
+- on Stack Overflow at the [stripe-payments](https://stackoverflow.com/tags/stripe-payments/info) tag
+- by [email](mailto:support+github@stripe.com)
 
 ## Author(s)
 
