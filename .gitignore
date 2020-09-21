@@ -2,6 +2,12 @@
 .DS_Store
 .vscode
 
+# Ignore dotnet build files
+**/Debug/**
+**/project-cache/**
+**/.vs/**
+**/obj/**
+
 # Dependencies
 node_modules
 package-lock.json
