@@ -14,7 +14,7 @@ Once your customer is ready to pay, use Stripe.js to redirect them to the URL of
 
 The demo is running in test mode -- use `4242424242424242` as a test card number with any CVC + future expiration date.
 
-Use the `4000000000003220` test card number to trigger a 3D Secure challenge flow.
+Use the `4000002500003155` test card number to trigger a 3D Secure challenge flow.
 
 Read more about testing on Stripe at https://stripe.com/docs/testing.
 
@@ -43,25 +43,19 @@ For more features see the [Checkout documentation](https://stripe.com/docs/payme
 There are two integrations: [client-and-server](./client-and-server) and [client-only](./client-only).
 
 <!-- prettier-ignore -->
-|     | client-only | client-and-server
-:--- | :---: | :---:
-🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. | ✅  | ✅ |
-🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.  | ❌  | ✅ |
-⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ❌ | ✅ |
+|     | main
+:--- | :---:
+🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. |  ✅ |
+🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.   | ✅ |
+⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ✅ |
 
-### Client-only flowchart
-
-<img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-only.png" alt="A flowchart of the Checkout flow" align="center">
-
-### Client-and-server flowchart
+### flowchart
 
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
 ## How to run locally
 
-There are two integrations: `client-only` and `client-and-server`. The following are instructions on how to run the `client-and-server` integration. For `client-only` setup instructions see the READMEs in [client-only/client/html/README.md](./client-only/client/html/README.md) or [client-only/client/react-cra/README.md](./client-only/client/react-cra/README.md).
-
-This sample includes 5 server implementations in Java, JavaScript (Node), PHP, Python, and Ruby. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
+This sample includes 8 server implementations in Java, JavaScript (Node), PHP, PHP-Slim, Python, Ruby, .NET, and go. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
 
 Follow the steps below to run locally.
 
