@@ -3,14 +3,9 @@
   "configureDotEnv": true,
   "integrations": [
     {
-      "name": "client-and-server",
+      "name": "main",
       "clients": ["html", "react-cra"],
       "servers": ["java", "node", "php-slim", "php", "python", "ruby", "go", "dotnet"]
-    },
-    {
-      "name": "client-only",
-      "clients": ["html", "react-cra"],
-      "servers": []
     }
   ]
 }
