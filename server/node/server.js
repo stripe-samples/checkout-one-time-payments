@@ -51,7 +51,7 @@ app.post('/create-checkout-session', async (req, res) => {
   // [customer_email] - lets you prefill the email input in the Checkout page
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: process.env.PAYMENT_METHODS.split(', '),
+    payment_method_types: process.env.PAYMENT_METHODS.split(',').trim(),
     mode: 'payment',
     locale: locale,
     line_items: [

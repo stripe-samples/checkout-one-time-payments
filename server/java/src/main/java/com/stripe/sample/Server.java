@@ -75,6 +75,7 @@ public class Server {
             String domainUrl = dotenv.get("DOMAIN");
             Long quantity = postBody.getQuantity();
             String price = dotenv.get("PRICE");
+            String paymentMethodType = dotenv.get("PAYMENT_METHOD_TYPES");
 
             // Create new Checkout Session for the order
             // Other optional params include:
@@ -87,7 +88,7 @@ public class Server {
             // set as a query param
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
                     .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
-                    .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.CARD)
+                    .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.valueOf(paymentMethodType))
                     .setMode(SessionCreateParams.Mode.PAYMENT);
 
             // Add a line item for the sticker the Customer is purchasing

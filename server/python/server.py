@@ -65,7 +65,7 @@ def create_checkout_session():
             success_url=domain_url +
             "/success.html?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=domain_url + "/canceled.html",
-            payment_method_types=["card"],
+            payment_method_types= [os.getenv("PAYMENT_METHOD_TYPES").split(',').strip()] ,
             mode="payment",
             line_items=[
                 {

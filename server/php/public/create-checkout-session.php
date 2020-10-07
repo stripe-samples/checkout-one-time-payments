@@ -16,7 +16,7 @@ $quantity = $body->quantity;
 $checkout_session = \Stripe\Checkout\Session::create([
 	'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
 	'cancel_url' => $domain_url . '/canceled.html',
-	'payment_method_types' => ['card'],
+	'payment_method_types' => $_ENV['PAYMENT_METHOD_TYPES'],
 	'mode' => 'payment',
 	'line_items' => [[
 	  'price' => $config['price'],
