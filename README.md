@@ -40,7 +40,6 @@ Read more about testing on Stripe at https://stripe.com/docs/testing.
 
 For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout).
 
-There are two integrations: [client-and-server](./client-and-server) and [client-only](./client-only).
 
 <!-- prettier-ignore -->
 |     | main
