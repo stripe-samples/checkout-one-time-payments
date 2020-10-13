@@ -110,7 +110,7 @@ You can create Products and Prices in the Dashboard or with the API. This sample
 `PRICE` is the ID of a [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
 
 
-**3. Follow the server instructions on how to run:**
+**3. Follow the server instructions on how to run**
 
 Pick the server language you want and follow the instructions in the server folder README on how to run.
 
@@ -122,7 +122,7 @@ npm install
 npm start
 ```
 
-**4. [Optional] Run a webhook locally:**
+**4. [Optional] Run a webhook locally**
 
 You can use the Stripe CLI to easily spin up a local webhook.
 
