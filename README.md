@@ -105,19 +105,24 @@ The other environment variables are configurable:
 
 `DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page.
 
-**2. Follow the server instructions on how to run:**
+**2. Create a Price
+
+You can create Products and Prices in the Dashboard or with the API. This sample requires a Price to run. Once you've created a Price, and add its ID to your `.env`.
+
+
+**3. Follow the server instructions on how to run:**
 
 Pick the server language you want and follow the instructions in the server folder README on how to run.
 
 For example, if you want to run the Node server:
 
 ```
-cd client-and-server/server/node # there's a README in this folder with instructions
+cd server/node # there's a README in this folder with instructions
 npm install
 npm start
 ```
 
-**3. [Optional] Run a webhook locally:**
+**4. [Optional] Run a webhook locally:**
 
 You can use the Stripe CLI to easily spin up a local webhook.
 
@@ -127,7 +132,7 @@ First [install the CLI](https://stripe.com/docs/stripe-cli) and [link your Strip
 stripe listen --forward-to localhost:4242/webhook
 ```
 
-The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECRET` to this value in your .env file.
+The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECRET` to this value in your `.env` file.
 
 You should see events logged in the console where the CLI is running.
 
