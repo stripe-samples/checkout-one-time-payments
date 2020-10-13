@@ -1,10 +1,12 @@
 # Accept payments with Stripe Checkout
 
-Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
+This sample shows you how to integrate with Stripe [Checkout](https://stripe.com/docs/checkout). 
+
+Building a payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
 We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work for you so now you can focus on building the best storefront experience for your customers.
 
-Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. It's so simple you don't even need a server! 🥳
+Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. 🥳
 
 ## Demo
 
@@ -32,29 +34,29 @@ Read more about testing on Stripe at https://stripe.com/docs/testing.
 
 ## Features
 
-- 🌍Localization in different languages
-- 🍎⌚️Built-in support for Apple Pay and Google Pay
-- 🔒Built-in dynamic 3D Secure (ready for SCA)
-- 🧾💵Support for various payment methods. See the [docs](https://stripe.com/docs/payments/checkout/payment-methods) for details.
-- 🍨HTML + Vanilla JavaScript as well as ⚛️ React clients
+- 🌍 Localization in different languages
+- 🍎⌚️ Built-in support for Apple Pay and Google Pay
+- 🔒 Built-in dynamic 3D Secure (ready for SCA)
+- 🧾💵 Support for various payment methods. See the [docs](https://stripe.com/docs/payments/checkout/payment-methods) for details.
+- 🍨 HTML + Vanilla JavaScript as well as ⚛️ React clients
 
 For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout).
 
 
 <!-- prettier-ignore -->
-|     | main
+|     | ✅
 :--- | :---:
 🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. |  ✅ |
 🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.   | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ✅ |
 
-### flowchart
+### Flowchart
 
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
 ## How to run locally
 
-This sample includes 8 server implementations in Java, JavaScript (Node), PHP, PHP-Slim, Python, Ruby, .NET, and go. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
+This sample includes 8 server implementations in Java, JavaScript (Node), PHP, PHP-Slim, Python, Ruby, .NET, and Go. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
 
 Follow the steps below to run locally.
 
@@ -64,15 +66,15 @@ The Stripe CLI is the fastest way to clone and configure a sample to run locally
 
 **Using the Stripe CLI**
 
-If you haven't already installed the CLI, follow the [installation steps](https://github.com/stripe/stripe-cli#installation) in the project README. The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
+If you haven't already installed the CLI, follow the [installation steps](https://stripe.com/docs/stripe-cli#install). The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
 
-In your terminal shell, run the Stripe CLI command to clone the sample:
+In your terminal, run the Stripe CLI command to clone the sample:
 
 ```
 stripe samples create checkout-one-time-payments
 ```
 
-The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys.
+The CLI will walk you through picking your integration type, server and client languages, and configuring your `.env` config file with your Stripe API keys. 
 
 **Installing and cloning manually**
 
