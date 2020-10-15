@@ -10,3 +10,4 @@ Pick the language you are most comfortable in and follow the instructions in the
 * [Ruby (Sinatra)](ruby/README.md)
 * [PHP (Slim)](php/README.md)
 * [Java (Spark)](java/README.md)
+* [Go (net/http)](go/README.md)
