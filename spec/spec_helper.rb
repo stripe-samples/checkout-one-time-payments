@@ -103,7 +103,7 @@ RSpec.configure do |config|
 =end
 end
 
-SERVER_URL = "http://localhost:4242"
+SERVER_URL = ENV.fetch('SERVER_URL', 'http://localhost:4242')
 
 def get(path, *args, **kwargs)
   RestClient.get("#{SERVER_URL}#{path}", *args, **kwargs)
