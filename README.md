@@ -105,6 +105,9 @@ The other environment variables are configurable:
 
 **2. Create a Price**
 
+[![Required](https://img.shields.io/badge/<REQUIRED>-<TRUE>-<ORANGE>.svg)](https://shields.io/)
+
+
 You can create Products and Prices in the Dashboard or with the API. This sample requires a Price to run. Once you've created a Price, and add its ID to your `.env`.
 
 `PRICE` is the ID of a [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
