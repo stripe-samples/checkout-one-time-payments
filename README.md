@@ -105,7 +105,7 @@ The other environment variables are configurable:
 
 **2. Create a Price**
 
-[![Required](https://img.shields.io/badge/<REQUIRED>-<TRUE>-<ORANGE>.svg)](https://shields.io/)
+[![Required](https://img.shields.io/badge/REQUIRED-TRUE-ORANGE.svg)](https://shields.io/)
 
 
 You can create Products and Prices in the Dashboard or with the API. This sample requires a Price to run. Once you've created a Price, and add its ID to your `.env`.
