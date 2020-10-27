@@ -1,6 +1,6 @@
 # Accept payments with Stripe Checkout
 
-This sample shows you how to integrate with Stripe [Checkout](https://stripe.com/docs/checkout). 
+This sample shows you how to integrate with Stripe [Checkout](https://stripe.com/docs/checkout).
 
 Building a payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
@@ -74,7 +74,7 @@ In your terminal, run the Stripe CLI command to clone the sample:
 stripe samples create checkout-one-time-payments
 ```
 
-The CLI will walk you through picking your integration type, server and client languages, and configuring your `.env` config file with your Stripe API keys. 
+The CLI will walk you through picking your integration type, server and client languages, and configuring your `.env` config file with your Stripe API keys.
 
 **Installing and cloning manually**
 
@@ -110,6 +110,43 @@ You can create Products and Prices in the Dashboard or with the API. This sample
 `PRICE` is the ID of a [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
 
 
+You can quickly create a Price with the Stripe CLI like so:
+
+```sh
+stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo"
+```
+
+Which will return the json:
+
+```json
+{
+  "id": "price_1Hh1ZeCZ6qsJgndJaX9fauRl",
+  "object": "price",
+  "active": true,
+  "billing_scheme": "per_unit",
+  "created": 1603841250,
+  "currency": "usd",
+  "livemode": false,
+  "lookup_key": null,
+  "metadata": {
+  },
+  "nickname": null,
+  "product": "prod_IHalmba0p05ZKD",
+  "recurring": null,
+  "tiers_mode": null,
+  "transform_quantity": null,
+  "type": "one_time",
+  "unit_amount": 500,
+  "unit_amount_decimal": "500"
+}
+```
+
+Take the Price ID, in the example case `price_1Hh1ZeCZ6qsJgndJaX9fauRl`, and set the environment variable in `.env`:
+
+```sh
+PRICE=price_1Hh1ZeCZ6qsJgndJaX9fauRl
+```
+
 **3. Follow the server instructions on how to run**
 
 Pick the server language you want and follow the instructions in the server folder README on how to run.
@@ -121,6 +158,10 @@ cd server/node # there's a README in this folder with instructions
 npm install
 npm start
 ```
+
+If you're running the react client, then the sample will run in the browser at
+`localhost:3000` otherwise visit `localhost:4242`.
+
 
 **4. [Optional] Run a webhook locally**
 
