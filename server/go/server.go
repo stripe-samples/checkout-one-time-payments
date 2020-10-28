@@ -22,6 +22,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	checkEnv()
+
 	stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
 
 	http.Handle("/", http.FileServer(http.Dir(os.Getenv("STATIC_DIR"))))
@@ -177,4 +179,11 @@ func writeJSONErrorMessage(w http.ResponseWriter, message string, code int) {
 		},
 	}
 	writeJSONError(w, resp, code)
+}
+
+func checkEnv() {
+	price := os.Getenv("PRICE")
+	if price == "price_12345" || price == "" {
+		log.Fatal("You must set a Price ID from your Stripe account. See the README for instructions.")
+	}
 }

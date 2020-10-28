@@ -13,8 +13,16 @@ import os
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from dotenv import load_dotenv, find_dotenv
 
-# Setup Stripe python client library
+# Setup Stripe python client library.
 load_dotenv(find_dotenv())
+
+# Ensure environment variables are set.
+price = os.getenv('PRICE')
+if price is None or price == 'price_12345' or price == '':
+    print('You must set a Price ID in .env. Please see the README.')
+    exit(0)
+
+
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = os.getenv('STRIPE_API_VERSION')
 
@@ -59,7 +67,7 @@ def create_checkout_session():
         # [payment_intent_data] - lets capture the payment later
         # [customer_email] - lets you prefill the email input in the form
         # For full details see https:#stripe.com/docs/api/checkout/sessions/create
-        
+
         # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
         checkout_session = stripe.checkout.Session.create(
             success_url=domain_url +
@@ -108,7 +116,6 @@ def webhook_received():
         print('🔔 Payment succeeded!')
 
     return jsonify({'status': 'success'})
-
 
 if __name__ == '__main__':
     app.run(port=4242)

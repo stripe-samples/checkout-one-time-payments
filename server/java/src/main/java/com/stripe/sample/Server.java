@@ -42,6 +42,8 @@ public class Server {
 
         Dotenv dotenv = Dotenv.load();
 
+        checkEnv();
+
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
 
         staticFiles.externalLocation(
@@ -127,5 +129,14 @@ public class Server {
                     return "";
             }
         });
+    }
+
+    public static void checkEnv() {
+        Dotenv dotenv = Dotenv.load();
+        String price = dotenv.get("PRICE");
+        if(price == "price_12345" || price == "" || price == null) {
+          System.out.println("You must set a Price ID in the .env file. Please see the README.");
+          System.exit(0);
+        }
     }
 }

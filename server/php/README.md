@@ -17,7 +17,8 @@ price = price_1Hh1ZeCZ6qsJgndJaX9fauRl
 ```
 
 Note that `price_12345` is a placeholder and the sample will not work with that
-price ID.
+price ID. You can [create a price](https://stripe.com/docs/api/prices/create)
+from the dashboard or with the Stripe CLI.
 
 
 2. Run composer to set up dependencies

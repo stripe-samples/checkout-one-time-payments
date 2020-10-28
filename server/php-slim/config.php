@@ -1,5 +1,11 @@
 <?php
 
+$price = getenv('PRICE');
+if($price == null || $price == 'price_12345' || $price == '') {
+  echo "You must set a Price ID in the .env file. See the README.";
+  die(0);
+}
+
 if (PHP_SAPI == 'cli-server') {
   $_SERVER['SCRIPT_NAME'] = '/index.php';
   $url  = parse_url($_SERVER['REQUEST_URI']);
