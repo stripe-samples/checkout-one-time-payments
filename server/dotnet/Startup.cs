@@ -36,7 +36,7 @@ namespace server
                 options.SecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
                 options.WebhookSecret = Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SECRET");
                 options.Price = Environment.GetEnvironmentVariable("PRICE");
-                options.PaymentMethodTypes = Environment.GetEnvironmentVariable("PAYMENT_METHODS");
+                options.PaymentMethodTypes = Environment.GetEnvironmentVariable("PAYMENT_METHOD_TYPES");
                 options.Domain = Environment.GetEnvironmentVariable("DOMAIN");
             });
 
