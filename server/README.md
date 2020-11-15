@@ -8,5 +8,7 @@ Pick the language you are most comfortable in and follow the instructions in the
 * [JavaScript (Node)](node/README.md)
 * [Python (Flask)](python/README.md)
 * [Ruby (Sinatra)](ruby/README.md)
-* [PHP (Slim)](php/README.md)
+* [PHP](php/README.md)
+* [PHP (Slim)](php-slim/README.md)
 * [Java (Spark)](java/README.md)
+* [Go (net/http)](go/README.md)

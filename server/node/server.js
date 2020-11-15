@@ -3,6 +3,10 @@ const app = express();
 const { resolve } = require('path');
 // Copy the .env.example in the root into a .env file in this folder
 require('dotenv').config({ path: './.env' });
+
+// Ensure environment variables are set.
+checkEnv();
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(express.static(process.env.STATIC_DIR));
@@ -108,3 +112,12 @@ app.post('/webhook', async (req, res) => {
 });
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
+
+
+function checkEnv() {
+  const price = process.env.PRICE;
+  if(price === "price_12345" || !price) {
+    console.log("You must set a Price ID in the environment variables. Please see the README.");
+    process.exit(0);
+  }
+}

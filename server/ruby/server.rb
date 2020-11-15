@@ -2,14 +2,23 @@ require 'stripe'
 require 'sinatra'
 require 'dotenv'
 
-# Copy the .env.example in the root into a .env file in this folder
+# Copy the .env.example in the root into a .env file in this folder.
 Dotenv.load
+
+# Ensure environment variables were configured properly.
+price = ENV['PRICE']
+if price == 'price_12345' || price == '' || price.nil?
+  puts "You must set a Price ID in your .env file. Please see the README."
+  exit
+end
+
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
 set :static, true
 
 set :public_folder, File.join(File.dirname(__FILE__), ENV['STATIC_DIR'])
 set :port, 4242
+set :bind, '0.0.0.0'
 
 get '/' do
   content_type 'text/html'

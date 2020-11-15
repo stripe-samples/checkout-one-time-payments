@@ -24,13 +24,19 @@ namespace server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var price = Environment.GetEnvironmentVariable("PRICE");
+            if(price == "price_12345" || price == "" || price == null) {
+              Console.WriteLine("You must set a Price ID in .env. Please see the README.");
+              Environment.Exit(0);
+            }
+
             services.Configure<StripeOptions>(options =>
             {
                 options.PublishableKey = Environment.GetEnvironmentVariable("STRIPE_PUBLISHABLE_KEY");
                 options.SecretKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
                 options.WebhookSecret = Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SECRET");
                 options.Price = Environment.GetEnvironmentVariable("PRICE");
-                options.PaymentMethodTypes = Environment.GetEnvironmentVariable("PAYMENT_METHOD_TYPES");
+                options.PaymentMethodTypes = Environment.GetEnvironmentVariable("PAYMENT_METHODS");
                 options.Domain = Environment.GetEnvironmentVariable("DOMAIN");
             });
 

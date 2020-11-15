@@ -26,18 +26,18 @@ $app->add(function ($request, $response, $next) {
     Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
     return $next($request, $response);
 });
-  
-$app->get('/', function (Request $request, Response $response, array $args) {   
+
+$app->get('/', function (Request $request, Response $response, array $args) {
     return $response->write(file_get_contents(getenv('STATIC_DIR') . '/index.html'));
 });
 
 $app->get('/config', function (Request $request, Response $response, array $args) {
   $pub_key = getenv('STRIPE_PUBLISHABLE_KEY');
   $price = \Stripe\Price::retrieve(getenv('PRICE'));
-  return $response->withJson([ 
-    'publicKey' => $pub_key, 
-    'unitAmount' => $price['unit_amount'], 
-    'currency' => $price['currency'] 
+  return $response->withJson([
+    'publicKey' => $pub_key,
+    'unitAmount' => $price['unit_amount'],
+    'currency' => $price['currency']
   ]);
 });
 
@@ -75,7 +75,7 @@ $app->post('/create-checkout-session', function(Request $request, Response $resp
       'quantity' => $quantity,
     ]]
   ]);
-  
+
   return $response->withJson(array('sessionId' => $checkout_session['id']));
 });
 

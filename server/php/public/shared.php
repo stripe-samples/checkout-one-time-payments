@@ -13,11 +13,19 @@ if (!$config) {
 	exit;
 }
 
+$price = $config['price'];
+if (!$price || $price == 'price_12345') {
+  http_response_code(500);
+  echo "You must set a Price ID in the config.ini file. Please see the README";
+  exit;
+}
+
+
 \Stripe\Stripe::setApiKey($config['stripe_secret_key']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$input = file_get_contents('php://input');
-	$body = json_decode($input);	
+	$body = json_decode($input);
 }
 
 if (json_last_error() !== JSON_ERROR_NONE) {

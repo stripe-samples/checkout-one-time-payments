@@ -1,10 +1,12 @@
 # Accept payments with Stripe Checkout
 
-Building payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
+This sample shows you how to integrate with Stripe [Checkout](https://stripe.com/docs/checkout).
+
+Building a payment form UI from scratch is difficult -- input field validation, error message handing, and localization are just a few things to think about when designing a simple checkout flow.
 
 We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work for you so now you can focus on building the best storefront experience for your customers.
 
-Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. It's so simple you don't even need a server! 🥳
+Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. 🥳
 
 ## Demo
 
@@ -32,30 +34,29 @@ Read more about testing on Stripe at https://stripe.com/docs/testing.
 
 ## Features
 
-- 🌍Localization in different languages
-- 🍎⌚️Built-in support for Apple Pay and Google Pay
-- 🔒Built-in dynamic 3D Secure (ready for SCA)
-- 🧾💵Support for various payment methods. See the [docs](https://stripe.com/docs/payments/checkout/payment-methods) for details.
-- 🍨HTML + Vanilla JavaScript as well as ⚛️ React clients
+- 🌍 Localization in different languages
+- 🍎⌚️ Built-in support for Apple Pay and Google Pay
+- 🔒 Built-in dynamic 3D Secure (ready for SCA)
+- 🧾💵 Support for various payment methods. See the [docs](https://stripe.com/docs/payments/checkout/payment-methods) for details.
+- 🍨 HTML + Vanilla JavaScript as well as ⚛️ React clients
 
 For more features see the [Checkout documentation](https://stripe.com/docs/payments/checkout).
 
-There are two integrations: [client-and-server](./client-and-server) and [client-only](./client-only).
 
 <!-- prettier-ignore -->
-|     | main
+|     | ✅
 :--- | :---:
 🔨 **Prebuilt checkout page.** Create a payment page that is customizable with your business' name and logo. |  ✅ |
 🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.   | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ✅ |
 
-### flowchart
+### Flowchart
 
 <img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
 ## How to run locally
 
-This sample includes 8 server implementations in Java, JavaScript (Node), PHP, PHP-Slim, Python, Ruby, .NET, and go. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
+This sample includes 8 server implementations in Java, JavaScript (Node), PHP, PHP-Slim, Python, Ruby, .NET, and Go. All servers implement the same routes for the client to communicate with. There is a HTML + Vanilla JavaScript as well as a React client implemention available.
 
 Follow the steps below to run locally.
 
@@ -65,15 +66,15 @@ The Stripe CLI is the fastest way to clone and configure a sample to run locally
 
 **Using the Stripe CLI**
 
-If you haven't already installed the CLI, follow the [installation steps](https://github.com/stripe/stripe-cli#installation) in the project README. The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
+If you haven't already installed the CLI, follow the [installation steps](https://stripe.com/docs/stripe-cli#install). The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
 
-In your terminal shell, run the Stripe CLI command to clone the sample:
+In your terminal, run the Stripe CLI command to clone the sample:
 
 ```
 stripe samples create checkout-one-time-payments
 ```
 
-The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys.
+The CLI will walk you through picking your integration type, server and client languages, and configuring your `.env` config file with your Stripe API keys.
 
 **Installing and cloning manually**
 
@@ -100,23 +101,72 @@ The other environment variables are configurable:
 
 `STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
 
-`PRICE` is the [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
-
 `DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page.
 
-**2. Follow the server instructions on how to run:**
+**2. Create a Price**
+
+[![Required](https://img.shields.io/badge/REQUIRED-TRUE-ORANGE.svg)](https://shields.io/)
+
+
+You can create Products and Prices in the Dashboard or with the API. This sample requires a Price to run. Once you've created a Price, and add its ID to your `.env`.
+
+`PRICE` is the ID of a [Price](https://stripe.com/docs/api/prices/create) for your product. A Price has a unit amount and currency.
+
+
+You can quickly create a Price with the Stripe CLI like so:
+
+```sh
+stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo"
+```
+
+Which will return the json:
+
+```json
+{
+  "id": "price_1Hh1ZeCZ6qsJgndJaX9fauRl",
+  "object": "price",
+  "active": true,
+  "billing_scheme": "per_unit",
+  "created": 1603841250,
+  "currency": "usd",
+  "livemode": false,
+  "lookup_key": null,
+  "metadata": {
+  },
+  "nickname": null,
+  "product": "prod_IHalmba0p05ZKD",
+  "recurring": null,
+  "tiers_mode": null,
+  "transform_quantity": null,
+  "type": "one_time",
+  "unit_amount": 500,
+  "unit_amount_decimal": "500"
+}
+```
+
+Take the Price ID, in the example case `price_1Hh1ZeCZ6qsJgndJaX9fauRl`, and set the environment variable in `.env`:
+
+```sh
+PRICE=price_1Hh1ZeCZ6qsJgndJaX9fauRl
+```
+
+**3. Follow the server instructions on how to run**
 
 Pick the server language you want and follow the instructions in the server folder README on how to run.
 
 For example, if you want to run the Node server:
 
 ```
-cd client-and-server/server/node # there's a README in this folder with instructions
+cd server/node # there's a README in this folder with instructions
 npm install
 npm start
 ```
 
-**3. [Optional] Run a webhook locally:**
+If you're running the react client, then the sample will run in the browser at
+`localhost:3000` otherwise visit `localhost:4242`.
+
+
+**4. [Optional] Run a webhook locally**
 
 You can use the Stripe CLI to easily spin up a local webhook.
 
@@ -126,7 +176,7 @@ First [install the CLI](https://stripe.com/docs/stripe-cli) and [link your Strip
 stripe listen --forward-to localhost:4242/webhook
 ```
 
-The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECRET` to this value in your .env file.
+The CLI will print a webhook secret key to the console. Set `STRIPE_WEBHOOK_SECRET` to this value in your `.env` file.
 
 You should see events logged in the console where the CLI is running.
 
@@ -155,3 +205,4 @@ If you have questions, comments, or need help with code, we're here to help:
 
 - [@adreyfus-stripe](https://twitter.com/adrind)
 - [@thorsten-stripe](https://twitter.com/thorwebdev)
+- [@cjavilla-stripe](https://twitter.com/cjav_dev)
