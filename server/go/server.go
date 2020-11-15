@@ -104,7 +104,7 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			{
 				Quantity: stripe.Int64(req.Quantity),
-				Price:    stripe.String(),
+				Price:    stripe.String(os.Getenv("PRICE"))
 			},
 		},
 	}
