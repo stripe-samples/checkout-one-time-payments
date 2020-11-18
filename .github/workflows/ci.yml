@@ -7,15 +7,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # repository: 'stripe-samples/checkout-one-time-payments'
-          repository: 'hibariya/checkout-one-time-payments'
-          ref: 'ci'
+          repository: 'stripe-samples/checkout-one-time-payments'
 
       - uses: actions/checkout@v2
         with:
           repository: 'stripe-samples/sample-ci'
           path: 'sample-ci'
-          ref: 'ci'
 
       - name: Install gettext for envsubst
         run: |
