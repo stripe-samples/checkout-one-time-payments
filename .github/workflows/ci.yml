@@ -52,3 +52,15 @@ jobs:
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
           PRICE: price_1Hf3k8CWW2eVYDoPDT6y9NLt
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: |
+          cat docker-compose.yml
+          docker-compose ps -a
+          docker-compose logs web
+        env:
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+          PREMIUM: price_1HXyXwCWW2eVYDoPnnTQ02VO
+          BASIC: price_1HXyVBCWW2eVYDoPtXcEdXfw
