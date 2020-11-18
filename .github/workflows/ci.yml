@@ -1,0 +1,63 @@
+name: CI for stripe-samples/checkout-one-time-payments
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: 'stripe-samples/checkout-one-time-payments'
+
+      - uses: actions/checkout@v2
+        with:
+          repository: 'stripe-samples/sample-ci'
+          path: 'sample-ci'
+
+      - name: Install gettext for envsubst
+        run: |
+          sudo apt install gettext-base
+
+      - name: Install jq
+        run: |
+          sudo curl -o /usr/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+          sudo chmod +x /usr/bin/jq
+
+      - name: Run tests
+        run: |
+          source sample-ci/helpers.sh
+
+          install_docker_compose_settings
+          export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
+          cat <<EOF >> .env
+          DOMAIN=http://web:4242
+          PRICE=${PRICE}
+          PAYMENT_METHODS="card"
+          EOF
+
+          for lang in $(cat .cli.json | server_langs_for_integration main)
+          do
+            [ "$lang" = "php" ] && continue
+
+            configure_docker_compose_for_integration . "$lang" ../../client/html \
+                                                     target/single-product-checkout-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+
+            docker-compose up -d && wait_web_server
+            docker-compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
+          done
+        env:
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+          PRICE: price_1Hf3k8CWW2eVYDoPDT6y9NLt
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: |
+          cat docker-compose.yml
+          docker-compose ps -a
+          docker-compose logs web
+        env:
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+          PREMIUM: price_1HXyXwCWW2eVYDoPnnTQ02VO
+          BASIC: price_1HXyVBCWW2eVYDoPtXcEdXfw

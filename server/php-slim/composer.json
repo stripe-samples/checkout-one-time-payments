@@ -6,6 +6,6 @@
     "monolog/monolog": "^1.17"
   },
   "scripts": {
-    "start": "php -S localhost:4242 index.php"
+    "start": "php -S 0.0.0.0:4242 index.php"
   }
 }

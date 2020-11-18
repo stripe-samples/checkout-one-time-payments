@@ -32,8 +32,8 @@ func main() {
 	http.HandleFunc("/create-checkout-session", handleCreateCheckoutSession)
 	http.HandleFunc("/webhook", handleWebhook)
 
-	log.Println("server running at localhost:4242")
-	http.ListenAndServe("localhost:4242", nil)
+	log.Println("server running at 0.0.0.0:4242")
+	http.ListenAndServe("0.0.0.0:4242", nil)
 }
 
 // ErrorResponseMessage represents the structure of the error
