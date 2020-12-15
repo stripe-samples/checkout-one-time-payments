@@ -3,7 +3,7 @@
    "headline": "Foto Singola",
    "subline": "Acquista una foto originale Pasha",
    "sr-legal-text": "Numero di copie (massimo 10)",
-   "pulsante": {
+   "button": {
      "submit": "Acquista per {{total}}"
    }
 }
