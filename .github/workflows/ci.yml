@@ -1,5 +1,5 @@
 name: CI for stripe-samples/checkout-one-time-payments
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
