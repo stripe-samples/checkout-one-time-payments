@@ -47,6 +47,11 @@ namespace server.Controllers
         [HttpPost("create-checkout-session")]
         public async Task<CreateCheckoutSessionResponse> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
         {
+            // Pulled from environment variables in the `.env` file. In practice,
+            // users often hard code this list of strings representing the types of
+            // payment methods that are accepted.
+            List<string> paymentMethodTypes = this.options.Value.PaymentMethodTypes;
+
             // Create new Checkout Session for the order
             // Other optional params include:
             //  [billing_address_collection] - to display billing address details on the page
@@ -59,7 +64,7 @@ namespace server.Controllers
             {
                 SuccessUrl = $"{this.options.Value.Domain}/success.html?session_id={{CHECKOUT_SESSION_ID}}",
                 CancelUrl = $"{this.options.Value.Domain}/canceled.html",
-                PaymentMethodTypes = new List<string> { "card" },
+                PaymentMethodTypes = paymentMethodTypes,
                 Mode = "payment",
                 LineItems = new List<SessionLineItemOptions>
                 {
