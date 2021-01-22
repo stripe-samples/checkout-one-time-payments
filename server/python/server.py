@@ -73,7 +73,7 @@ def create_checkout_session():
             success_url=domain_url +
             "/success.html?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=domain_url + "/canceled.html",
-            payment_method_types= [os.getenv("PAYMENT_METHOD_TYPES").split(',').strip()] ,
+            payment_method_types= os.getenv("PAYMENT_METHOD_TYPES").split(','),
             mode="payment",
             line_items=[
                 {
@@ -118,4 +118,4 @@ def webhook_received():
     return jsonify({'status': 'success'})
 
 if __name__ == '__main__':
-    app.run(port=4242)
+    app.run(port=4242, debug=True)
