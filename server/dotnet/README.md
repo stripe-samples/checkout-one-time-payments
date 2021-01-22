@@ -1,9 +1,10 @@
-# Checkout single product
+# Checkout single subscription
 
-A [Sinatra](http://sinatrarb.com/) implementation.
+An [.NET Core](https://dotnet.microsoft.com/download/dotnet-core) implementation
 
 ## Requirements
-* Ruby v2.4.5+
+
+* .NET Core
 * [Configured .env file](../../README.md)
 
 ## How to run
@@ -23,15 +24,11 @@ Note that `price_12345` is a placeholder and the sample will not work with that
 price ID. You can [create a price](https://stripe.com/docs/api/prices/create)
 from the dashboard or with the Stripe CLI.
 
-2. Install dependencies
-```
-bundle install
-```
-
-3. Run the application
+2. Run the application
 
 ```
-ruby server.rb
+dotnet run Program.cs
 ```
 
-4. If you're using the html client, go to `localhost:4242` to see the demo. For react, visit `localhost:3000`.
+4. If you're using the html client, go to `localhost:4242` to see the demo. For
+   react, visit `localhost:3000`.

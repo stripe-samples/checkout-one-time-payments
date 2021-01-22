@@ -3,7 +3,7 @@
 ## Requirements
 
 - Go 1.13
-- [Configured .env file](../README.md)
+- [Configured .env file](../../README.md)
 
 ## How to run
 

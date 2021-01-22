@@ -1,5 +1,8 @@
 {
   "require": {
     "stripe/stripe-php": "^7.31.0"
+  },
+  "scripts": {
+    "start": "php -S 0.0.0.0:4242"
   }
 }

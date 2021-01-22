@@ -3,7 +3,7 @@
 ## Requirements
 
 - Python 3
-- [Configured .env file](../README.md)
+- [Configured .env file](../../README.md)
 
 ## How to run
 

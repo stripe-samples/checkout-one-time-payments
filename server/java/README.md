@@ -4,6 +4,7 @@
 
 - Maven
 - Java
+- [Configured .env file](../../README.md)
 
 ## How to run
 
@@ -32,7 +33,7 @@ mvn package
 2. Run the packaged jar
 
 ```
-java -cp target/single-product-checkout-1.0.0-SNAPSHOT-jar-with-dependencies.jar com.stripe.sample.Server
+java -cp target/sample-jar-with-dependencies.jar com.stripe.sample.Server
 ```
 
 4. If you're using the html client, go to `localhost:4242` to see the demo. For
