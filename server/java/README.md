@@ -4,6 +4,7 @@
 
 - Maven
 - Java
+- [Configured .env file](../../README.md)
 
 ## How to run
 

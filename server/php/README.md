@@ -1,7 +1,9 @@
 # Checkout subscription with add-ons with PHP
 
 ## Requirements
+
 * PHP
+* [Configured .env file](../../README.md)
 
 ## How to run
 
