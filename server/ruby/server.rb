@@ -48,18 +48,24 @@ end
 post '/create-checkout-session' do
   content_type 'application/json'
   data = JSON.parse request.body.read
+
+  # The list of payment method types to allow your customers to pay.  This is
+  # an array of strings. For this sample, the list of supported payment method
+  # types are fetched from the environment variables `.env` file by default.
+  # In practice, users often hard code a list of strings.
+  pm_types = ENV.fetch('PAYMENT_METHOD_TYPES', 'card').split(',').map(&:strip)
+
   # Create new Checkout Session for the order
   # Other optional params include:
   # [billing_address_collection] - to display billing address details on the page
   # [customer] - if you have an existing Stripe Customer ID
   # [customer_email] - lets you prefill the email input in the form
   # For full details see https:#stripe.com/docs/api/checkout/sessions/create
-
   # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
   session = Stripe::Checkout::Session.create(
     success_url: ENV['DOMAIN'] + '/success.html?session_id={CHECKOUT_SESSION_ID}',
     cancel_url: ENV['DOMAIN'] + '/canceled.html',
-    payment_method_types: ENV['PAYMENT_METHOD_TYPES'].split(',').strip!,
+    payment_method_types: pm_types,
     mode: 'payment',
     line_items: [{
       quantity: data['quantity'],
