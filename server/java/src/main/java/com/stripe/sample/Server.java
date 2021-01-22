@@ -4,6 +4,10 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -77,7 +81,19 @@ public class Server {
             String domainUrl = dotenv.get("DOMAIN");
             Long quantity = postBody.getQuantity();
             String price = dotenv.get("PRICE");
-            String paymentMethodType = dotenv.get("PAYMENT_METHOD_TYPES");
+
+            // Pull the comma separated list of payment method types from the
+            // environment variables stored in `.env`.  Then map to uppercase
+            // strings so that we can lookup the PaymentMethodType enum values.
+            //
+            // In practice, you could hard code the list of strings representing
+            // the payment method types you accept.
+            String[] pmTypes = dotenv.get("PAYMENT_METHOD_TYPES", "card").split(",", 0);
+            List<PaymentMethodType> paymentMethodTypes = Stream
+              .of(pmTypes)
+              .map(String::toUpperCase)
+              .map(PaymentMethodType::valueOf)
+              .collect(Collectors.toList());
 
             // Create new Checkout Session for the order
             // Other optional params include:
@@ -90,7 +106,8 @@ public class Server {
             // set as a query param
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
                     .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
-                    .setCancelUrl(domainUrl + "/canceled.html").addPaymentMethodType(PaymentMethodType.valueOf(paymentMethodType))
+                    .setCancelUrl(domainUrl + "/canceled.html")
+                    .addAllPaymentMethodType(paymentMethodTypes)
                     .setMode(SessionCreateParams.Mode.PAYMENT);
 
             // Add a line item for the sticker the Customer is purchasing
