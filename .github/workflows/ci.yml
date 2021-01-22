@@ -30,7 +30,7 @@ jobs:
           cat <<EOF >> .env
           DOMAIN=http://web:4242
           PRICE=${PRICE}
-          PAYMENT_METHODS="card"
+          PAYMENT_METHOD_TYPES="card,ideal"
           EOF
 
           for lang in $(cat .cli.json | server_langs_for_integration main)
