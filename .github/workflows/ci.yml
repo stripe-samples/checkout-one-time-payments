@@ -45,7 +45,7 @@ jobs:
         env:
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
-          PRICE: price_1Hf3k8CWW2eVYDoPDT6y9NLt
+          PRICE: price_1ICW8OCWW2eVYDoPXTu7iRvB
 
       - name: Collect debug information
         if: ${{ failure() }}
