@@ -16,5 +16,13 @@ RSpec.describe "full integration path" do
     expect(status).to eq(200)
     expect(response).not_to be_nil
     expect(response).to have_key('sessionId')
+
+    session = Stripe::Checkout::Session.retrieve(response['sessionId'])
+    expect(session.payment_method_types).to include('card')
+
+    resp = get_json("/checkout-session?sessionId=#{response['sessionId']}")
+    expect(resp).to have_key('id')
+    expect(resp).to have_key('object')
+    expect(resp['object']).to eq('checkout.session')
   end
 end
