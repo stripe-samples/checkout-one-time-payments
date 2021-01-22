@@ -19,6 +19,7 @@ RSpec.describe "full integration path" do
 
     session = Stripe::Checkout::Session.retrieve(response['sessionId'])
     expect(session.payment_method_types).to include('card')
+    expect(session.payment_method_types).to include('ideal')
 
     resp = get_json("/checkout-session?sessionId=#{response['sessionId']}")
     expect(resp).to have_key('id')

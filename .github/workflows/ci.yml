@@ -30,7 +30,7 @@ jobs:
           cat <<EOF >> .env
           DOMAIN=http://web:4242
           PRICE=${PRICE}
-          PAYMENT_METHODS="card"
+          PAYMENT_METHOD_TYPES="card,ideal"
           EOF
 
           for lang in $(cat .cli.json | server_langs_for_integration main)
@@ -45,7 +45,7 @@ jobs:
         env:
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
-          PRICE: price_1Hf3k8CWW2eVYDoPDT6y9NLt
+          PRICE: price_1ICW8OCWW2eVYDoPXTu7iRvB
 
       - name: Collect debug information
         if: ${{ failure() }}
