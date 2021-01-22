@@ -76,7 +76,6 @@ func handleCheckoutSession(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	sessionID := r.URL.Query().Get("sessionId")
-	fmt.Println(sessionID)
 	s, _ := session.Get(sessionID, nil)
 	writeJSON(w, s)
 }
