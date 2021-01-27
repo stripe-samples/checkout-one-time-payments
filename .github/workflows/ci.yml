@@ -1,5 +1,8 @@
 name: CI for stripe-samples/checkout-one-time-payments
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   test:
