@@ -33,3 +33,4 @@ target/
 .classpath
 .factorypath
 .project
+.secrets
