@@ -15,14 +15,11 @@ jobs:
           repository: 'stripe-samples/sample-ci'
           path: 'sample-ci'
 
-      - name: Install gettext for envsubst
+      - name: Setup dependencies
         run: |
-          sudo apt install gettext-base
+          source sample-ci/helpers.sh
 
-      - name: Install jq
-        run: |
-          sudo curl -o /usr/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
-          sudo chmod +x /usr/bin/jq
+          setup_dependencies
 
       - name: Run tests
         run: |
