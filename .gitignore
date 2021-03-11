@@ -1,6 +1,7 @@
 .env
 .DS_Store
-.vscode
+.vscode/*
+!.vscode/extensions.json
 
 # Ignore dotnet build files
 **/Debug/**
