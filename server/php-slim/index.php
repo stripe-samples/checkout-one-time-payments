@@ -23,6 +23,12 @@ $container['logger'] = function ($c) {
 };
 
 $app->add(function ($request, $response, $next) {
+    // For sample support and debugging. Not required for production:
+    Stripe::setAppInfo(
+      "stripe-samples/accept-a-payment/custom-payment-form",
+      "0.0.1",
+      "https://github.com/stripe-samples/checkout-one-time-payments"
+    );
     Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
     return $next($request, $response);
 });

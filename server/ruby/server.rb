@@ -12,6 +12,13 @@ if price == 'price_12345' || price == '' || price.nil?
   exit
 end
 
+# For sample support and debugging, not required for production:
+Stripe.set_app_info(
+  'stripe-samples/checkout-one-time-payments',
+  version: '0.0.1',
+  url: 'https://github.com/stripe-samples/checkout-one-time-payments'
+)
+Stripe.api_version = '2020-08-27'
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
 set :static, true

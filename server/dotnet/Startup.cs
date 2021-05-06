@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using Stripe;
 
 namespace server
 {
@@ -29,6 +30,13 @@ namespace server
               Console.WriteLine("You must set a Price ID in .env. Please see the README.");
               Environment.Exit(0);
             }
+
+            StripeConfiguration.AppInfo = new AppInfo
+            {
+                Name = "stripe-samples/checkout-one-time-payments",
+                Url = "https://github.com/stripe-samples/checkout-one-time-payments",
+                Version = "0.0.1",
+            };
 
             services.Configure<StripeOptions>(options =>
             {

@@ -49,6 +49,12 @@ public class Server {
         checkEnv();
 
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
+        Stripe.setAppInfo(
+            "stripe-samples/checkout-one-time-payments",
+            "0.0.1",
+            "https://github.com/stripe-samples/checkout-one-time-payments"
+        );
+
 
         staticFiles.externalLocation(
                 Paths.get(Paths.get("").toAbsolutePath().toString(), dotenv.get("STATIC_DIR")).normalize().toString());
