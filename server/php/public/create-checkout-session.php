@@ -14,14 +14,14 @@ $quantity = $body->quantity;
 
 // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 $checkout_session = \Stripe\Checkout\Session::create([
-	'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
-	'cancel_url' => $domain_url . '/canceled.html',
-	'payment_method_types' => explode(",", $_ENV['PAYMENT_METHOD_TYPES']),
-	'mode' => 'payment',
-	'line_items' => [[
-	  'price' => $config['price'],
-	  'quantity' => $quantity,
-	]]
-  ]);
-  
+  'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
+  'cancel_url' => $domain_url . '/canceled.html',
+  'payment_method_types' => explode(",", $_ENV['PAYMENT_METHOD_TYPES']),
+  'mode' => 'payment',
+  'line_items' => [[
+    'price' => $config['price'],
+    'quantity' => $quantity,
+  ]]
+]);
+
 echo json_encode(['sessionId' => $checkout_session['id']]);

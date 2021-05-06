@@ -22,15 +22,12 @@ if (!$price || $price == 'price_12345') {
 
 // For sample support and debugging. Not required for production:
 \Stripe\Stripe::setAppInfo(
-  "stripe-samples/accept-a-payment/custom-payment-form",
+  "stripe-samples/checkout-one-time-payments",
   "0.0.1",
   "https://github.com/stripe-samples/checkout-one-time-payments"
 );
-$stripe = new \Stripe\StripeClient([
-  'api_key' => $config['stripe_secret_key'],
-  'stripe_version' => '2020-08-27',
-]);
 
+\Stripe\Stripe::setApiKey($config['stripe_secret_key']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $input = file_get_contents('php://input');
