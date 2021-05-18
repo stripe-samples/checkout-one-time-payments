@@ -4,8 +4,13 @@ on:
     branches:
       - master
 
+env:
+  STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+  PRICE: ${{ secrets.TEST_PRICE }}
+
 jobs:
-  test:
+  server_test:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +25,10 @@ jobs:
           source sample-ci/helpers.sh
 
           setup_dependencies
+
+      - name: Prepare tests
+        run: |
+          echo '--format RSpec::Github::Formatter --format progress' >> .rspec
 
       - name: Run tests
         run: |
@@ -42,10 +51,6 @@ jobs:
             docker-compose up -d && wait_web_server
             docker-compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
           done
-        env:
-          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
-          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
-          PRICE: ${{ secrets.TEST_PRICE }}
 
       - name: Collect debug information
         if: ${{ failure() }}
@@ -53,3 +58,78 @@ jobs:
           cat docker-compose.yml
           docker-compose ps -a
           docker-compose logs web
+
+  e2e_test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: 'stripe-samples/sample-ci'
+          path: 'sample-ci'
+
+      - name: Setup dependencies
+        run: |
+          source sample-ci/helpers.sh
+
+          setup_dependencies
+
+      - name: Prepare tests
+        run: |
+          echo '--format RSpec::Github::Formatter --format progress' >> .rspec
+
+      - name: Run tests for client/html
+        env:
+          SERVER_URL: http://web:4242
+        run: |
+          source sample-ci/helpers.sh
+
+          install_docker_compose_settings
+          export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
+          cat <<EOF >> .env
+          DOMAIN=${SERVER_URL}
+          PRICE=${PRICE}
+          PAYMENT_METHOD_TYPES="card,ideal"
+          EOF
+
+          configure_docker_compose_for_integration . node ../../client/html
+          docker-compose --profile=e2e up -d && wait_web_server
+          docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb
+
+      - name: Run tests for client/react-cra
+        env:
+          SERVER_URL: http://frontend:3000
+        run: |
+          source sample-ci/helpers.sh
+
+          echo "$(cat client/react-cra/package.json | jq '.proxy = "http://web:4242"')" > client/react-cra/package.json
+
+          install_docker_compose_settings
+          export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
+          cat <<EOF >> .env
+          DOMAIN=${SERVER_URL}
+          PRICE=${PRICE}
+          PAYMENT_METHOD_TYPES="card,ideal"
+          EOF
+
+          configure_docker_compose_for_integration . node ../../client/react-cra
+          docker-compose --profile=frontend up -d && wait_web_server
+          docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: |
+          cat docker-compose.yml
+          docker-compose ps -a
+          docker-compose --profile=frontend logs web
+
+          docker cp $(docker-compose ps -qa runner | head -1):/work/tmp .
+
+      - name: Upload capybara screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: |
+            tmp/capybara
