@@ -80,6 +80,7 @@ jobs:
           echo '--format RSpec::Github::Formatter --format progress' >> .rspec
 
       - name: Run tests for client/html
+        if: ${{ always() }}
         env:
           SERVER_URL: http://web:4242
         run: |
@@ -98,6 +99,7 @@ jobs:
           docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb
 
       - name: Run tests for client/react-cra
+        if: ${{ always() }}
         env:
           SERVER_URL: http://frontend:3000
         run: |
