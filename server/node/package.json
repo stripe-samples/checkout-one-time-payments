@@ -11,8 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "dotenv": "^8.0.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "stripe": "^8.131.1"
+    "stripe": "^8.154.1"
   }
 }
