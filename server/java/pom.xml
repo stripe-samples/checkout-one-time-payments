@@ -32,7 +32,7 @@
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>java-dotenv</artifactId>
-            <version>5.1.1</version>
+            <version>5.2.2</version>
         </dependency>
     </dependencies>
     <build>
