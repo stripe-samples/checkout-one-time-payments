@@ -2,4 +2,4 @@ source 'https://rubygems.org/'
 
 gem 'dotenv'
 gem 'sinatra'
-gem 'stripe', '~> 5.21.0'
+gem 'stripe', '~> 5.34.0'
