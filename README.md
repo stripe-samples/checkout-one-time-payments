@@ -50,9 +50,6 @@ For more features see the [Checkout documentation](https://stripe.com/docs/payme
 🔢 **Dynamic checkout amounts.** Dynamically define product amounts rather than relying on predefined Prices.   | ✅ |
 ⌛ **Capture payments later.** Optionally split the capture and authorization steps to place a hold on the card and charge later. | ✅ |
 
-### Flowchart
-
-<img src="https://storage.googleapis.com/stripe-samples-flow-charts/checkout-one-time-client-server.png" alt="A flowchart of the Checkout flow" align="center">
 
 ## How to run locally
 
@@ -196,7 +193,6 @@ A: Plans and SKUs were old ways to model recurring and one-off prices. We create
 If you found a bug or want to suggest a new [feature/use case/sample], please [file an issue](../../issues).
 
 If you have questions, comments, or need help with code, we're here to help:
-- on [IRC via freenode](https://webchat.freenode.net/?channel=#stripe)
 - on Twitter at [@StripeDev](https://twitter.com/StripeDev)
 - on Stack Overflow at the [stripe-payments](https://stackoverflow.com/tags/stripe-payments/info) tag
 - by [email](mailto:support+github@stripe.com)
