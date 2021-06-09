@@ -22,10 +22,6 @@ updates:
     directory: "/server/php/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "composer"
-    directory: "/server/php-slim/"
-    schedule:
-      interval: "daily"
 
   # node dependencies
   - package-ecosystem: "npm"
