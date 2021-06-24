@@ -1,9 +1,33 @@
 <?php
 
-require_once 'shared.php';
+require '../vendor/autoload.php';
 
-$domain_url = $config['domain'];
-$quantity = $body->quantity;
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+$price = $_ENV['PRICE'];
+if (!$price || $price == 'price_12345') {
+  http_response_code(500);
+  echo "You must set a Price ID in the config.ini file. Please see the README";
+  exit;
+}
+
+// For sample support and debugging. Not required for production:
+\Stripe\Stripe::setAppInfo(
+  "stripe-samples/checkout-one-time-payments",
+  "0.0.2",
+  "https://github.com/stripe-samples/checkout-one-time-payments"
+);
+
+\Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+  echo 'Invalid request';
+  exit;
+}
+
+$domain_url = $_ENV['DOMAIN'];
+$quantity = $_POST['quantity'];
 
 // Create new Checkout Session for the order
 // Other optional params include:
@@ -11,7 +35,6 @@ $quantity = $body->quantity;
 // [customer] - if you have an existing Stripe Customer ID
 // [customer_email] - lets you prefill the email input in the form
 // For full details see https://stripe.com/docs/api/checkout/sessions/create
-
 // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 $checkout_session = \Stripe\Checkout\Session::create([
   'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
@@ -19,9 +42,10 @@ $checkout_session = \Stripe\Checkout\Session::create([
   'payment_method_types' => explode(",", $_ENV['PAYMENT_METHOD_TYPES']),
   'mode' => 'payment',
   'line_items' => [[
-    'price' => $config['price'],
+    'price' => $price,
     'quantity' => $quantity,
   ]]
 ]);
 
-echo json_encode(['sessionId' => $checkout_session['id']]);
+header("HTTP/1.1 303 See Other");
+header("Location: " . $checkout_session->url);

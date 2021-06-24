@@ -7,21 +7,21 @@
 
 ## How to run
 
-1. Confirm `config.ini` configuration
+1. Confirm `.env` configuration
 
-Copy `config.ini.sample` to `config.ini`, replace with your Stripe API keys:
+Copy `.env.example` to `.env`, replace with your Stripe API keys:
 
 ```
-cp config.ini.sample config.ini
+cp ../../.env.example .env
 ```
 
-This sample requires a Price ID in the `price` config variable.
+This sample requires a Price ID in the `PRICE` environment variable.
 
-Confirm `price` is set equal to the ID of a Price from your
+Confirm `PRICE` is set equal to the ID of a Price from your
 Stripe account. It should look something like:
 
-```
-price = price_1Hh1ZeCZ6qsJgndJaX9fauRl
+```yml
+PRICE=price_1Hh1ZeCZ6qsJgndJaX9fauRl
 ```
 
 Note that `price_12345` is a placeholder and the sample will not work with that
@@ -41,5 +41,4 @@ cd public
 php -S localhost:4242
 ```
 
-4. If you're using the html client, go to `localhost:4242` to see the demo. For
-   react, visit `localhost:3000`.
+4. If you're using the html client, go to `localhost:4242` to see the demo.
