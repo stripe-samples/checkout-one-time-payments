@@ -1,6 +1,10 @@
 package com.stripe.sample;
 
 import java.nio.file.Paths;
+import java.nio.charset.Charset;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 
 import java.util.HashMap;
 import java.util.Map;
