@@ -9,13 +9,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
-	"github.com/stripe/stripe-go/v71"
-	"github.com/stripe/stripe-go/v71/checkout/session"
-	"github.com/stripe/stripe-go/v71/price"
-	"github.com/stripe/stripe-go/v71/webhook"
+	"github.com/stripe/stripe-go/v72"
+	"github.com/stripe/stripe-go/v72/checkout/session"
+	"github.com/stripe/stripe-go/v72/price"
+	"github.com/stripe/stripe-go/v72/webhook"
 )
 
 func main() {
@@ -87,13 +88,13 @@ func handleCheckoutSession(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, s)
 }
 
-type checkoutSessionCreateReq struct {
-	Quantity int64 `json:"quantity"`
-}
-
 func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
-	req := checkoutSessionCreateReq{}
-	json.NewDecoder(r.Body).Decode(&req)
+	r.ParseForm()
+	quantity, err := strconv.ParseInt(r.PostFormValue("quantity")[0:], 10, 64)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("error parsing quantity %v", err.Error()), http.StatusInternalServerError)
+		return
+	}
 	domainURL := os.Getenv("DOMAIN")
 
 	// Pulls the list of payment method types from environment variables (`.env`).
@@ -117,7 +118,7 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 		Mode:               stripe.String(string(stripe.CheckoutSessionModePayment)),
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			{
-				Quantity: stripe.Int64(req.Quantity),
+				Quantity: stripe.Int64(quantity),
 				Price:    stripe.String(os.Getenv("PRICE")),
 			},
 		},
@@ -128,11 +129,7 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	writeJSON(w, struct {
-		SessionID string `json:"sessionId"`
-	}{
-		SessionID: s.ID,
-	})
+	http.Redirect(w, r, s.URL, http.StatusSeeOther)
 }
 
 func handleWebhook(w http.ResponseWriter, r *http.Request) {
