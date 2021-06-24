@@ -16,10 +16,6 @@
   <body>
     <div class="sr-root">
       <div class="sr-main">
-        <header class="sr-header">
-          <div class="sr-header__logo"></div>
-        </header>
-
         <section class="container">
           <div>
             <h1>Single photo</h1>
@@ -34,15 +30,17 @@
             </div>
           </div>
 
-          <div class="quantity-setter">
-            <button class="increment-btn" id="subtract" disabled>-</button>
-            <input type="number" id="quantity-input" min="1" value="1" />
-            <button class="increment-btn" id="add">+</button>
-          </div>
+          <form action="/create-checkout-session" method="POST">
+            <div class="quantity-setter">
+              <button class="increment-btn" id="subtract" disabled type="button">-</button>
+              <input type="number" id="quantity-input" min="1" value="1" name="quantity" />
+              <button class="increment-btn" id="add" type="button">+</button>
+            </div>
 
-          <p class="sr-legal-text">Number of copies (max 10)</p>
+            <p class="sr-legal-text">Number of copies (max 10)</p>
 
-          <button id="submit">Buy</button>
+            <button type="submit" id="submit">Buy</button>
+          </form>
         </section>
 
         <div id="error-message"></div>

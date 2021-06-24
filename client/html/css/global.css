@@ -10,7 +10,6 @@
   --accent-color: #0066f0;
   --body-font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   --radius: 6px;
-  --logo-image: url("https://storage.googleapis.com/stripe-sample-images/KAVHOLM.svg");
   --form-width: 600px;
 }
 
@@ -50,7 +49,7 @@ h4 {
   flex-direction: row;
   width: 100%;
   max-width: 980px;
-  padding: 48px;
+  padding: 24px;
   align-content: center;
   justify-content: center;
   height: auto;
@@ -66,7 +65,6 @@ h4 {
 .sr-main,
 .sr-content {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   height: 100%;
   align-self: center;
@@ -78,7 +76,6 @@ h4 {
   padding-left: 48px;
 }
 .sr-header__logo {
-  background-image: var(--logo-image);
   height: 24px;
   background-size: contain;
   background-repeat: no-repeat;
@@ -132,7 +129,7 @@ input[type="text"]:focus,
 button:focus,
 .focused {
   box-shadow: 0 0 0 1px rgba(50, 151, 211, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.07),
-    0 0 0 4px rgba(50, 151, 211, 0.3);
+  0 0 0 4px rgba(50, 151, 211, 0.3);
   outline: none;
   z-index: 9;
 }
@@ -166,7 +163,7 @@ input[type="number"]::placeholder {
 
 .sr-checkbox-label input:focus ~ .sr-checkbox-check {
   box-shadow: 0 0 0 1px rgba(50, 151, 211, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.07),
-    0 0 0 4px rgba(50, 151, 211, 0.3);
+  0 0 0 4px rgba(50, 151, 211, 0.3);
   outline: none;
 }
 
@@ -198,7 +195,7 @@ input[type="number"]::placeholder {
 }
 .sr-select:focus {
   box-shadow: 0 0 0 1px rgba(50, 151, 211, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.07),
-    0 0 0 4px rgba(50, 151, 211, 0.3);
+  0 0 0 4px rgba(50, 151, 211, 0.3);
   outline: none;
 }
 .sr-select option {
@@ -356,7 +353,6 @@ pre {
 :root {
   --accent-color: #ed5f74;
   --headline-color: var(--accent-color);
-  --logo-image: url("https://storage.googleapis.com/stripe-sample-images/logo-pasha.svg");
 }
 
 .pasha-image-stack {
@@ -370,7 +366,7 @@ pre {
   border-radius: var(--radius);
   background-color: var(--gray-border);
   box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1),
-    0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  0 3px 6px 0 rgba(0, 0, 0, 0.07);
   transition: all 0.8s ease;
   opacity: 0;
 }
@@ -569,4 +565,8 @@ input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+#submit {
+  width: 100%;
 }
