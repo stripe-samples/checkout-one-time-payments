@@ -1,4 +1,4 @@
-require './spec_helper.rb'
+require 'stripe'
 
 RSpec.describe "full integration path" do
   describe "/config" do
