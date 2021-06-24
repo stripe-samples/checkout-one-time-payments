@@ -32,15 +32,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Server {
     private static Gson gson = new Gson();
 
-    static class PostBody {
-        @SerializedName("quantity")
-        Long quantity;
-
-        public Long getQuantity() {
-            return quantity;
-        }
-    }
-
     public static void main(String[] args) {
         port(4242);
 
@@ -81,11 +72,8 @@ public class Server {
         });
 
         post("/create-checkout-session", (request, response) -> {
-            response.type("application/json");
-            PostBody postBody = gson.fromJson(request.body(), PostBody.class);
-
             String domainUrl = dotenv.get("DOMAIN");
-            Long quantity = postBody.getQuantity();
+            Long quantity = Long.parseLong(request.queryParams("quantity"));
             String price = dotenv.get("PRICE");
 
             // Pull the comma separated list of payment method types from the
@@ -123,9 +111,8 @@ public class Server {
             SessionCreateParams createParams = builder.build();
             Session session = Session.create(createParams);
 
-            Map<String, Object> responseData = new HashMap<>();
-            responseData.put("sessionId", session.getId());
-            return gson.toJson(responseData);
+            response.redirect(session.getUrl(), 303);
+            return "";
         });
 
         post("/webhook", (request, response) -> {

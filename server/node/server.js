@@ -18,6 +18,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
 
 
 app.use(express.static(process.env.STATIC_DIR));
+app.use(express.urlencoded());
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -55,7 +56,7 @@ app.get('/checkout-session', async (req, res) => {
 app.post('/create-checkout-session', async (req, res) => {
   const domainURL = process.env.DOMAIN;
 
-  const { quantity, locale } = req.body;
+  const { quantity } = req.body;
 
   // The list of supported payment method types. We fetch this from the
   // environment variables in this sample. In practice, users often hard code a
@@ -71,7 +72,6 @@ app.post('/create-checkout-session', async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: pmTypes,
     mode: 'payment',
-    locale: locale,
     line_items: [
       {
         price: process.env.PRICE,
@@ -83,9 +83,7 @@ app.post('/create-checkout-session', async (req, res) => {
     cancel_url: `${domainURL}/canceled.html`,
   });
 
-  res.send({
-    sessionId: session.id,
-  });
+  return res.redirect(303, session.url);
 });
 
 // Webhook handler for asynchronous events.

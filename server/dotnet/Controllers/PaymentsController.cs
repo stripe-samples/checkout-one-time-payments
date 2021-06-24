@@ -45,7 +45,7 @@ namespace server.Controllers
         }
 
         [HttpPost("create-checkout-session")]
-        public async Task<CreateCheckoutSessionResponse> CreateCheckoutSession([FromBody] CreateCheckoutSessionRequest req)
+        public async Task<IActionResult> CreateCheckoutSession()
         {
             // Pulled from environment variables in the `.env` file. In practice,
             // users often hard code this list of strings representing the types of
@@ -70,7 +70,7 @@ namespace server.Controllers
                 {
                     new SessionLineItemOptions
                     {
-                        Quantity = req.Quantity,
+                        Quantity = long.Parse(Request.Form["quantity"]),
                         Price = this.options.Value.Price,
                     },
                 },
@@ -78,11 +78,8 @@ namespace server.Controllers
 
             var service = new SessionService(this.client);
             var session = await service.CreateAsync(options);
-
-            return new CreateCheckoutSessionResponse
-            {
-                SessionId = session.Id,
-            };
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
 
         [HttpPost("webhook")]

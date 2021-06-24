@@ -53,9 +53,6 @@ get '/checkout-session' do
 end
 
 post '/create-checkout-session' do
-  content_type 'application/json'
-  data = JSON.parse request.body.read
-
   # The list of payment method types to allow your customers to pay.  This is
   # an array of strings. For this sample, the list of supported payment method
   # types are fetched from the environment variables `.env` file by default.
@@ -75,14 +72,12 @@ post '/create-checkout-session' do
     payment_method_types: pm_types,
     mode: 'payment',
     line_items: [{
-      quantity: data['quantity'],
+      quantity: params['quantity'],
       price: ENV['PRICE'],
     }]
   )
 
-  {
-    sessionId: session['id']
-  }.to_json
+  redirect session.url, 303
 end
 
 post '/webhook' do

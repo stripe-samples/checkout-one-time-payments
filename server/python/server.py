@@ -10,7 +10,7 @@ import stripe
 import json
 import os
 
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request, send_from_directory, redirect
 from dotenv import load_dotenv, find_dotenv
 
 # Setup Stripe python client library.
@@ -61,7 +61,7 @@ def get_checkout_session():
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
-    data = json.loads(request.data)
+    quantity = request.form.get('quantity', 1)
     domain_url = os.getenv('DOMAIN')
 
     try:
@@ -75,19 +75,16 @@ def create_checkout_session():
 
         # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
         checkout_session = stripe.checkout.Session.create(
-            success_url=domain_url +
-            "/success.html?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url=domain_url + "/canceled.html",
-            payment_method_types= os.getenv("PAYMENT_METHOD_TYPES").split(','),
-            mode="payment",
-            line_items=[
-                {
-                    "price": os.getenv('PRICE'),
-                    "quantity": data['quantity']
-                }
-            ]
+            success_url=domain_url + '/success.html?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=domain_url + '/canceled.html',
+            payment_method_types= os.getenv('PAYMENT_METHOD_TYPES').split(','),
+            mode='payment',
+            line_items=[{
+                'price': os.getenv('PRICE'),
+                'quantity': quantity,
+            }]
         )
-        return jsonify({'sessionId': checkout_session['id']})
+        return redirect(checkout_session.url, code=303)
     except Exception as e:
         return jsonify(error=str(e)), 403
 
