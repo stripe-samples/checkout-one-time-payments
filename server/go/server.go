@@ -9,8 +9,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
-  "strconv"
 
 	"github.com/joho/godotenv"
 	"github.com/stripe/stripe-go/v72"
@@ -89,12 +89,12 @@ func handleCheckoutSession(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
-  r.ParseForm()
-  quantity, err := strconv.ParseInt(r.PostFormValue("quantity")[0:], 10, 64);
-  if err != nil {
+	r.ParseForm()
+	quantity, err := strconv.ParseInt(r.PostFormValue("quantity")[0:], 10, 64)
+	if err != nil {
 		http.Error(w, fmt.Sprintf("error parsing quantity %v", err.Error()), http.StatusInternalServerError)
 		return
-  }
+	}
 	domainURL := os.Getenv("DOMAIN")
 
 	// Pulls the list of payment method types from environment variables (`.env`).
@@ -129,7 +129,7 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-  http.Redirect(w, r, s.URL, http.StatusSeeOther)
+	http.Redirect(w, r, s.URL, http.StatusSeeOther)
 }
 
 func handleWebhook(w http.ResponseWriter, r *http.Request) {

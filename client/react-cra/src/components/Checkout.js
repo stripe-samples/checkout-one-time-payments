@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 const formatPrice = ({ amount, currency, quantity }) => {
-  console.log(amount, currency, quantity);
   const numberFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
@@ -31,7 +30,6 @@ const Checkout = () => {
         unitAmount,
         currency
       } = await fetch('/config').then(r => r.json());
-      console.log(unitAmount);
       setAmount(unitAmount);
       setCurrency(currency);
     }
