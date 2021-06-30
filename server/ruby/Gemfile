@@ -2,5 +2,5 @@ source 'https://rubygems.org/'
 
 gem 'dotenv'
 gem 'sinatra'
-gem 'stripe', '~> 5.34.0'
+gem 'stripe', '~> 5.35.0'
 gem 'webrick'
