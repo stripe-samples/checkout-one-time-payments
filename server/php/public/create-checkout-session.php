@@ -8,7 +8,7 @@ $dotenv->load();
 $price = $_ENV['PRICE'];
 if (!$price || $price == 'price_12345') {
   http_response_code(500);
-  echo "You must set a Price ID in the config.ini file. Please see the README";
+  echo "You must set a Price ID in the `.env` file. Please see the README";
   exit;
 }
 
