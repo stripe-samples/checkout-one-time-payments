@@ -169,7 +169,6 @@ input[type='number']::placeholder {
 
 .sr-checkbox-label input:checked ~ .sr-checkbox-check {
   background-color: var(--accent-color);
-  background-image: url('https://storage.googleapis.com/stripe-sample-images/icon-checkmark.svg');
   background-repeat: no-repeat;
   background-size: 16px;
   background-position: -1px -1px;
@@ -180,7 +179,6 @@ input[type='number']::placeholder {
   display: block;
   height: 44px;
   margin: 0;
-  background-image: url('https://storage.googleapis.com/stripe-sample-images/icon-chevron-down.svg');
   background-repeat: no-repeat, repeat;
   background-position: right 12px top 50%, 0 0;
   background-size: 0.65em auto, 100%;
