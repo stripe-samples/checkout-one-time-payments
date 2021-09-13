@@ -114,6 +114,16 @@ You can quickly create a Price with the Stripe CLI like so:
 stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo"
 ```
 
+<details open>
+<summary>With Stripe Tax</summary>
+
+  ```sh
+  stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo" -d "automatic_tax[enabled]"="true"
+  ```
+
+  More Information: [Docs - Update your Products and Prices](https://stripe.com/docs/tax/checkout#product-and-price-setup)
+</details>
+
 Which will return the json:
 
 ```json
