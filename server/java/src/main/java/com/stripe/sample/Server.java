@@ -98,6 +98,7 @@ public class Server {
             // [billing_address_collection] - to display billing address details on the page
             // [customer] - if you have an existing Stripe Customer ID
             // [customer_email] - lets you prefill the email input in the form
+            // [automatic_tax] - to automatically calculate consumer tax in the checkout page
             // For full details see https://stripe.com/docs/api/checkout/sessions/create
 
             // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID
@@ -106,6 +107,7 @@ public class Server {
                     .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl(domainUrl + "/canceled.html")
                     .addAllPaymentMethodType(paymentMethodTypes)
+                    // .setAutomaticTax(SessionCreateParams.AutomaticTax.builder().setEnabled(true).build())
                     .setMode(SessionCreateParams.Mode.PAYMENT);
 
             // Add a line item for the sticker the Customer is purchasing
