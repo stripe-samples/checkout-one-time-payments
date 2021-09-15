@@ -114,11 +114,27 @@ You can quickly create a Price with the Stripe CLI like so:
 stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo"
 ```
 
-<details open>
+<details>
 <summary>With Stripe Tax</summary>
 
+  Before creating a price, make sure you have Stripe Tax set up in the dashboard: [Docs - Set up Stripe Tax](https://stripe.com/docs/tax/set-up).
+
+  Because Stripe needs to know what kind of product you are selling, you need to submit a valid tax code specifying what kind of product you are selling. You can find a list of all tax codes here: [Available tax codes](https://stripe.com/docs/tax/tax-codes). In this example, we will use `txcd_99999999` which is 'General - Tangible Goods'.
+
   ```sh
-  stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=demo" -d "automatic_tax[enabled]"="true"
+  stripe products create \
+    --name="demo" \
+    --tax-code="txcd_99999999"
+  ```
+
+  From the response, copy the `id` and create a price. The tax behavior can be either `inclusive`, `exclusive` or `unspecified`. For our example, we are using `exclusive`.
+
+  ```sh
+  stripe prices create \
+    --unit-amount=500 \
+    --currency=usd \
+    --tax-behavior=exclusive \
+    --product=<INSERT_ID, like prod_ABC123>
   ```
 
   More Information: [Docs - Update your Products and Prices](https://stripe.com/docs/tax/checkout#product-and-price-setup)
@@ -162,7 +178,8 @@ Pick the server language you want and follow the instructions in the server fold
 For example, if you want to run the Node server:
 
 ```
-cd server/node # there's a README in this folder with instructions
+cd server/node 
+# There's a README in this folder with instructions + a how to enable Stripe Tax.
 npm install
 npm start
 ```
