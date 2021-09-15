@@ -71,6 +71,7 @@ def create_checkout_session():
         # [customer] - if you have an existing Stripe Customer ID
         # [payment_intent_data] - lets capture the payment later
         # [customer_email] - lets you prefill the email input in the form
+        # [automatic_tax] - to automatically calculate consumer tax in the checkout page
         # For full details see https:#stripe.com/docs/api/checkout/sessions/create
 
         # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
@@ -79,6 +80,7 @@ def create_checkout_session():
             cancel_url=domain_url + '/canceled.html',
             payment_method_types= os.getenv('PAYMENT_METHOD_TYPES').split(','),
             mode='payment',
+            # automatic_tax={'enabled': True},
             line_items=[{
                 'price': os.getenv('PRICE'),
                 'quantity': quantity,
