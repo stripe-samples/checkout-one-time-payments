@@ -68,7 +68,7 @@ app.post('/create-checkout-session', async (req, res) => {
   // [billing_address_collection] - to display billing address details on the page
   // [customer] - if you have an existing Stripe Customer ID
   // [customer_email] - lets you prefill the email input in the Checkout page
-  // [automatic_tax] - to automatically calculate consumer tax in the Checkout page
+  // [automatic_tax] - to automatically calculate sales tax, VAT and GST in the checkout page
   // For full details see https://stripe.com/docs/api/checkout/sessions/create
   const session = await stripe.checkout.sessions.create({
     payment_method_types: pmTypes,

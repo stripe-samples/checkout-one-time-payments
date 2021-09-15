@@ -32,7 +32,7 @@ from the dashboard or with the Stripe CLI.
 
    Uncomment this line of code and the sales tax will be automatically calculated during the checkout.
 
-   Make sure you previously went through the set up of Stripe Tax: [Set up Stripe Tax](https://stripe.com/docs/tax/set-up) and you have your products & prices updated with tax codes and tax behavior: [Docs - Update your Products and Prices](https://stripe.com/docs/tax/checkout#product-and-price-setup)
+   Make sure you previously went through the set up of Stripe Tax: [Set up Stripe Tax](https://stripe.com/docs/tax/set-up) and you have your products and prices updated with tax behavior and optionally tax codes: [Docs - Update your Products and Prices](https://stripe.com/docs/tax/checkout#product-and-price-setup)
 </details>
 
 2. Create and activate a new virtual environment

@@ -116,10 +116,11 @@ stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=dem
 
 <details>
 <summary>With Stripe Tax</summary>
+  Stripe Tax lets you calculate and collect sales tax, VAT and GST with one line of code.
 
   Before creating a price, make sure you have Stripe Tax set up in the dashboard: [Docs - Set up Stripe Tax](https://stripe.com/docs/tax/set-up).
 
-  Because Stripe needs to know what kind of product you are selling, you need to submit a valid tax code specifying what kind of product you are selling. You can find a list of all tax codes here: [Available tax codes](https://stripe.com/docs/tax/tax-codes). In this example, we will use `txcd_99999999` which is 'General - Tangible Goods'.
+  Stripe needs to know what kind of product you are selling to calculate the taxes. For this example we will submit a tax code describing what kind of product is used: `txcd_99999999` which is 'General - Tangible Goods'. You can find a list of all tax codes here: [Available tax codes](https://stripe.com/docs/tax/tax-codes). If you leave the tax code empty, Stripe will use the default one from your [Tax settings](https://dashboard.stripe.com/test/settings/tax).
 
   ```sh
   stripe products create \
@@ -127,7 +128,7 @@ stripe prices create --unit-amount 500 --currency usd -d "product_data[name]=dem
     --tax-code="txcd_99999999"
   ```
 
-  From the response, copy the `id` and create a price. The tax behavior can be either `inclusive`, `exclusive` or `unspecified`. For our example, we are using `exclusive`.
+  From the response, copy the `id` and create a price. The tax behavior can be either `inclusive` or `exclusive`. For our example, we are using `exclusive`.
 
   ```sh
   stripe prices create \
@@ -179,7 +180,7 @@ For example, if you want to run the Node server:
 
 ```
 cd server/node 
-# There's a README in this folder with instructions + a how to enable Stripe Tax.
+# There's a README in this folder with instructions to run the server and how to enable Stripe Tax.
 npm install
 npm start
 ```

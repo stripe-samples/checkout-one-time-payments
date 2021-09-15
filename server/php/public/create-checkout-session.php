@@ -34,7 +34,7 @@ $quantity = $_POST['quantity'];
 // [billing_address_collection] - to display billing address details on the page
 // [customer] - if you have an existing Stripe Customer ID
 // [customer_email] - lets you prefill the email input in the form
-// [automatic_tax] - to automatically calculate consumer tax in the checkout page
+// [automatic_tax] - to automatically calculate sales tax, VAT and GST in the checkout page
 // For full details see https://stripe.com/docs/api/checkout/sessions/create
 // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 $checkout_session = \Stripe\Checkout\Session::create([
