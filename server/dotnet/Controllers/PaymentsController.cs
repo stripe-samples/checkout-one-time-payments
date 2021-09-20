@@ -57,6 +57,7 @@ namespace server.Controllers
             //  [billing_address_collection] - to display billing address details on the page
             //  [customer] - if you have an existing Stripe Customer ID
             //  [customer_email] - lets you prefill the email input in the form
+            //  [automatic_tax] - to automatically calculate sales tax, VAT and GST in the checkout page
             //  For full details see https:#stripe.com/docs/api/checkout/sessions/create
 
             //  ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
@@ -74,6 +75,7 @@ namespace server.Controllers
                         Price = this.options.Value.Price,
                     },
                 },
+                // AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true },
             };
 
             var service = new SessionService(this.client);
