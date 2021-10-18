@@ -10,6 +10,10 @@ env:
   STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
   PRICE: ${{ secrets.TEST_PRICE }}
 
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   server_test:
     runs-on: ubuntu-20.04
