@@ -8,7 +8,7 @@ RSpec.describe "Checkout one-time payments", type: :system do
     click_on 'Buy'
 
     fill_in 'email', with: 'test@example.com'
-    click_on 'Pay with card'
+    click_on 'Pay'
     fill_in 'cardNumber', with: '4242424242424242'
     fill_in 'cardExpiry', with: '12 / 33'
     fill_in 'CVC', with: '123'
