@@ -40,7 +40,6 @@ $quantity = $_POST['quantity'];
 $checkout_session = \Stripe\Checkout\Session::create([
   'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
   'cancel_url' => $domain_url . '/canceled.html',
-  'payment_method_types' => explode(",", $_ENV['PAYMENT_METHOD_TYPES']),
   'mode' => 'payment',
   // 'automatic_tax' => ['enabled' => true],
   'line_items' => [[

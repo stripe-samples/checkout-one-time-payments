@@ -39,8 +39,6 @@ RSpec.describe "full integration path" do
         id: session_id,
         expand: ['line_items'],
       })
-      expect(session.payment_method_types).to include('card')
-      expect(session.payment_method_types).to include('ideal')
       expect(session.line_items.first.quantity).to eq(7)
     end
   end
@@ -50,7 +48,6 @@ RSpec.describe "full integration path" do
       session = Stripe::Checkout::Session.create({
         success_url: 'https://example.com/success',
         cancel_url: 'https://example.com/cancel',
-        payment_method_types: ['card'],
         line_items: [{
           price: ENV['PRICE'],
           quantity: 1
