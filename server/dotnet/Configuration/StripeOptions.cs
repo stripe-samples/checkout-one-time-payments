@@ -6,6 +6,5 @@ public class StripeOptions
     public string SecretKey { get; set; }
     public string WebhookSecret { get; set; }
     public string Price { get; set; }
-    public List<string> PaymentMethodTypes { get; set; }
     public string Domain { get; set; }
 }

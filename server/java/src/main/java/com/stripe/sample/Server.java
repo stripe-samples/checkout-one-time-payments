@@ -80,19 +80,6 @@ public class Server {
             Long quantity = Long.parseLong(request.queryParams("quantity"));
             String price = dotenv.get("PRICE");
 
-            // Pull the comma separated list of payment method types from the
-            // environment variables stored in `.env`.  Then map to uppercase
-            // strings so that we can lookup the PaymentMethodType enum values.
-            //
-            // In practice, you could hard code the list of strings representing
-            // the payment method types you accept.
-            String[] pmTypes = dotenv.get("PAYMENT_METHOD_TYPES", "card").split(",", 0);
-            List<PaymentMethodType> paymentMethodTypes = Stream
-              .of(pmTypes)
-              .map(String::toUpperCase)
-              .map(PaymentMethodType::valueOf)
-              .collect(Collectors.toList());
-
             // Create new Checkout Session for the order
             // Other optional params include:
             // [billing_address_collection] - to display billing address details on the page
@@ -106,7 +93,6 @@ public class Server {
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
                     .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl(domainUrl + "/canceled.html")
-                    .addAllPaymentMethodType(paymentMethodTypes)
                     // .setAutomaticTax(SessionCreateParams.AutomaticTax.builder().setEnabled(true).build())
                     .setMode(SessionCreateParams.Mode.PAYMENT);
 

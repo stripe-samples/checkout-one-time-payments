@@ -97,10 +97,6 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 	}
 	domainURL := os.Getenv("DOMAIN")
 
-	// Pulls the list of payment method types from environment variables (`.env`).
-	// In practice, users often hard code the list of strings.
-	paymentMethodTypes := strings.Split(os.Getenv("PAYMENT_METHOD_TYPES"), ",")
-
 	// Create new Checkout Session for the order
 	// Other optional params include:
 	// [billing_address_collection] - to display billing address details on the page
@@ -115,7 +111,6 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 	params := &stripe.CheckoutSessionParams{
 		SuccessURL:         stripe.String(domainURL + "/success.html?session_id={CHECKOUT_SESSION_ID}"),
 		CancelURL:          stripe.String(domainURL + "/canceled.html"),
-		PaymentMethodTypes: stripe.StringSlice(paymentMethodTypes),
 		Mode:               stripe.String(string(stripe.CheckoutSessionModePayment)),
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			{
