@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/stripe/stripe-go/v72"
