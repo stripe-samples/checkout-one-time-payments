@@ -9,4 +9,5 @@ require (
 	github.com/stripe/stripe-go/v72 v72.101.0
 	golang.org/x/text v0.3.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
