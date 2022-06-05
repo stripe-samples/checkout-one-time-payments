@@ -26,7 +26,7 @@ RSpec.describe "Checkout one-time payments", type: :system do
     visit server_url('/')
 
     click_on 'Buy'
-    click_on 'Previous page'
+    find('a[href$="/canceled.html"]').click
 
     expect(page).to have_content 'Your payment was canceled'
   end
