@@ -6,7 +6,7 @@ Building a payment form UI from scratch is difficult -- input field validation, 
 
 We built [Checkout](https://stripe.com/docs/payments/checkout) to do that work for you so now you can focus on building the best storefront experience for your customers.
 
-Once your customer is ready to pay, use Stripe.js to redirect them to the URL of your Stripe hosted payment page. 🥳
+Once your customer is ready to pay, use [Stripe.js](https://github.com/stripe/stripe-js) to redirect them to the URL of your Stripe hosted payment page. 🥳
 
 ## Demo
 
