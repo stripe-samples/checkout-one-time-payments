@@ -19,6 +19,7 @@ jobs:
         if: |
           (contains(steps.metadata.outputs.dependency-names, 'github.com/stripe/stripe-go/v72') ||
            contains(steps.metadata.outputs.dependency-names, 'Stripe.net') ||
+           contains(steps.metadata.outputs.dependency-names, 'com.stripe:stripe-java') ||
            contains(steps.metadata.outputs.dependency-names, 'stripe/stripe-php') ||
            contains(steps.metadata.outputs.dependency-names, 'stripe')) && 
            steps.metadata.outputs.update-type == 'version-update:semver-minor'
