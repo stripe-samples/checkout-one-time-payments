@@ -2,7 +2,7 @@ name: CI for stripe-samples/checkout-one-time-payments
 on:
   push:
     branches:
-      - master
+      - main
       - fix-ci
   workflow_dispatch:
 
