@@ -2,7 +2,7 @@ name: CI for stripe-samples/checkout-one-time-payments
 on:
   push:
     branches:
-      - master
+      - main
       - fix-ci
   workflow_dispatch:
 
@@ -43,7 +43,7 @@ jobs:
           - server_type: go
             server_image: golang:1.17
           - server_type: dotnet
-            server_image: mcr.microsoft.com/dotnet/core/sdk:3.1
+            server_image: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
       - uses: actions/checkout@v3
 
