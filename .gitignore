@@ -35,3 +35,7 @@ target/
 .factorypath
 .project
 .secrets
+
+# .NET files
+**/dotnet/bin/
+**/dotnet/obj/ 
