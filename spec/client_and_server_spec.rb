@@ -32,7 +32,7 @@ RSpec.describe "full integration path" do
       # Pull's the Checkout session ID out of the Location header
       # to assert the right configuration on the created session.
       redirect_url = redirect_response.headers[:location]
-      expect(redirect_url).to start_with("https://checkout.stripe.com/pay/cs_test")
+      expect(redirect_url).to start_with("https://checkout.stripe.com/c/pay/cs_test")
       match = redirect_url.match(".*(?<session_id>cs_test.*)#.*")
       session_id = match[:session_id]
       session = Stripe::Checkout::Session.retrieve({
