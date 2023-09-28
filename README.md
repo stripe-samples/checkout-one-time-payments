@@ -94,7 +94,7 @@ STRIPE_SECRET_KEY=<replace-with-your-secret-key>
 
 The other environment variables are configurable:
 
-`STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
+`STATIC_DIR` tells the server where the client files are located and does not need to be modified unless you move the server files.
 
 `DOMAIN` is the domain of your website, where Checkout will redirect back to after the customer completes the payment on the Checkout page.
 
