@@ -16,6 +16,8 @@ RSpec.describe "Checkout one-time payments", type: :system do
     select 'United States', from: 'billingCountry'
     fill_in 'billingPostalCode', with: '10000'
 
+    uncheck 'enableStripePass', visible: false
+
     first('*', exact_text: 'Pay').click
 
     expect(page).to have_content 'Your payment succeeded'

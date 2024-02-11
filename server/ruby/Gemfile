@@ -1,6 +1,7 @@
 source 'https://rubygems.org/'
 
 gem 'dotenv'
+gem "rackup"
 gem 'sinatra'
 gem 'stripe', '~> 8.3.0'
 gem 'webrick'

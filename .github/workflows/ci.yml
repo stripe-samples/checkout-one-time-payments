@@ -4,18 +4,57 @@ on:
     branches:
       - main
       - fix-ci
+  pull_request_target:
   workflow_dispatch:
 
 env:
   STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
   STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
   PRICE: ${{ secrets.TEST_PRICE }}
+  MAINTAINERS: |
+    cecilphillip-stripe
+    charliegerard-stripe
+    dependabot[bot]
+    erinkavanaugh-stripe
+    hideokamoto-stripe
+    kevinpeters-stripe
 
 concurrency:
-  group: ci-${{ github.head_ref }}
+  group: ci-${{ github.event.pull_request.head.ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  require-permission:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'check if the triggering actor is one of the maintainers'
+        run: |
+          while read item; do
+            if [[ "$item" == "${{ github.triggering_actor }}" ]]; then
+              exit # safe to run tests with write permission
+            fi
+          done <<< "$MAINTAINERS"
+          echo 'CI have to be re-run by one of the $MAINTAINERS' >> $GITHUB_STEP_SUMMARY
+          exit 1
+
+  changed_files:
+    runs-on: ubuntu-latest
+    needs: require-permission
+    outputs:
+      files: ${{ steps.diff.outputs.files }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: 'Collect changed files'
+        id: diff
+        run: |
+          echo 'files<<EOF' >> $GITHUB_OUTPUT
+          git diff --name-only --merge-base origin/main >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
   server_test:
     runs-on: ubuntu-latest
     strategy:
@@ -33,7 +72,7 @@ jobs:
           - server_type: python
             server_image: python:latest
           - server_type: python
-            server_image: python:3.7
+            server_image: python:3.8
           - server_type: java
             server_image: maven:latest
           - server_type: java
@@ -45,21 +84,30 @@ jobs:
           - server_type: dotnet
             server_image: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
-      - uses: actions/checkout@v3
+      - id: if_running
+        run: |
+          prefix="${{ matrix.target.sample }}/server/${{ matrix.runtime.server_type }}"
+          if [[ "${{ github.event.pull_request.head.ref || github.ref }}" = "refs/heads/main" ]] || \
+            [[ $(echo "${{ needs.changed_files.outputs.files }}" | grep -E "^${prefix}") ]]
+          then echo 'running=true' >> $GITHUB_OUTPUT
+          fi
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        if: ${{ steps.if_running.outputs.running }}
+        with:
+          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
+
+      - uses: actions/checkout@v4
+        if: ${{ steps.if_running.outputs.running }}
         with:
           repository: 'stripe-samples/sample-ci'
           path: 'sample-ci'
 
-      - name: Setup dependencies
+      - name: Run tests
+        if: ${{ steps.if_running.outputs.running }}
         run: |
           source sample-ci/helpers.sh
           setup_dependencies
-
-      - name: Run tests
-        run: |
-          source sample-ci/helpers.sh
 
           install_docker_compose_settings
           export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
@@ -75,7 +123,7 @@ jobs:
           docker-compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
 
       - name: Collect debug information
-        if: ${{ failure() }}
+        if: ${{ steps.if_running.outputs.running && failure() }}
         run: |
           cat .env
           cat docker-compose.yml
@@ -83,6 +131,7 @@ jobs:
           docker-compose logs web
 
   e2e_test:
+    needs: changed_files
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -95,28 +144,35 @@ jobs:
             domain: http://frontend:3000
             profile: frontend
     steps:
-      - uses: actions/checkout@v3
+      - id: if_running
+        run: |
+          prefix="client/${{ matrix.implementation.client_type }}"
+          if [[ "${{ github.event.pull_request.head.ref || github.ref }}" = "refs/heads/main" ]] || \
+            [[ $(echo "${{ needs.changed_files.outputs.files }}" | grep -E "^${prefix}") ]]
+          then echo 'running=true' >> $GITHUB_OUTPUT
+          fi
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        if: ${{ steps.if_running.outputs.running }}
+        with:
+          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
+
+      - uses: actions/checkout@v4
+        if: ${{ steps.if_running.outputs.running }}
         with:
           repository: 'stripe-samples/sample-ci'
           path: 'sample-ci'
 
-      - name: Setup dependencies
-        run: |
-          source sample-ci/helpers.sh
-          setup_dependencies
-
-      - name: Prepare tests
+      - name: Run tests
+        if: ${{ steps.if_running.outputs.running }}
+        env:
+          SERVER_URL: ${{ matrix.implementation.domain }}
         run: |
           echo '--format RSpec::Github::Formatter --format progress' >> .rspec
           echo "$(cat client/react-cra/package.json | jq '.proxy = "http://web:4242"')" > client/react-cra/package.json
 
-      - name: Run tests
-        env:
-          SERVER_URL: ${{ matrix.implementation.domain }}
-        run: |
           source sample-ci/helpers.sh
+          setup_dependencies
 
           install_docker_compose_settings
           export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
@@ -126,7 +182,7 @@ jobs:
           PAYMENT_METHOD_TYPES="card,ideal"
           EOF
 
-          configure_docker_compose_for_integration . node ../../client/${{ matrix.implementation.client_type }}
+          configure_docker_compose_for_integration . node ../../client/${{ matrix.implementation.client_type }} node:lts
           docker-compose --profile="${{ matrix.implementation.profile }}" up -d && wait_web_server && wait_web_server "${{ matrix.implementation.domain }}"
           docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb
           command="docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb"
@@ -135,7 +191,7 @@ jobs:
             || $command --only-failures
 
       - name: Collect debug information
-        if: ${{ failure() }}
+        if: ${{ steps.if_running.outputs.running && failure() }}
         run: |
           cat .env
           cat docker-compose.yml
@@ -145,9 +201,36 @@ jobs:
           docker cp $(docker-compose ps -qa runner | head -1):/work/tmp .
 
       - name: Upload capybara screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        if: ${{ steps.if_running.outputs.running && failure() }}
+        uses: actions/upload-artifact@v4
         with:
           name: screenshots
           path: |
             tmp/capybara
+
+  auto-merge-dependabot-prs:
+    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
+    needs:
+      - server_test
+      - e2e_test
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Enable auto-merge for Stripe SDKs
+        if: |
+          (contains(steps.metadata.outputs.dependency-names, 'github.com/stripe/stripe-go/v72') ||
+           contains(steps.metadata.outputs.dependency-names, 'Stripe.net') ||
+           contains(steps.metadata.outputs.dependency-names, 'com.stripe:stripe-java') ||
+           contains(steps.metadata.outputs.dependency-names, 'stripe/stripe-php') ||
+           contains(steps.metadata.outputs.dependency-names, 'stripe'))
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
