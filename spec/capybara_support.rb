@@ -5,7 +5,9 @@ require 'capybara-screenshot/rspec'
 Capybara.server_host = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
 
 Capybara.register_driver :chrome do |app|
-  opts = {browser: :chrome, url: ENV.fetch('SELENIUM_URL', 'http://selenium:4444/wd/hub')}
+  browser_options = Selenium::WebDriver::Chrome::Options.new
+  browser_options.add_argument 'disable-dev-shm-usage'
+  opts = {browser: :remote, options: browser_options, url: ENV.fetch('SELENIUM_URL', 'http://selenium:4444/wd/hub')}
   Capybara::Selenium::Driver.new(app, **opts)
 end
 
@@ -15,7 +17,7 @@ end
 
 Capybara.javascript_driver = :chrome
 Capybara.default_driver = :chrome
-Capybara.default_max_wait_time = 20
+Capybara.default_max_wait_time = 25
 Capybara.enable_aria_label = true
 Capybara.save_path = 'tmp/capybara'
 
