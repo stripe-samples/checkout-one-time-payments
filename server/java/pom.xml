@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
-            <version>22.30.0</version>
+            <version>24.17.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.cdimascio</groupId>
