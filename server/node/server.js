@@ -18,7 +18,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
 
 
 app.use(express.static(process.env.STATIC_DIR));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
@@ -124,7 +124,7 @@ app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 
 function checkEnv() {
   const price = process.env.PRICE;
-  if(price === "price_12345" || !price) {
+  if (price === "price_12345" || !price) {
     console.log("You must set a Price ID in the environment variables. Please see the README.");
     process.exit(0);
   }
