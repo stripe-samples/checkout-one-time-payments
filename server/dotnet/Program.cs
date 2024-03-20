@@ -75,12 +75,12 @@ app.MapPost("/create-checkout-session", async (IOptions<StripeOptions> stripeOpt
                         Price = stripeOptions.Value.Price,
                     },
                 },
+        // AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true }
     };
 
     var service = new SessionService();
     var session = await service.CreateAsync(options);
-    context.Response.Headers.Add("Location", session.Url);
-    return Results.StatusCode(303);
+    return Results.Redirect(session.Url);
 });
 
 app.MapPost("webhook", async (IOptions<StripeOptions> stripeOptions, HttpContext context) =>
@@ -106,9 +106,8 @@ app.MapPost("webhook", async (IOptions<StripeOptions> stripeOptions, HttpContext
     if (stripeEvent.Type == "checkout.session.completed")
     {
         var session = stripeEvent.Data.Object as Session;
-        app.Logger.LogInformation($"Session ID: {session.Id}");
+        app.Logger.LogInformation("Session ID: {SessionId}", session.Id);
 
-        // Take some action based on session.
     }
 
     return Results.Ok();
