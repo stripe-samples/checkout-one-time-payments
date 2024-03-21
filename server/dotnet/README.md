@@ -4,7 +4,7 @@ An [.NET Core](https://dotnet.microsoft.com/download/dotnet-core) implementation
 
 ## Requirements
 
-* .NET Core
+* .NET SDK
 * [Configured .env file](../../README.md)
 
 ## How to run
@@ -27,7 +27,7 @@ from the dashboard or with the Stripe CLI.
 <details>
 <summary>Enabling Stripe Tax</summary>
 
-   In the [`Controllers/PaymentsController.cs`](./Controllers/PaymentsController.cs) file you will find the following code commented out
+   In the [`Program.cs`](./Program.cs) file you will find the following code commented out
    ```csharp
    // AutomaticTax = new SessionAutomaticTaxOptions { Enabled = true },
    ```
@@ -40,7 +40,7 @@ from the dashboard or with the Stripe CLI.
 2. Run the application
 
 ```
-dotnet run Program.cs
+dotnet run
 ```
 
 4. If you're using the html client, go to `localhost:4242` to see the demo. For

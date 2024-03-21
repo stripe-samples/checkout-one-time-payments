@@ -23,6 +23,7 @@ Gemfile.lock
 __pycache__
 env
 venv
+.venv
 
 # PHP files
 vendor
