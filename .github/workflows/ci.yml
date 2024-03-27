@@ -57,6 +57,7 @@ jobs:
 
   server_test:
     runs-on: ubuntu-latest
+    needs: changed_files
     strategy:
       fail-fast: false
       matrix:
