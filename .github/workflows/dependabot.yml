@@ -1,0 +1,24 @@
+name: Dependabot Auto-Merge
+on:
+  workflow_call:
+
+jobs:
+  auto-merge-dependabot-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+      - name: Enable auto-merge for Stripe SDKs
+        if: |
+          (contains(steps.metadata.outputs.dependency-names, 'github.com/stripe/stripe-go/v72') ||
+           contains(steps.metadata.outputs.dependency-names, 'Stripe.net') ||
+           contains(steps.metadata.outputs.dependency-names, 'com.stripe:stripe-java') ||
+           contains(steps.metadata.outputs.dependency-names, 'stripe/stripe-php') ||
+           contains(steps.metadata.outputs.dependency-names, 'stripe'))
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

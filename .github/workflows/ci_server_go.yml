@@ -1,0 +1,34 @@
+name: Server Tests (Go)
+on:
+  pull_request_target:
+    paths:
+      - 'server/go/**'
+      - '!**.md'
+
+jobs:
+  require-permission:
+    uses: ./.github/workflows/require_permission.yml
+
+  server_test:
+    needs: require-permission
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime:
+          - server_type: go
+            server_image: golang:latest
+          - server_type: go
+            server_image: golang:1.17
+    uses: ./.github/workflows/server_test.yml
+    with:
+      server_type: ${{ matrix.runtime.server_type }}
+      server_image: ${{ matrix.runtime.server_image }}
+
+
+  dependabot-auto-merge:
+    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
+    needs: server_test
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/dependabot.yml
