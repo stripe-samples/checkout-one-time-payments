@@ -20,6 +20,7 @@ jobs:
           - server_type: ruby
             server_image: ruby:2.7
     uses: ./.github/workflows/server_test.yml
+    secrets: inherit
     with:
       server_type: ${{ matrix.runtime.server_type }}
       server_image: ${{ matrix.runtime.server_image }}
@@ -32,3 +33,4 @@ jobs:
       contents: write
       pull-requests: write
     uses: ./.github/workflows/dependabot.yml
+    secrets: inherit

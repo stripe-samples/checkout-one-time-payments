@@ -18,6 +18,7 @@ jobs:
           - server_type: dotnet
             server_image: mcr.microsoft.com/dotnet/sdk:8.0
     uses: ./.github/workflows/server_test.yml
+    secrets: inherit
     with:
       server_type: ${{ matrix.runtime.server_type }}
       server_image: ${{ matrix.runtime.server_image }}
@@ -30,3 +31,4 @@ jobs:
       contents: write
       pull-requests: write
     uses: ./.github/workflows/dependabot.yml
+    secrets: inherit

@@ -9,7 +9,6 @@ on:
       server_image:
         required: true
         type: string
-
 jobs:
   server_test:
     runs-on: ubuntu-latest

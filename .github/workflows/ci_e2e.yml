@@ -7,6 +7,11 @@ on:
       - '!**.css'
       - '!**.md'
 
+env:
+  STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+  PRICE: ${{ secrets.TEST_PRICE }}
+
 jobs:
   require-permission:
     uses: ./.github/workflows/require_permission.yml
@@ -41,9 +46,6 @@ jobs:
 
       - name: Run tests
         env:
-          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
-          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
-          PRICE: ${{ secrets.TEST_PRICE }}
           SERVER_URL: ${{ matrix.implementation.domain }}
         run: |
           echo '--format RSpec::Github::Formatter --format progress' >> .rspec
@@ -93,3 +95,4 @@ jobs:
       contents: write
       pull-requests: write
     uses: ./.github/workflows/dependabot.yml
+    secrets: inherit
