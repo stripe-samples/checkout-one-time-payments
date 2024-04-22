@@ -6,6 +6,8 @@ on:
       - fix-ci
   workflow_dispatch:
   pull_request_target:
+    branches:
+      - main
     paths:
       - 'client/html/**'
       - 'client/react-cra/**'
@@ -18,10 +20,7 @@ env:
   PRICE: ${{ secrets.TEST_PRICE }}
 
 jobs:
-  require-permission:
-    uses: ./.github/workflows/require_permission.yml
-  e2e_test:    
-    needs: require-permission
+  e2e_test: 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
