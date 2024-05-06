@@ -1,0 +1,102 @@
+name: E2E Tests
+on:
+  push:
+    branches:
+      - main
+      - fix-ci
+  workflow_dispatch:
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - 'client/html/**'
+      - 'client/react-cra/**'
+      - '!**.css'
+      - '!**.md'
+
+env:
+  STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+  STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+  PRICE: ${{ secrets.TEST_PRICE }}
+
+jobs:
+  e2e_test: 
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        implementation:
+          - client_type: html
+            domain: http://web:4242
+            profile: e2e
+            paths:
+              - 'client/html/**'
+          - client_type: react-cra
+            domain: http://frontend:3000
+            profile: frontend
+            paths:
+              - 'client/react-cra/**'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
+          
+      - name: Checkout CI runner
+        uses: actions/checkout@v4
+        with:
+          repository: 'stripe-samples/sample-ci'
+          path: 'sample-ci'
+
+      - name: Run tests
+        env:
+          SERVER_URL: ${{ matrix.implementation.domain }}
+        run: |
+          echo '--format RSpec::Github::Formatter --format progress' >> .rspec
+          echo "$(cat client/react-cra/package.json | jq '.proxy = "http://web:4242"')" > client/react-cra/package.json
+
+          source sample-ci/helpers.sh
+          setup_dependencies
+
+          install_docker_compose_settings
+          export STRIPE_WEBHOOK_SECRET=$(retrieve_webhook_secret)
+          cat <<EOF >> .env
+          DOMAIN=${SERVER_URL}
+          PRICE=${PRICE}
+          PAYMENT_METHOD_TYPES="card,ideal"
+          EOF
+
+          configure_docker_compose_for_integration . node ../../client/${{ matrix.implementation.client_type }} node:lts
+          docker-compose --profile="${{ matrix.implementation.profile }}" up -d && wait_web_server && wait_web_server "${{ matrix.implementation.domain }}"
+          docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb
+          command="docker-compose exec -T runner bundle exec rspec spec/e2e_spec.rb"
+          $command \
+            || $command --only-failures \
+            || $command --only-failures
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: |
+          cat .env
+          cat docker-compose.yml
+          docker-compose ps -a
+          docker-compose --profile="${{ matrix.implementation.profile }}" logs web frontend
+
+          docker cp $(docker-compose ps -qa runner | head -1):/work/tmp .
+
+      - name: Upload capybara screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            tmp/capybara
+
+  dependabot-auto-merge:
+    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
+    needs: e2e_test
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/dependabot.yml
+    secrets: inherit

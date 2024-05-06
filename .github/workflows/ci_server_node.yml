@@ -1,0 +1,39 @@
+name: Server Tests (Node)
+on:
+  push:
+    branches:
+      - main
+      - fix-ci
+  workflow_dispatch:
+  pull_request_target:
+    branches:
+      - main
+    paths:
+      - 'server/node/**'
+      - '!**.md'
+
+jobs:
+  server_test:
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime:
+          - server_type: node
+            server_image: node:latest
+          - server_type: node
+            server_image: node:lts
+    uses: ./.github/workflows/server_test.yml
+    secrets: inherit
+    with:
+      server_type: ${{ matrix.runtime.server_type }}
+      server_image: ${{ matrix.runtime.server_image }}
+
+
+  dependabot-auto-merge:
+    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
+    needs: server_test
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/dependabot.yml
+    secrets: inherit
