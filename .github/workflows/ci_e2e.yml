@@ -54,7 +54,12 @@ jobs:
         run: |
           echo '--format RSpec::Github::Formatter --format progress' >> .rspec
           echo "$(cat client/react-cra/package.json | jq '.proxy = "http://web:4242"')" > client/react-cra/package.json
-          sed -i -E 's/http:\/\/localhost:4242/http:\/\/web:4242/' ${{ matrix.target.sample }}/client/react/vite.config.mjs
+          if test -f "${{ matrix.target.sample }}/client/react-cra/vite.config.mjs"; then
+            sed -i -E 's/http:\/\/localhost:4242/http:\/\/web:4242/' "${{ matrix.target.sample }}/client/react-cra/vite.config.mjs"
+            echo "URL replaced in vite.config.mjs"
+          else
+            echo "File not found: ${{ matrix.target.sample }}/client/react-cra/vite.config.mjs"
+          fi
 
           source sample-ci/helpers.sh
           setup_dependencies
