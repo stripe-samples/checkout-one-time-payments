@@ -9,7 +9,7 @@ const Success = () => {
   useEffect(() => {
     async function fetchSession() {
       setSession(
-        await fetch('/checkout-session?sessionId=' + sessionId).then((res) =>
+        await fetch('/api/checkout-session?sessionId=' + sessionId).then((res) =>
           res.json()
         )
       );
