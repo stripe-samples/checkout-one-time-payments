@@ -24,5 +24,8 @@ npm start
 
 ## Credits
 
-- Author: [@thorsten-stripe](https://twitter.com/thorwebdev)
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The client is implemented using `Vite` to provide the boilerplate
+
+## Authors
+[@hideokamoto-stripe](https://twitter.com/hidetaka_dev)
+[@thorsten-stripe](https://twitter.com/thorwebdev)
