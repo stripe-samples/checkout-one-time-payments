@@ -1,7 +1,5 @@
-version: '3'
-
 services:
-  web:
+  runner:
     build:
       context: .
       args:
