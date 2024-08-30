@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        A=${STRIPE_SECRET_KEY}
+        B=${STRIPE_PUBLISHABLE_KEY}
