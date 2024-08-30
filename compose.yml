@@ -5,5 +5,5 @@ services:
     build:
       context: .
       args:
-        A=${STRIPE_SECRET_KEY}
-        B=${STRIPE_PUBLISHABLE_KEY}
+        - A=${STRIPE_SECRET_KEY}
+        - B=${STRIPE_PUBLISHABLE_KEY}
