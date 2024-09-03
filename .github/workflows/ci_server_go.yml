@@ -27,13 +27,3 @@ jobs:
     with:
       server_type: ${{ matrix.runtime.server_type }}
       server_image: ${{ matrix.runtime.server_image }}
-
-
-  dependabot-auto-merge:
-    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
-    needs: server_test
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: ./.github/workflows/dependabot.yml
-    secrets: inherit
