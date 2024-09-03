@@ -43,13 +43,13 @@ jobs:
 
           configure_docker_compose_for_integration . "${{ inputs.server_type }}" ../../client/html "${{ inputs.server_image }}"
 
-          docker-compose up -d && wait_web_server
-          docker-compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
+          docker compose up -d && wait_web_server
+          docker compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
 
       - name: Collect debug information
         if: ${{ failure() }}
         run: |
           cat .env
           cat docker-compose.yml
-          docker-compose ps -a
-          docker-compose logs web
+          docker compose ps -a
+          docker compose logs web
