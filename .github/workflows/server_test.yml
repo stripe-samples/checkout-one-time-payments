@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.after || github.event.pull_request.head.sha }}
           
       - name: Checkout CI runner
         uses: actions/checkout@v4
