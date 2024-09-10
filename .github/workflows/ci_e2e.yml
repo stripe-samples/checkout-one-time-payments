@@ -96,11 +96,3 @@ jobs:
           path: |
             tmp/capybara
 
-  dependabot-auto-merge:
-    if: ${{ github.event.pull_request && github.actor == 'dependabot[bot]' }}
-    needs: e2e_test
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: ./.github/workflows/dependabot.yml
-    secrets: inherit
