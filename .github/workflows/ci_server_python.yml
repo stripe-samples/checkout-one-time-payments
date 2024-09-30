@@ -4,13 +4,10 @@ on:
     branches:
       - main
       - fix-ci
-  workflow_dispatch:
-  pull_request_target:
-    branches:
-      - main
     paths:
       - 'server/python/**'
       - '!**.md'
+  workflow_dispatch:
 
 jobs:
   server_test:

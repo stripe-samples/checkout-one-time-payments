@@ -4,15 +4,12 @@ on:
     branches:
       - main
       - fix-ci
-  workflow_dispatch:
-  pull_request_target:
-    branches:
-      - main
     paths:
       - 'client/html/**'
       - 'client/react-cra/**'
       - '!**.css'
       - '!**.md'
+  workflow_dispatch:
 
 env:
   STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
