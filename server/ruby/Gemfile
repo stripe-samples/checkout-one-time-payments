@@ -3,5 +3,5 @@ source 'https://rubygems.org/'
 gem 'dotenv'
 gem "rackup"
 gem 'sinatra'
-gem 'stripe', '~> 13.0.0'
+gem 'stripe', '~> 13.1.0'
 gem 'webrick'
