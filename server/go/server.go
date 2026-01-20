@@ -109,7 +109,6 @@ func handleCreateCheckoutSession(w http.ResponseWriter, r *http.Request) {
 	// set as a query param
 	params := &stripe.CheckoutSessionParams{
 		SuccessURL:         stripe.String(domainURL + "/success.html?session_id={CHECKOUT_SESSION_ID}"),
-		CancelURL:          stripe.String(domainURL + "/canceled.html"),
 		Mode:               stripe.String(string(stripe.CheckoutSessionModePayment)),
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
 			{

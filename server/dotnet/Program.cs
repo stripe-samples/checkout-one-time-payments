@@ -65,7 +65,6 @@ app.MapPost("/create-checkout-session", async (IOptions<StripeOptions> stripeOpt
     var options = new SessionCreateOptions
     {
         SuccessUrl = $"{stripeOptions.Value.Domain}/success.html?session_id={{CHECKOUT_SESSION_ID}}",
-        CancelUrl = $"{stripeOptions.Value.Domain}/canceled.html",
         Mode = "payment",
         LineItems = new List<SessionLineItemOptions>
                 {

@@ -39,7 +39,6 @@ $quantity = $_POST['quantity'];
 // ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
 $checkout_session = \Stripe\Checkout\Session::create([
   'success_url' => $domain_url . '/success.html?session_id={CHECKOUT_SESSION_ID}',
-  'cancel_url' => $domain_url . '/canceled.html',
   'mode' => 'payment',
   // 'automatic_tax' => ['enabled' => true],
   'line_items' => [[
