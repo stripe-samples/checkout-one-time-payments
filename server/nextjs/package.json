@@ -1,0 +1,25 @@
+{
+  "name": "stripe-sample-checkout-one-time-payments-nextjs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4242",
+    "build": "next build",
+    "start": "next start -p 4242",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "16.1.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "stripe": "^17.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@tailwindcss/postcss": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3"
+  }
+}
