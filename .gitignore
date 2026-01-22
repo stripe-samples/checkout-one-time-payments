@@ -40,3 +40,7 @@ target/
 # .NET files
 **/dotnet/bin/
 **/dotnet/obj/ 
+
+# Terraform files
+.terraform*
+terraform.tfstate*
