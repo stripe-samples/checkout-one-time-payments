@@ -47,7 +47,6 @@ RSpec.describe "full integration path" do
     it "Reretrieves the Checkout Session" do
       session = Stripe::Checkout::Session.create({
         success_url: 'https://example.com/success',
-        cancel_url: 'https://example.com/cancel',
         line_items: [{
           price: ENV['PRICE'],
           quantity: 1

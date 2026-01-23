@@ -92,7 +92,6 @@ public class Server {
             // set as a query param
             SessionCreateParams.Builder builder = new SessionCreateParams.Builder()
                     .setSuccessUrl(domainUrl + "/success.html?session_id={CHECKOUT_SESSION_ID}")
-                    .setCancelUrl(domainUrl + "/canceled.html")
                     // .setAutomaticTax(SessionCreateParams.AutomaticTax.builder().setEnabled(true).build())
                     .setMode(SessionCreateParams.Mode.PAYMENT);
 

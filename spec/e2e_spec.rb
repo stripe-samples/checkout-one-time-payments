@@ -23,13 +23,4 @@ RSpec.describe "Checkout one-time payments", type: :system do
     expect(page).to have_content 'Your payment succeeded'
     expect(page).to have_content '"amount_total": 2000'
   end
-
-  example "Cancel a payment" do
-    visit server_url('/')
-
-    click_on 'Buy'
-    find('a[href$="/canceled.html"]').click
-
-    expect(page).to have_content 'Your payment was canceled'
-  end
 end

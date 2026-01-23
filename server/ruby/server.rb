@@ -63,7 +63,6 @@ post '/create-checkout-session' do
   # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
   session = Stripe::Checkout::Session.create(
     success_url: ENV['DOMAIN'] + '/success.html?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: ENV['DOMAIN'] + '/canceled.html',
     mode: 'payment',
     # automatic_tax: { enabled: true },
     line_items: [{
