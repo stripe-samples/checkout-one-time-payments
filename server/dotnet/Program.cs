@@ -4,6 +4,11 @@ using Stripe.Checkout;
 
 DotNetEnv.Env.Load();
 
+// Never put any keys in code! Always use a secrets vault or environment
+// variable to supply keys to your integration.
+//
+// See https://docs.stripe.com/keys-best-practices and find your
+// keys at https://dashboard.stripe.com/apikeys.
 StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
 
 StripeConfiguration.AppInfo = new AppInfo

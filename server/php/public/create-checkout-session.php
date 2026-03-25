@@ -19,6 +19,11 @@ if (!$price || $price == 'price_12345') {
   "https://github.com/stripe-samples/checkout-one-time-payments"
 );
 
+// Never put any keys in code! Always use a secrets vault or environment
+// variable to supply keys to your integration.
+//
+// See https://docs.stripe.com/keys-best-practices and find your
+// keys at https://dashboard.stripe.com/apikeys.
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
