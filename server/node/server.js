@@ -7,8 +7,8 @@ require('dotenv').config({ path: './.env' });
 // Ensure environment variables are set.
 checkEnv();
 
-// Never put any keys in code! Always use a secrets vault or environment
-// variable to supply keys to your integration.
+// Don't put any keys in code. Use an environment variable (as shown
+// here) or secrets vault to supply keys to your integration.
 //
 // See https://docs.stripe.com/keys-best-practices and find your
 // keys at https://dashboard.stripe.com/apikeys.
