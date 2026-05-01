@@ -21,6 +21,11 @@ stripe.set_app_info(
     url='https://github.com/stripe-samples/checkout-one-time-payments')
 
 stripe.api_version = '2020-08-27'
+# Don't put any keys in code. Use an environment variable (as shown
+# here) or secrets vault to supply keys to your integration.
+#
+# See https://docs.stripe.com/keys-best-practices and find your
+# keys at https://dashboard.stripe.com/apikeys.
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 
 static_dir = str(os.path.abspath(os.path.join(
