@@ -7,6 +7,15 @@ on:
     paths:
       - 'server/ruby/**'
       - '!**.md'
+  pull_request:
+    paths:
+      - 'server/ruby/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_ruby.yml'
+      - '.github/workflows/server_test.yml'
+      - '!**.md'
   workflow_dispatch:
 
 jobs:
@@ -18,7 +27,7 @@ jobs:
           - server_type: ruby
             server_image: ruby:latest
           - server_type: ruby
-            server_image: ruby:2.7
+            server_image: ruby:3.0
     uses: ./.github/workflows/server_test.yml
     secrets: inherit
     with:

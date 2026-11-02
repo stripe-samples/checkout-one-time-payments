@@ -7,6 +7,15 @@ on:
     paths:
       - 'server/dotnet/**'
       - '!**.md'
+  pull_request:
+    paths:
+      - 'server/dotnet/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_dotnet.yml'
+      - '.github/workflows/server_test.yml'
+      - '!**.md'
   workflow_dispatch:
 
 jobs:
@@ -16,7 +25,7 @@ jobs:
       matrix:
         runtime:
           - server_type: dotnet
-            server_image: mcr.microsoft.com/dotnet/sdk:8.0
+            server_image: mcr.microsoft.com/dotnet/sdk:10.0
     uses: ./.github/workflows/server_test.yml
     secrets: inherit
     with:

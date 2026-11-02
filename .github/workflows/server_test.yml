@@ -27,6 +27,7 @@ jobs:
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
           PRICE: ${{ secrets.TEST_PRICE }}
+          EXPECTED_STRIPE_API_VERSION: 2026-10-28.endive
         run: |
           source sample-ci/helpers.sh
           setup_dependencies
@@ -36,12 +37,12 @@ jobs:
           cat <<EOF >> .env
           DOMAIN=http://web:4242
           PRICE=${PRICE}
-          PAYMENT_METHOD_TYPES="card,ideal"
           EOF
 
           configure_docker_compose_for_integration . "${{ inputs.server_type }}" ../../client/html "${{ inputs.server_image }}"
 
           docker compose up -d && wait_web_server
+          docker compose exec -T -e EXPECTED_STRIPE_API_VERSION web bash /work/ci/assert-stripe-api-version.sh "${{ inputs.server_type }}"
           docker compose exec -T runner bundle exec rspec spec/client_and_server_spec.rb
 
       - name: Collect debug information

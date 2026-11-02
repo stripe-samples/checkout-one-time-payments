@@ -1,0 +1,77 @@
+name: Server Tests (PHP)
+on:
+  push:
+    branches:
+      - main
+      - fix-ci
+    paths:
+      - 'server/php/**'
+      - '!**.md'
+  pull_request:
+    paths:
+      - 'server/php/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_php.yml'
+      - '!**.md'
+  workflow_dispatch:
+
+env:
+  EXPECTED_STRIPE_API_VERSION: 2026-10-28.endive
+
+jobs:
+  server_test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.4']
+    defaults:
+      run:
+        working-directory: server/php
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: .
+
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress
+
+      - name: Assert Stripe API version
+        run: ../../ci/assert-stripe-api-version.sh php
+
+      - name: Run integration tests
+        env:
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+          PRICE: ${{ secrets.TEST_PRICE }}
+          SERVER_URL: http://127.0.0.1:4242
+          CONFIG_PATH: ''
+          CREATE_CHECKOUT_SESSION_PATH: /create-checkout-session.php
+          CHECKOUT_SESSION_PATH: /get-checkout-session.php
+        run: |
+          cat <<EOF > .env
+          STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+          STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+          STRIPE_WEBHOOK_SECRET=whsec_unused
+          PRICE=${PRICE}
+          DOMAIN=http://localhost:4242
+          EOF
+          php -S 127.0.0.1:4242 -t public > server.log 2>&1 &
+          curl -s -o /dev/null --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:4242/
+          (cd ../.. && bundle exec rspec spec/client_and_server_spec.rb)
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: cat server.log || true

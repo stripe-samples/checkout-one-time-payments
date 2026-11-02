@@ -9,6 +9,16 @@ on:
       - 'client/react-cra/**'
       - '!**.css'
       - '!**.md'
+  pull_request:
+    paths:
+      - 'client/html/**'
+      - 'client/react-cra/**'
+      - 'server/node/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - '.github/workflows/ci_e2e.yml'
+      - '!**.css'
+      - '!**.md'
   workflow_dispatch:
 
 env:
@@ -64,7 +74,6 @@ jobs:
           cat <<EOF >> .env
           DOMAIN=${SERVER_URL}
           PRICE=${PRICE}
-          PAYMENT_METHOD_TYPES="card,ideal"
           EOF
 
           configure_docker_compose_for_integration . node ../../client/${{ matrix.implementation.client_type }} node:lts

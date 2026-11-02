@@ -3,11 +3,13 @@ require 'stripe'
 RSpec.describe "full integration path" do
   describe "/config" do
     it "returns the expected configuration" do
+      skip "CONFIG_PATH is empty" if CONFIG_PATH.empty?
+
       # Get the index html page
       response = get("/")
       expect(response).not_to be_nil
 
-      response = get_json("/config")
+      response = get_json(CONFIG_PATH)
       expect(response).not_to be_nil
       expect(response).to have_key("publicKey")
       expect(response).to have_key("unitAmount")
@@ -18,7 +20,7 @@ RSpec.describe "full integration path" do
   describe "/create-checkout-session" do
     it "returns a redirect to the hosted checkout URL" do
       response = RestClient.post(
-        "#{SERVER_URL}/create-checkout-session",
+        "#{SERVER_URL}#{CREATE_CHECKOUT_SESSION_PATH}",
         {quantity: 7},
         {max_redirects: 0}
       )
@@ -54,7 +56,7 @@ RSpec.describe "full integration path" do
         mode: 'payment',
       })
 
-      resp = get_json("/checkout-session?sessionId=#{session.id}")
+      resp = get_json("#{CHECKOUT_SESSION_PATH}?sessionId=#{session.id}")
       expect(resp).to have_key('id')
       expect(resp).to have_key('object')
       expect(resp['object']).to eq('checkout.session')

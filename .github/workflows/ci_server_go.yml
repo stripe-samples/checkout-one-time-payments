@@ -7,6 +7,15 @@ on:
     paths:
       - 'server/go/**'
       - '!**.md'
+  pull_request:
+    paths:
+      - 'server/go/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_go.yml'
+      - '.github/workflows/server_test.yml'
+      - '!**.md'
   workflow_dispatch:
 
 jobs:
@@ -18,7 +27,7 @@ jobs:
           - server_type: go
             server_image: golang:latest
           - server_type: go
-            server_image: golang:1.17
+            server_image: golang:1.24
     uses: ./.github/workflows/server_test.yml
     secrets: inherit
     with:
