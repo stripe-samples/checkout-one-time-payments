@@ -109,6 +109,12 @@ Dotenv.load
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 SERVER_URL = ENV.fetch('SERVER_URL', 'http://localhost:4242')
 
+# Some servers (e.g. PHP, Next.js) expose these endpoints at different paths.
+# Set CONFIG_PATH to an empty string to skip the /config check.
+CONFIG_PATH = ENV.fetch('CONFIG_PATH', '/config')
+CREATE_CHECKOUT_SESSION_PATH = ENV.fetch('CREATE_CHECKOUT_SESSION_PATH', '/create-checkout-session')
+CHECKOUT_SESSION_PATH = ENV.fetch('CHECKOUT_SESSION_PATH', '/checkout-session')
+
 def get(path, *args, **kwargs)
   RestClient.get("#{SERVER_URL}#{path}", *args, **kwargs)
 end

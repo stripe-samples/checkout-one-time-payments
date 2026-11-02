@@ -84,7 +84,8 @@ app.MapPost("/create-checkout-session", async (IOptions<StripeOptions> stripeOpt
 
     var service = new SessionService();
     var session = await service.CreateAsync(options);
-    return Results.Redirect(session.Url);
+    context.Response.Headers.Location = session.Url;
+    return Results.StatusCode(303);
 });
 
 app.MapPost("webhook", async (IOptions<StripeOptions> stripeOptions, HttpContext context) =>

@@ -6,7 +6,7 @@ $event = null;
 
 try {
 	// Make sure the event is coming from Stripe by checking the signature header
-	$event = \Stripe\Webhook::constructEvent($input, $_SERVER['HTTP_STRIPE_SIGNATURE'], $config['stripe_webhook_secret']);
+	$event = \Stripe\Webhook::constructEvent($input, $_SERVER['HTTP_STRIPE_SIGNATURE'], $_ENV['STRIPE_WEBHOOK_SECRET']);
 }
 catch (Exception $e) {
 	http_response_code(403);

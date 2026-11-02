@@ -7,6 +7,15 @@ on:
     paths:
       - 'server/node/**'
       - '!**.md'
+  pull_request:
+    paths:
+      - 'server/node/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_node.yml'
+      - '.github/workflows/server_test.yml'
+      - '!**.md'
   workflow_dispatch:
 
 jobs:

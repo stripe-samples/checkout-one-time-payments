@@ -8,7 +8,7 @@ gem 'dotenv'
 gem 'rspec'
 gem 'rest-client'
 gem 'byebug'
-gem 'stripe'
+gem 'stripe', '~> 20.1'
 
 gem 'selenium-webdriver'
 gem 'capybara'

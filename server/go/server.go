@@ -12,10 +12,10 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
-	"github.com/stripe/stripe-go/v84"
-	"github.com/stripe/stripe-go/v84/checkout/session"
-	"github.com/stripe/stripe-go/v84/price"
-	"github.com/stripe/stripe-go/v84/webhook"
+	"github.com/stripe/stripe-go/v87"
+	"github.com/stripe/stripe-go/v87/checkout/session"
+	"github.com/stripe/stripe-go/v87/price"
+	"github.com/stripe/stripe-go/v87/webhook"
 )
 
 func main() {

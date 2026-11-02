@@ -1,0 +1,78 @@
+name: Server Tests (Next.js)
+on:
+  push:
+    branches:
+      - main
+      - fix-ci
+    paths:
+      - 'server/nextjs/**'
+      - '!**.md'
+  pull_request:
+    paths:
+      - 'server/nextjs/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'ci/**'
+      - '.github/workflows/ci_server_nextjs.yml'
+      - '!**.md'
+  workflow_dispatch:
+
+env:
+  EXPECTED_STRIPE_API_VERSION: 2026-10-28.endive
+
+jobs:
+  server_test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['lts/*', 'latest']
+    defaults:
+      run:
+        working-directory: server/nextjs
+    env:
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.TEST_STRIPE_PUBLISHABLE_KEY }}
+      STRIPE_SECRET_KEY: ${{ secrets.TEST_STRIPE_SECRET_KEY }}
+      PRICE: ${{ secrets.TEST_PRICE }}
+      DOMAIN: http://localhost:4242
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+          working-directory: .
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      # Fails if lib/stripe.ts pins an apiVersion the installed SDK doesn't support.
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Assert Stripe API version
+        run: ../../ci/assert-stripe-api-version.sh nextjs
+
+      - name: Build
+        run: npm run build
+
+      - name: Run integration tests
+        env:
+          SERVER_URL: http://127.0.0.1:4242
+          CONFIG_PATH: /api/config
+          CREATE_CHECKOUT_SESSION_PATH: /api/create-checkout-session
+          CHECKOUT_SESSION_PATH: /api/checkout-session
+        run: |
+          npm start > server.log 2>&1 &
+          curl -s -o /dev/null --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:4242/
+          (cd ../.. && bundle exec rspec spec/client_and_server_spec.rb)
+
+      - name: Collect debug information
+        if: ${{ failure() }}
+        run: cat server.log || true

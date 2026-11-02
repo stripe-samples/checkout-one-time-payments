@@ -29,7 +29,6 @@ import com.stripe.exception.*;
 import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionCreateParams.LineItem;
-import com.stripe.param.checkout.SessionCreateParams.PaymentMethodType;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
